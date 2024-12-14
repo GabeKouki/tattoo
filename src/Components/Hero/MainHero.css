@@ -1,0 +1,131 @@
+.HeroContainer {
+  display: flex;
+  width: 100%;
+  height: calc(100vh - 110px);
+  background-color: black;
+}
+
+.CarouselContent {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.MapContent {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.MapContent h1 {
+  font-size: 32px;
+  color: #008080;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.MapContent p {
+  font-size: 16px;
+  color: #008080;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.MapContainer {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  background-color: black;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.MapContainer iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.MapButtonContainer {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.MapButton{
+  padding: 10px 20px;
+  background-color: #008080;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.MapButton:hover {
+  background-color: #00bfbf;
+}
+
+@media (max-width: 768px) {
+
+  .HeroContainer {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .CarouselContent {
+    flex: none;
+    height: calc(60vh - 110px);
+    width: 100%;
+  }
+
+  .MapContent {
+    flex: none;
+    padding: 15px;
+  }
+
+  .MapContent h1 {
+    font-size: 28px;
+  }
+
+  .MapContent p {
+    font-size: 14px;
+  }
+
+  .MapContainer {
+    height: 250px;
+  }
+
+  .MapButton {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .MapContent h1 {
+    font-size: 24px;
+  }
+
+  .MapContent p {
+    font-size: 12px;
+  }
+
+  .MapContainer {
+    height: 200px;
+  }
+
+  .MapButton {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+}
