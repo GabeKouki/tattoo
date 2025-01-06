@@ -1,0 +1,49 @@
+.ProgressTracker {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 20px 0;
+}
+
+.ProgressStep {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  text-align: center;
+}
+
+.StepCircle {
+  width: 30px;
+  height: 30px;
+  background-color: #ccc;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.StepCircle.completed {
+  background-color: #4caf50; /* Green for completed steps */
+  color: white;
+}
+
+.StepLabel {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.StepConnector {
+  width: 60px;
+  height: 3px;
+  background-color: #ccc;
+  position: absolute;
+  top: 15px;
+  left: 40px;
+  z-index: -1;
+}
+
+.ProgressStep.completed + .StepConnector {
+  background-color: #4caf50; /* Green for completed steps */
+}

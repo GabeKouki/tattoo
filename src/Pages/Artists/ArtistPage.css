@@ -1,0 +1,369 @@
+.ArtistPage {
+  padding-top: 80px; 
+  background-color: #121212;
+  min-height: 100vh;
+}
+
+/* Artist Intro Section */
+.ArtistIntro {
+  padding: 60px 40px;
+  background: rgba(18, 18, 18, 0.7);
+  backdrop-filter: blur(10px);
+}
+
+.ArtistProfile {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  gap: 40px;
+  align-items: center;
+}
+
+.ArtistImage {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.ArtistInfo {
+  flex: 1;
+  text-align: left;
+}
+
+.ArtistInfo h1 {
+  color: #008080;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.ArtistBio {
+  color: #cecece;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.ArtistSocials {
+  margin-top: 20px;
+}
+
+.ArtistSocials a {
+  color: #008080;
+  text-decoration: none;
+  font-size: 1.1rem;
+  transition: color 0.3s ease;
+}
+
+.ArtistSocials a:hover {
+  color: #009999;
+}
+
+/* Portfolio Section */
+.ArtistPortfolio {
+  padding: 60px 40px;
+}
+
+.ArtistPortfolio h2 {
+  color: #008080;
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.CategoryFilter {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+
+.FilterButton {
+  padding: 8px 20px;
+  background: transparent;
+  border: 2px solid #008080;
+  color: #ffffff;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.FilterButton:hover,
+.FilterButton.active {
+  background-color: #008080;
+  color: white;
+}
+
+.WorkGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.WorkItem {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.WorkItem img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.WorkItem:hover img {
+  transform: scale(1.05);
+}
+
+/* Booking Inquiry Section */
+.BookingInquiry {
+  padding: 60px 40px;
+  background: rgba(18, 18, 18, 0.7);
+  backdrop-filter: blur(10px);
+}
+
+.BookingInquiry h2 {
+  color: #008080;
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.InquiryButton {
+  display: block;
+  margin: 0 auto;
+  padding: 15px 30px;
+  background: linear-gradient(45deg, #008080, #009999);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.InquiryButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 128, 128, 0.3);
+}
+
+.InquiryForm {
+  max-width: 600px;
+  margin: 40px auto 0;
+  padding: 30px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  align-items: center;
+  justify-content: center;
+}
+
+.FormGroup {
+  margin-bottom: 20px;
+}
+
+.FormGroup label {
+  display: block;
+  color: #cecece;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+
+.FormGroup input,
+.FormGroup textarea {
+  width: 100%;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(0, 128, 128, 0.3);
+  border-radius: 4px;
+  color: white;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.FormGroup input[type="file"] {
+  padding: 8px;
+}
+
+.FormGroup textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.FormGroup input:focus,
+.FormGroup textarea:focus {
+  outline: none;
+  border-color: #008080;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.SubmitButton {
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(45deg, #008080, #009999);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 20px;
+}
+
+.SubmitButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 128, 128, 0.3);
+}
+
+.BookingDialog {
+  max-width: 600px;
+  width: 90%;
+  padding: 30px;
+  border: none;
+  border-radius: 12px;
+  background: #1a1a1a;
+  color: #ffffff;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+}
+
+.BookingDialog::backdrop {
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px);
+}
+
+.BookingDialog h3 {
+  color: #008080;
+  font-size: 1.8rem;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.DialogContent {
+  margin-bottom: 30px;
+}
+
+.DialogContent h4 {
+  color: #008080;
+  font-size: 1.2rem;
+  margin: 20px 0 10px;
+}
+
+.DialogContent ol,
+.DialogContent ul {
+  margin: 10px 0;
+  padding-left: 20px;
+}
+
+.DialogContent li {
+  color: #cecece;
+  margin: 8px 0;
+  line-height: 1.4;
+}
+
+.DialogContent p {
+  color: #cecece;
+  line-height: 1.6;
+}
+
+.DialogButton {
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(45deg, #008080, #009999);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.DialogButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 128, 128, 0.3);
+}
+
+@media (max-width: 480px) {
+  .BookingDialog {
+    padding: 20px;
+  }
+
+  .BookingDialog h3 {
+    font-size: 1.5rem;
+  }
+
+  .DialogContent h4 {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .ArtistProfile {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .ArtistInfo {
+    text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .ArtistIntro,
+  .ArtistPortfolio,
+  .BookingInquiry {
+    padding: 40px 20px;
+  }
+
+  .ArtistImage {
+    width: 250px;
+    height: 250px;
+  }
+
+  .ArtistInfo h1 {
+    font-size: 2rem;
+  }
+
+  .WorkGrid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ArtistIntro,
+  .ArtistPortfolio,
+  .BookingInquiry {
+    padding: 30px 15px;
+  }
+
+  .ArtistImage {
+    width: 200px;
+    height: 200px;
+  }
+
+  .ArtistInfo h1 {
+    font-size: 1.8rem;
+  }
+
+  .FilterButton {
+    padding: 6px 15px;
+    font-size: 0.8rem;
+  }
+}

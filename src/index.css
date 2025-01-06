@@ -1,10 +1,85 @@
 body {
   margin: 0;
   padding: 0;
+  font-family: 'Playfair Display', serif;
+  background-color: #121212;
+  color: white;
   box-sizing: border-box;
-  font-family: "Playfair Display", serif;
+  overflow-x: hidden;
 }
 
-::-webkit-scrollbar {
-  display: none;
+/* Typography */
+h1, h2, h3 {
+  color: #008080;
+  margin: 0;
+}
+
+p {
+  color: #cccccc;
+  line-height: 1.6;
+  margin: 0 0 20px;
+}
+
+/* Buttons */
+button {
+  font-family: inherit;
+  padding: 10px 20px;
+  background-color: #008080;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+
+a {
+  color: #008080;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: #00a5a5;
+}
+
+.Spacer {
+  height: 80px;
+}
+/* ::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #008080;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+} */
+
+/* Utility Classes */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.mt-20 {
+  margin-top: 20px;
+}
+
+.mb-20 {
+  margin-bottom: 20px;
 }

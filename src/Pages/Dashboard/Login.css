@@ -1,0 +1,134 @@
+/* src/Pages/Dashboard/Login.css */
+
+/* Container for the login form */
+.container {
+  max-width: 400px;
+  width: 100%;
+  margin: 5% auto;
+  padding: 2rem;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Centered header text */
+.header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+/* Groups input label and field together */
+.inputGroup {
+  margin-bottom: 1rem;
+}
+
+/* Labels */
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Inputs */
+input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+input:focus {
+  border-color: #4f46e5;
+}
+
+/* Login button */
+.button {
+  width: 100%;
+  background-color: #4f46e5;
+  color: #fff;
+  border: none;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-weight: 600;
+}
+
+.button:hover {
+  background-color: #4338ca;
+}
+
+/* Status message container */
+.statusMessage {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+/* Color-coded success/error styling */
+.success {
+  color: #15803d; /* green-700 */
+}
+
+.error {
+  color: #dc2626; /* red-600 */
+}
+
+/* 
+  Basic responsive breakpoints for all screen sizes:
+  Feel free to adjust these to your exact design preferences.
+*/
+
+/* For screens up to 600px wide (small devices) */
+@media (max-width: 600px) {
+  .container {
+    margin: 2rem auto;
+    padding: 1rem;
+  }
+
+  .header {
+    font-size: 1.25rem;
+  }
+
+  label,
+  input {
+    font-size: 0.9rem;
+  }
+
+  .button {
+    font-size: 0.9rem;
+  }
+
+  .statusMessage {
+    font-size: 0.85rem;
+  }
+}
+
+/* For screens between 601px and 900px (tablets, small laptops) */
+@media (min-width: 601px) and (max-width: 900px) {
+  .container {
+    width: 80%;
+  }
+}
+
+/* For screens between 901px and 1200px (larger laptops) */
+@media (min-width: 901px) and (max-width: 1200px) {
+  .container {
+    width: 60%;
+  }
+}
+
+/* For screens wider than 1200px (desktops) */
+@media (min-width: 1201px) {
+  .container {
+    width: 400px; /* Use a fixed width for large screens */
+  }
+}

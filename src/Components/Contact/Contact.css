@@ -1,0 +1,212 @@
+.ContactSection {
+  background-color: rgba(18, 18, 18, 0.8);
+  padding: 80px 0;
+  position: relative;
+}
+
+.ContactContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.ContactTitle {
+  text-align: center;
+  color: #008080;
+  font-size: 2.5rem;
+  margin-bottom: 50px;
+}
+
+.ContactContent {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+.MapSection {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.ErrorMessage {
+  text-align: center;
+  color: #ff4444;
+  padding: 10px;
+  border-radius: 4px;
+  background: rgba(255, 68, 68, 0.1);
+  margin-top: 10px;
+}
+
+.SuccessMessage {
+  text-align: center;
+  color: #008080;
+  padding: 10px;
+  border-radius: 4px;
+  background: rgba(0, 128, 128, 0.1);
+  margin-top: 10px;
+}
+
+.MapContainer {
+  width: 100%;
+  height: 400px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.Map {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.BusinessInfo {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  background: rgba(18, 18, 18, 0.7);
+  backdrop-filter: blur(10px);
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.InfoItem {
+  text-align: center;
+}
+
+.InfoItem h3 {
+  color: #008080;
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+}
+
+.InfoItem p {
+  color: #cecece;
+  margin: 5px 0;
+  font-size: 1rem;
+}
+
+.FormSection {
+  background: rgba(18, 18, 18, 0.7);
+  backdrop-filter: blur(10px);
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.ContactForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.FormGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.FormGroup label {
+  color: #cecece;
+  font-size: 0.9rem;
+}
+
+.FormGroup input,
+.FormGroup textarea {
+  padding: 12px;
+  border: 1px solid rgba(0, 128, 128, 0.3);
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.05);
+  color: white;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.FormGroup input:focus,
+.FormGroup textarea:focus {
+  outline: none;
+  border-color: #008080;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.SubmitButton {
+  padding: 12px 24px;
+  background: linear-gradient(45deg, #008080, #009999);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 10px;
+}
+
+.SubmitButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 128, 128, 0.3);
+}
+
+
+/* ! NewsLetter */
+/* .NewsLetterContainer {
+  display: flex;
+  flex-direction: column;
+  background-color: #121212;
+  padding: 20px;
+  border-radius: 8px;
+} */
+
+.SuccessMessage {
+  text-align: center;
+  color: #008080;
+  padding: 10px;
+  border-radius: 4px;
+  background: rgba(0, 128, 128, 0.1);
+  margin-top: 10px;
+}
+
+@media (max-width: 992px) {
+  .ContactContent {
+    grid-template-columns: 1fr;
+  }
+
+  .MapContainer {
+    height: 350px;
+  }
+}
+
+@media (max-width: 768px) {
+  .ContactSection {
+    padding: 60px 0;
+  }
+
+  .ContactTitle {
+    font-size: 2rem;
+  }
+
+  .BusinessInfo {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ContactSection {
+    padding: 40px 0;
+  }
+
+  .ContactTitle {
+    font-size: 1.8rem;
+  }
+
+  .MapContainer {
+    height: 300px;
+  }
+
+  .FormSection {
+    padding: 20px;
+  }
+}

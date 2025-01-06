@@ -2,23 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import BookingWidget from './Components/BookingWidget';
-import Navbar from './Components/Navbar/Navbar';
-import Carousel from './Components/Carousel/Carousel';
-import MainHero from './Components/Hero/MainHero';
-// import Chatbot from './Components/ChatBot';
+import { SessionProvider } from './Context/SessionContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    {/* <App /> */}
-    <Navbar />
-    {/* <BookingWidget /> */}
-    {/* <Chatbot /> */}
-    {/* <Carousel /> */}
-    {/* <LiveMap /> */}
-    <MainHero />
-    <h1>Hello World!</h1>
+    <SessionProvider>
+    <App />
+    </SessionProvider>
   </React.StrictMode>
 );
 

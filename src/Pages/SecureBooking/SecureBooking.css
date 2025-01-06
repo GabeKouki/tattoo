@@ -1,0 +1,76 @@
+.SecureBookingPage {
+  padding: 100px 20px 60px;
+  min-height: 100vh;
+  background-color: #121212;
+  color: #fff;
+}
+
+.BookingContainer {
+  max-width: 1000px;
+  margin: 0 auto;
+  background-color: #1a1a1a;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.BookingContainer h1 {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.BookingInfo {
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color: #242424;
+  border-radius: 6px;
+}
+
+.BookingDetails {
+  margin-top: 20px;
+  display: flex;
+  gap: 30px;
+}
+
+.DetailItem {
+  flex: 1;
+}
+
+.DetailLabel {
+  display: block;
+  color: #888;
+  margin-bottom: 5px;
+}
+
+.DetailValue {
+  font-size: 1.1em;
+  font-weight: 500;
+}
+
+.calendly-inline-widget {
+  margin: 30px 0;
+  background-color: #fff;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.BookingNotes {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #242424;
+  border-radius: 6px;
+}
+
+.BookingNotes p {
+  color: #888;
+  margin: 5px 0;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  font-size: 1.2em;
+  color: #fff;
+}
