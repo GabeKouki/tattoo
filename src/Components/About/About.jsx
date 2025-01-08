@@ -2,6 +2,13 @@ import React from 'react';
 import './About.css';
 
 const About = () => {
+
+  const scrollToArtists = () => {
+    const artistSection = document.getElementById('artists');
+    if (artistSection) {
+      artistSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
   return (
     <section id="about" className="AboutSection">
       <div className="AboutContainer">
@@ -56,8 +63,7 @@ const About = () => {
         </div>
 
         <div className="AboutCTA">
-          <button className="CTAButton">Book Consultation</button>
-          <button className="CTAButton Secondary">View Our Work</button>
+          <button className="CTAButton Secondary" onClick={scrollToArtists}>View Our Artists</button>
         </div>
       </div>
     </section>

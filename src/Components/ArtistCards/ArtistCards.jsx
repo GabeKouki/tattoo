@@ -34,8 +34,7 @@ const artists = [
     socials: {
       instagram: "christina_tattoos",
       facebook: "christinasmith.tattoo"
-      
-  },
+    }
   },
   {
     id: 3,
@@ -61,26 +60,40 @@ const ArtistCard = ({ artist }) => {
     <div className="artist-card-container">
       <div className="artist-card" onClick={() => setIsFlipped(!isFlipped)}>
         <div className={`artist-card-inner ${isFlipped ? 'is-flipped' : ''}`}>
+          {/* Front of card */}
           <div className="artist-card-face artist-card-front">
-            <div className="artist-image">
-              <img src={artist.image} alt={artist.name} />
+            <div className="artist-image-wrapper">
+              <img src={artist.image} alt={artist.name} className="artist-image" />
+              <div className="artist-specialty-badge">{artist.specialty}</div>
             </div>
             <div className="artist-info">
               <h3>{artist.name}</h3>
-              <p className="specialty">{artist.specialty}</p>
-              <p className="experience">{artist.experience}</p>
-            </div>
-            <div className="card-footer">
-              <span className="flip-hint">Click for contact info</span>
+              <div className="artist-details">
+                <span className="detail-item">
+                  <i className="far fa-clock"></i> {artist.experience}
+                </span>
+                <span className="detail-item">
+                  <i className="far fa-calendar"></i> {artist.availability}
+                </span>
+              </div>
+              <p className="artist-bio">
+                Specializing in {artist.specialty.toLowerCase()} designs with a focus on 
+                creating unique, personalized artwork for each client.
+              </p>
+              <div className="card-footer">
+                <span className="flip-hint">Click to view contact details</span>
+              </div>
             </div>
           </div>
 
+          {/* Back of card */}
           <div className="artist-card-face artist-card-back">
             <div className="contact-section">
-              <h4>Contact Info</h4>
-              <p className="email">{artist.email}</p>
-              <p className="hours">Available: {artist.availability}</p>
-
+              <h4>Contact Information</h4>
+              <div className="contact-info-group">
+                <p className="email">{artist.email}</p>
+                <p className="hours">Available: {artist.availability}</p>
+              </div>
               <div className="social-links">
                 {artist.socials.instagram && (
                   <a href={`https://instagram.com/${artist.socials.instagram}`}
@@ -104,8 +117,7 @@ const ArtistCard = ({ artist }) => {
                   </a>
                 )}
               </div>
-
-              <Link to={`/artists/${artist.slug}`} className="portfolio-link">
+              <Link to={`/${artist.slug}`} className="portfolio-link">
                 View Full Portfolio
               </Link>
             </div>
@@ -120,8 +132,26 @@ const ArtistCards = () => {
   return (
     <section className="artists-section" id="artists">
       <div className="section-header">
-        <h2>Our Artists</h2>
-        <p>Meet our talented team of professional artists</p>
+        <span className="section-subtitle">Creative Professionals</span>
+        <h2>Meet Our Artists</h2>
+        <p className="section-description">
+          Each artist at our studio brings their own unique style and expertise to every piece they create. 
+          From detailed black and grey work to vibrant color pieces, our team is dedicated to bringing your vision to life.
+        </p>
+      </div>
+      <div className="expertise-badges">
+        <div className="expertise-item">
+          <span className="expertise-number">30+</span>
+          <span className="expertise-label">Years Combined Experience</span>
+        </div>
+        <div className="expertise-item">
+          <span className="expertise-number">3000+</span>
+          <span className="expertise-label">Satisfied Clients</span>
+        </div>
+        <div className="expertise-item">
+          <span className="expertise-number">100%</span>
+          <span className="expertise-label">Custom Designs</span>
+        </div>
       </div>
       <div className="artists-grid">
         {artists.map(artist => (

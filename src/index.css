@@ -21,27 +21,7 @@ p {
 }
 
 /* Buttons */
-button {
-  font-family: inherit;
-  padding: 10px 20px;
-  background-color: #008080;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
 
-
-a {
-  color: #008080;
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-a:hover {
-  color: #00a5a5;
-}
 
 .Spacer {
   height: 80px;

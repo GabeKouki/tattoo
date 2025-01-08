@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { init, send } from '@emailjs/browser';
+import { init } from '@emailjs/browser';
 import { supabase } from '../../Utils/SupabaseClient';
+import { sendEmail } from '../../Utils/EmailUtils';
 import './ArtistPage.css';
 import AudreysPhoto from '../../Images/Audrey.jpeg';
 import { ReactComponent as TwitterIcon } from '../../Images/TwitterIcon.svg';
@@ -132,12 +133,7 @@ const Audrey = () => {
         additional_info: formData.additionalInfo || 'None provided',
       };
   
-      const result = await send(
-        process.env.REACT_APP_AUDREY_EMAILJS_SERVICE_ID,
-        process.env.REACT_APP_AUDREY_APPOINTMENT_REQUEST_TEMPLATE_ID,
-        templateParams,
-        process.env.REACT_APP_AUDREY_EMAILJS_PUBLIC_KEY
-      );
+      const result = await sendEmail(templateParams);
   
       if (result.status === 200) {
         alert('Your inquiry has been sent successfully!');

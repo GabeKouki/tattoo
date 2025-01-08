@@ -9,9 +9,9 @@ if (!supabaseUrl || !supabaseAnonKey || !supabaseServiceRoleKey) {
   console.error('Supabase URL, anon key, or service role key is missing in environment variables.');
 }
 
-console.log('Supabase URL:', supabaseUrl);
-console.log('Anon Key:', supabaseAnonKey);
-console.log('Service Role Key:', supabaseServiceRoleKey ? 'Loaded' : 'Not Loaded');
+// console.log('Supabase URL:', supabaseUrl);
+// console.log('Anon Key:', supabaseAnonKey);
+// console.log('Service Role Key:', supabaseServiceRoleKey ? 'Loaded' : 'Not Loaded');
 
 // Regular client (for general operations)
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
