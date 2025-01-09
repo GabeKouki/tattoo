@@ -15,7 +15,8 @@ import GenerateBookingLink from './Pages/GenerateBookingLink';
 import BookAppointment from './Pages/BookAppointment';
 import Navbar from './Components/Navbar/Navbar';
 import Test from './Components/Test';
-
+import { SessionProvider } from './Context/SessionContext';
+import ProtectedRoute from './Context/ProtectedRoute';
 
 function App() {
   return (
@@ -36,7 +37,13 @@ function App() {
         <Route path="/login" element={<Login />} />
 
         {/* Protected Routes */}
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard" element={
+            <SessionProvider>
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          </SessionProvider>
+          } />
         <Route
           path="/generate-booking-link/:artistId/:clientEmail"
           element={<GenerateBookingLink />}
