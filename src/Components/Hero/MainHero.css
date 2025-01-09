@@ -17,10 +17,6 @@
   z-index: 0;
 }
 
-video {
-  controls: none;
-  pointer-events: none; /* Optional: Prevent user interaction with the video */
-}
 
 .BackgroundGif {
   width: 100%;
@@ -32,7 +28,6 @@ video {
   filter: blur(3px) brightness(0.7);
   pointer-events: none;
   filter: grayscale(1);
-  
 }
 
 .GifOverlay {

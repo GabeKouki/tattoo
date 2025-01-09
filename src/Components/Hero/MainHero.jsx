@@ -21,7 +21,7 @@ const MainHero = () => {
           autoPlay
           playsInline
           loop
-          src="path/to/video.mp4"
+          src={inkGif}
           className="BackgroundGif"
           preload="auto"
         />
