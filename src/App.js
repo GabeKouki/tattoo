@@ -34,16 +34,21 @@ function App() {
         <Route path="/aftercare" element={<Aftercare />} />
         <Route path="/faq" element={<FAQ />} />
         <Route path="/policies" element={<Policies />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={
+
+          <SessionProvider>
+            <Login />
+          </SessionProvider>
+        } />
 
         {/* Protected Routes */}
         <Route path="/dashboard" element={
-            <SessionProvider>
+          <SessionProvider>
             <ProtectedRoute>
               <Dashboard />
             </ProtectedRoute>
           </SessionProvider>
-          } />
+        } />
         <Route
           path="/generate-booking-link/:artistId/:clientEmail"
           element={<GenerateBookingLink />}

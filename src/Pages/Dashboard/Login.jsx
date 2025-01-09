@@ -6,6 +6,7 @@ import './Login.css'
 
 
 const Login = () => {
+  console.log('Session:');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
