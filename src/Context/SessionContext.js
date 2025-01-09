@@ -33,7 +33,7 @@ export const SessionProvider = ({ children }) => {
     const { data: subscription } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
       if (!session) {
-        navigate('/'); // Redirect to login when session changes to null
+        navigate('/login'); // Redirect to login when session changes to null
       }
     });
 
