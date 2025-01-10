@@ -71,8 +71,8 @@ const Contact = () => {
             <div className="BusinessInfo">
               <div className="InfoItem">
                 <h3>Location</h3>
-                <p>122 Washington Street</p>
-                <p>Providence, RI 02895</p>
+                <p>730 US-24</p>
+                <p>Woodland Park, CO 80863</p>
               </div>
               <div className="InfoItem">
                 <h3>Phone</h3>
