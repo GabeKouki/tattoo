@@ -7,18 +7,21 @@ import ChristinasPhoto from '../../Images/Christina.jpg';
 import { ReactComponent as TwitterIcon } from '../../Images/TwitterIcon.svg';
 import { ReactComponent as InstagramIcon } from '../../Images/InstagramIcon.svg';
 import { ReactComponent as FacebookIcon } from '../../Images/FacebookIcon.svg';
-import Audrey1 from '../../Images/Audrey1.jpeg';
-import Audrey2 from '../../Images/Audrey2.jpeg';
-import Audrey3 from '../../Images/Audrey3.jpeg';
-import Audrey4 from '../../Images/Audrey4.jpeg';
-import Audrey5 from '../../Images/Audrey5.jpeg';
-import Audrey6 from '../../Images/Audrey6.jpeg';
-import Audrey7 from '../../Images/Audrey7.jpeg';
-import Audrey8 from '../../Images/Audrey8.jpeg';
-import Audrey9 from '../../Images/Audrey9.jpeg';
-import Audrey10 from '../../Images/Audrey10.jpeg';
-import Audrey11 from '../../Images/Audrey11.jpeg';
-import Audrey12 from '../../Images/Audrey12.jpeg';
+import Christina1 from '../../Images/Christina1.jpg';
+import Christina2 from '../../Images/Christina2.jpg';
+import Christina3 from '../../Images/Christina3.jpg';
+import Christina4 from '../../Images/Christina4.jpg';
+import Christina5 from '../../Images/Christina5.jpg';
+import Christina6 from '../../Images/Christina6.jpg';
+import Christina7 from '../../Images/Christina7.jpg';
+import Christina8 from '../../Images/Christina8.jpg';
+import Christina9 from '../../Images/Christina9.jpg';
+import Christina10 from '../../Images/Christina10.jpg';
+import Christina11 from '../../Images/Christina11.jpg';
+import Christina12 from '../../Images/Christina12.jpg';
+import Christina13 from '../../Images/Christina13.jpg';
+import Christina14 from '../../Images/Christina14.jpg';
+import Christina15 from '../../Images/Christina15.jpg';
 
 const Christina = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -29,7 +32,7 @@ const Christina = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    init(process.env.REACT_APP_AUDREY_EMAILJS_PUBLIC_KEY);
+    init(process.env.REACT_APP_CHRISTINA_EMAILJS_PUBLIC_KEY);
   }, []);
 
   const [formData, setFormData] = useState({
@@ -133,7 +136,7 @@ const Christina = () => {
         additional_info: formData.additionalInfo || 'None provided',
       };
   
-      const result = await sendEmail(templateParams);
+      const result = await sendEmail(templateParams, ('Christina'));
   
       if (result.status === 200) {
         alert('Your inquiry has been sent successfully!');
@@ -160,18 +163,21 @@ const Christina = () => {
   const categories = ['all', 'fine line', 'realism', 'color'];
 
   const workExamples = [
-    { id: 1, image: Audrey1, category: 'realism' },
-    { id: 2, image: Audrey2, category: 'fine line' },
-    { id: 3, image: Audrey3, category: 'realism' },
-    { id: 4, image: Audrey4, category: 'realism' },
-    { id: 5, image: Audrey5, category: 'fine line' },
-    { id: 6, image: Audrey6, category: 'realism' },
-    { id: 7, image: Audrey7, category: 'realism' },
-    { id: 8, image: Audrey8, category: 'color' },
-    { id: 9, image: Audrey9, category: 'realism' },
-    { id: 10, image: Audrey10, category: 'fine line' },
-    { id: 11, image: Audrey11, category: 'fine line' },
-    { id: 12, image: Audrey12, category: 'realism' },
+    { id: 1, image: Christina1, category: 'realism' },
+    { id: 2, image: Christina2, category: 'fine line' },
+    { id: 3, image: Christina3, category: 'realism' },
+    { id: 4, image: Christina4, category: 'realism' },
+    { id: 5, image: Christina5, category: 'fine line' },
+    { id: 6, image: Christina6, category: 'realism' },
+    { id: 7, image: Christina7, category: 'realism' },
+    { id: 8, image: Christina8, category: 'color' },
+    { id: 9, image: Christina9, category: 'realism' },
+    { id: 10, image: Christina10, category: 'fine line' },
+    { id: 11, image: Christina11, category: 'fine line' },
+    { id: 12, image: Christina12, category: 'realism' },
+    { id: 13, image: Christina13, category: 'realism' },
+    { id: 14, image: Christina14, category: 'realism' },
+    { id: 15, image: Christina15, category: 'realism' },
   ];
 
   return (

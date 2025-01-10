@@ -46,6 +46,8 @@
 }
 
 .TestimonialItem {
+  margin-top: 50px;
+  padding: 20px;
   min-width: 700px; /* Match track width */
   width: 700px; /* Explicit width */
   flex-shrink: 0; /* Prevent shrinking */
@@ -106,6 +108,7 @@
   justify-content: center;
   gap: 10px;
   margin-top: 20px;
+  padding-bottom: 40px;
 }
 
 .Dot {

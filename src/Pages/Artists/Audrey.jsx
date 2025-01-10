@@ -133,7 +133,7 @@ const Audrey = () => {
         additional_info: formData.additionalInfo || 'None provided',
       };
   
-      const result = await sendEmail(templateParams);
+      const result = await sendEmail(templateParams, ('Audrey'));
   
       if (result.status === 200) {
         alert('Your inquiry has been sent successfully!');

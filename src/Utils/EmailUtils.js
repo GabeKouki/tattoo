@@ -1,10 +1,30 @@
 import emailjs from '@emailjs/browser';
 
-export const sendEmail = async (templateParams) => {
+export const sendEmail = async (templateParams, artistID) => {
+  let serviceId;
+  let templateId;
+  let publicKey;
+  
   try {
-    const serviceId = process.env.REACT_APP_AUDREY_EMAILJS_SERVICE_ID;
-    const templateId = process.env.REACT_APP_AUDREY_APPOINTMENT_REQUEST_TEMPLATE_ID;
-    const publicKey = process.env.REACT_APP_AUDREY_EMAILJS_PUBLIC_KEY;
+    switch(artistID) {
+      case 'Audrey':
+        serviceId = process.env.REACT_APP_AUDREY_EMAILJS_SERVICE_ID;
+        templateId = process.env.REACT_APP_AUDREY_APPOINTMENT_REQUEST_TEMPLATE_ID;
+        publicKey = process.env.REACT_APP_AUDREY_EMAILJS_PUBLIC_KEY;
+        break;
+      case 'Shiloh':
+        serviceId = process.env.REACT_APP_SHILOH_EMAILJS_SERVICE_ID;
+        templateId = process.env.REACT_APP_SHILOH_APPOINTMENT_REQUEST_TEMPLATE_ID;
+        publicKey = process.env.REACT_APP_SHILOH_EMAILJS_PUBLIC_KEY;
+        break;
+      case 'Christina':
+        serviceId = process.env.REACT_APP_CHRISTINA_EMAILJS_SERVICE_ID;
+        templateId = process.env.REACT_APP_CHRISTINA_APPOINTMENT_REQUEST_TEMPLATE_ID;
+        publicKey = process.env.REACT_APP_CHRISTINA_EMAILJS_PUBLIC_KEY;
+        break;
+      default:
+        throw new Error('Invalid artist ID');
+    }
 
     const response = await emailjs.send(
       serviceId,

@@ -288,6 +288,30 @@
   animation: pulse 2s infinite;
 }
 
+.ButtonContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+  position: relative;
+}
+
+.CTAButton {
+  background: linear-gradient(45deg, #008080, #009999);
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.CTAButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 128, 128, 0.3);
+}
+
 @keyframes pulse {
   0% { opacity: 0.4; }
   50% { opacity: 0.8; }

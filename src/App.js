@@ -17,6 +17,8 @@ import Navbar from './Components/Navbar/Navbar';
 import Test from './Components/Test';
 import { SessionProvider } from './Context/SessionContext';
 import ProtectedRoute from './Context/ProtectedRoute';
+import Gallery from './Pages/Gallery/Gallery';
+import Shiloh from './Pages/Artists/Shiloh';
 
 function App() {
   return (
@@ -27,13 +29,14 @@ function App() {
         {/* Public Routes */}
 
         <Route path="/" element={<Home />} />
-        <Route path="/artists/Christina" element={<Christina />} />
+        <Route path="/Shiloh" element={<Shiloh />} />
         <Route path="/Audrey" element={<Audrey />} />
         <Route path="/Christina" element={<Christina />} />
         <Route path="/booking" element={<Booking />} />
         <Route path="/aftercare" element={<Aftercare />} />
         <Route path="/faq" element={<FAQ />} />
         <Route path="/policies" element={<Policies />} />
+        <Route path="/gallery" element={<Gallery />} />
         <Route path="/login" element={
 
           <SessionProvider>

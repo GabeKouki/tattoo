@@ -69,7 +69,7 @@ const Navbar = () => {
                 <li><Link to="/Christina" className="DropdownLink">Christina</Link></li>
               </ul>
             </li>
-            <li><button onClick={() => scrollToSection('gallery')} className="NavLink">Gallery</button></li>
+            <li><Link to="/gallery" className="NavLink">Gallery</Link></li>
 
 
             {/* Separate pages */}

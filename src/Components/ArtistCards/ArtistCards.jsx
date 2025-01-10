@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { FaInstagram, FaFacebook } from 'react-icons/fa';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXTwitter } from '@fortawesome/free-brands-svg-icons';
+import { useNavigate } from 'react-router-dom';
 import './ArtistCards.css';
 import AudreyJenkins from '../../Images/Audrey.jpeg';
 import ShilohHix from '../../Images/Shiloh.jpg';
@@ -57,6 +58,7 @@ const artists = [
 
 const ArtistCard = ({ artist }) => {
   const [isFlipped, setIsFlipped] = useState(false);
+
 
   return (
     <div className="artist-card-container">
@@ -133,7 +135,10 @@ const ArtistCard = ({ artist }) => {
   );
 };
 
+
 const ArtistCards = () => {
+
+  const navigate = useNavigate();
   return (
     <section className="artists-section" id="artists">
       <div className="section-header">
@@ -161,6 +166,9 @@ const ArtistCards = () => {
         {artists.map(artist => (
           <ArtistCard key={artist.id} artist={artist} />
         ))}
+      </div>
+      <div className="ButtonContainer">
+        <button className="CTAButton" onClick={() => navigate('/gallery')}>View Full Gallery</button>
       </div>
     </section>
   );
