@@ -1,6 +1,6 @@
 .TestimonialsSection {
   height: 350px;
-  background-color: #121212;
+  background-color: #222;
   position: relative;
   display: flex;
   align-items: center;
@@ -21,7 +21,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 200px;
-  color: rgba(0, 128, 128, 0.05);
+  color: #5c5c5c;
   z-index: 0;
 }
 
@@ -72,7 +72,7 @@
 }
 
 .Author {
-  color: #008080;
+  color: white;
   font-size: 1.1rem;
   font-weight: 600;
 }
@@ -85,8 +85,8 @@
 .NavButton {
   background: transparent;
   border: none;
-  color: #008080;
-  font-size: 2rem;
+  color: white;
+  font-size: 2.5rem;
   cursor: pointer;
   transition: all 0.3s ease;
   padding: 10px;
@@ -97,7 +97,7 @@
 }
 
 .NavButton:hover {
-  color: #009999;
+  color: #ccc;
   transform: scale(1.1);
 }
 
@@ -109,15 +109,15 @@
 }
 
 .Dot {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
-  background-color: rgba(0, 128, 128, 0.3);
+  background-color: rgba(255, 255, 255, 0.3);
   transition: all 0.3s ease;
 }
 
 .Dot.active {
-  background-color: #008080;
+  background-color: white;
   transform: scale(1.2);
 }
 
@@ -142,6 +142,10 @@
 
   .QuoteIcon {
     font-size: 150px;
+  }
+
+  .NavButton {
+    font-size: 2rem;
   }
 }
 

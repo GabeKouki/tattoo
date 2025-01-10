@@ -52,7 +52,7 @@ const Navbar = () => {
       <div className="NavbarContainer">
         <div className="LogoContainer">
           <Link to="/" className="LogoLink">
-          {/* //TODO: replace with real logo */}
+            {/* //TODO: replace with real logo */}
             <Logo className="NavbarLogo" onClick={() => scrollToSection('home')} />
             {/* <h1 className='NavText'>Above The Clouds</h1> */}
           </Link>
@@ -64,17 +64,17 @@ const Navbar = () => {
             <li className="NavDropdown">
               <button onClick={() => scrollToSection('artists')} className="NavLink">Artists ▾</button>
               <ul className="DropdownContent">
-                <li><Link to="/artists/Audrey" className="DropdownLink">Audrey</Link></li>
-                <li><Link to="/artists/Shiloh" className="DropdownLink">Shiloh</Link></li>
-                <li><Link to="/artists/Christina" className="DropdownLink">Christina</Link></li>
+                <li><Link to="/Shiloh" className="DropdownLink">Shiloh</Link></li>
+                <li><Link to="/Audrey" className="DropdownLink">Audrey</Link></li>
+                <li><Link to="/Christina" className="DropdownLink">Christina</Link></li>
               </ul>
             </li>
             <li><button onClick={() => scrollToSection('gallery')} className="NavLink">Gallery</button></li>
-            
+
 
             {/* Separate pages */}
             <li><Link to="/booking" className="NavLink">Book Now</Link></li>
-            
+
             {/* Info Dropdown */}
             <li className="NavDropdown">
               <span className="NavLink">Info ▾</span>
@@ -90,9 +90,9 @@ const Navbar = () => {
         </div>
         <div className="SocialLinksContainer">
           <ul className="SocialLinks">
-            <li><a href="https://twitter.com" target="_blank" rel="noreferrer noopener"><TwitterIcon className="SocialIcon" /></a></li>
-            <li><a href="https://instagram.com" target="_blank" rel="noreferrer noopener"><InstagramIcon className="SocialIcon" /></a></li>
-            <li><a href="https://facebook.com" target="_blank" rel="noreferrer noopener"><FacebookIcon className="SocialIcon" /></a></li>
+            {/* <li><a href="https://twitter.com" target="_blank" rel="noreferrer noopener"><TwitterIcon className="SocialIcon" /></a></li> */}
+            <li><a href="https://www.instagram.com/explore/locations/360026639/above-the-clouds-tattoo/" target="_blank" rel="noreferrer noopener"><InstagramIcon className="SocialIcon" /></a></li>
+            <li><a href="https://www.facebook.com/AboveTheCloudsTattoo" target="_blank" rel="noreferrer noopener"><FacebookIcon className="SocialIcon" /></a></li>
           </ul>
           <button
             className={`HamburgerButton ${isOpen ? 'Open' : ''}`}

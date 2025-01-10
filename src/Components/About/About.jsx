@@ -1,14 +1,20 @@
 import React from 'react';
 import './About.css';
+import { useNavigate } from 'react-router-dom';
 
 const About = () => {
-
+  const navigate = useNavigate();
   const scrollToArtists = () => {
     const artistSection = document.getElementById('artists');
     if (artistSection) {
       artistSection.scrollIntoView({ behavior: 'smooth' });
     }
   };
+
+  const handleNavigate = () => {
+
+    navigate('/gallery');
+  }
   return (
     <section id="about" className="AboutSection">
       <div className="AboutContainer">
@@ -63,7 +69,8 @@ const About = () => {
         </div>
 
         <div className="AboutCTA">
-          <button className="CTAButton Secondary" onClick={scrollToArtists}>View Our Artists</button>
+          <button className="CTAButton Secondary" onClick={scrollToArtists}>Meet Our Artists</button>
+          <button className="CTAButton Secondary" onClick={handleNavigate}>View Our Work</button>
         </div>
       </div>
     </section>

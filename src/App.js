@@ -51,7 +51,14 @@ function App() {
         } />
         <Route
           path="/generate-booking-link/:artistId/:clientEmail"
-          element={<GenerateBookingLink />}
+          element={
+
+            <SessionProvider>
+              <ProtectedRoute>
+                <GenerateBookingLink />
+              </ProtectedRoute>
+            </SessionProvider>
+          }
         />
         <Route path="/book-appointment/:token" element={<BookAppointment />} />
 

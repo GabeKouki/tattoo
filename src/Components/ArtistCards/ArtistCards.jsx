@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FaInstagram, FaTwitter, FaFacebook } from 'react-icons/fa';
+import { FaInstagram, FaFacebook } from 'react-icons/fa';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faXTwitter } from '@fortawesome/free-brands-svg-icons';
 import './ArtistCards.css';
 import AudreyJenkins from '../../Images/Audrey.jpeg';
 import ShilohHix from '../../Images/Shiloh.jpg';
@@ -9,10 +11,25 @@ import Christina from '../../Images/Christina.jpg';
 const artists = [
   {
     id: 1,
+    name: "Shiloh Hix",
+    specialty: "Realism",
+    image: ShilohHix,
+    email: "tattoos.by.shiloh@gmail.com",
+    experience: "10 years",
+    availability: "Mon-Fri",
+    slug: "Shiloh",
+    socials: {
+      instagram: "shiloh_tattoos",
+      twitter: "shiloh_ink",
+      facebook: "shilohsmith.tattoo"
+    }
+  },
+  {
+    id: 2,
     name: "Audrey Jenkins",
     specialty: "Black & Grey Realism",
     image: AudreyJenkins,
-    email: "jane@studio.com",
+    email: "tattoos.by.audrey@gmail.com",
     experience: "8 years",
     availability: "Mon-Fri",
     slug: "Audrey",
@@ -23,11 +40,11 @@ const artists = [
     }
   },
   {
-    id: 2,
+    id: 3,
     name: "Christina",
     specialty: "Color",
     image: Christina,
-    email: "christina@studio.com",
+    email: "tattoos.by.christina@gmail.com",
     experience: "12 years",
     availability: "Tue-Sat",
     slug: "Christina",
@@ -36,21 +53,6 @@ const artists = [
       facebook: "christinasmith.tattoo"
     }
   },
-  {
-    id: 3,
-    name: "Shiloh Hix",
-    specialty: "Realism",
-    image: ShilohHix,
-    email: "shiloh@studio.com",
-    experience: "10 years",
-    availability: "Mon-Fri",
-    slug: "Shiloh",
-    socials: {
-      instagram: "shiloh_tattoos",
-      twitter: "shiloh_ink",
-      facebook: "shilohsmith.tattoo"
-    }
-  }
 ];
 
 const ArtistCard = ({ artist }) => {
@@ -81,7 +83,7 @@ const ArtistCard = ({ artist }) => {
                 creating unique, personalized artwork for each client.
               </p>
               <div className="card-footer">
-                <span className="flip-hint">Click to view contact details</span>
+                <span className="flip-hint">Click to reverse</span>
               </div>
             </div>
           </div>
@@ -89,12 +91,14 @@ const ArtistCard = ({ artist }) => {
           {/* Back of card */}
           <div className="artist-card-face artist-card-back">
             <div className="contact-section">
-              <h4>Contact Information</h4>
+              <h4>Contact</h4>
               <div className="contact-info-group">
                 <p className="email">{artist.email}</p>
                 <p className="hours">Available: {artist.availability}</p>
               </div>
+              <h4>Socials</h4>
               <div className="social-links">
+ 
                 {artist.socials.instagram && (
                   <a href={`https://instagram.com/${artist.socials.instagram}`}
                     target="_blank"
@@ -106,7 +110,8 @@ const ArtistCard = ({ artist }) => {
                   <a href={`https://twitter.com/${artist.socials.twitter}`}
                     target="_blank"
                     rel="noopener noreferrer">
-                    <FaTwitter />
+                    {/* <FaXTwitter /> */}
+                    <FontAwesomeIcon icon={faXTwitter} />
                   </a>
                 )}
                 {artist.socials.facebook && (
@@ -132,7 +137,6 @@ const ArtistCards = () => {
   return (
     <section className="artists-section" id="artists">
       <div className="section-header">
-        <span className="section-subtitle">Creative Professionals</span>
         <h2>Meet Our Artists</h2>
         <p className="section-description">
           Each artist at our studio brings their own unique style and expertise to every piece they create. 
