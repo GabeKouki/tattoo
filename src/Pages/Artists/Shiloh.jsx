@@ -66,7 +66,7 @@ const Shiloh = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-  
+
     try {
       // Step 1: Get artist_id from the database
       const { data: artistData, error: artistError } = await supabase
@@ -74,38 +74,38 @@ const Shiloh = () => {
         .select('id')
         .eq('email', 'tattoos.by.shiloh@gmail.com') // Ensure email matches the one in your database
         .single();
-  
+
       if (artistError || !artistData) {
         throw new Error('Failed to fetch artist ID.');
       }
-  
+
       const artistId = artistData.id;
-  
+
       // Step 2: Upload images to Supabase Storage
       let supabaseImageUrls = [];
       if (formData.references) {
         const files = Array.from(formData.references);
         const maxFiles = 3;
         const filesToProcess = files.slice(0, maxFiles);
-  
+
         for (const file of filesToProcess) {
           const fileExt = file.name.split('.').pop();
           const fileName = `${Math.random()}.${fileExt}`;
-  
+
           const { data, error } = await supabase.storage
             .from('tattoo-references')
             .upload(fileName, file);
-  
+
           if (error) throw error;
-  
+
           const { data: publicUrlData } = supabase.storage
             .from('tattoo-references')
             .getPublicUrl(fileName);
-  
+
           supabaseImageUrls.push(publicUrlData.publicUrl);
         }
       }
-  
+
       // Step 3: Save inquiry to Supabase database
       const { error: dbError } = await supabase.from('inquiries').insert([
         {
@@ -121,9 +121,9 @@ const Shiloh = () => {
           status: 'pending',
         },
       ]);
-  
+
       if (dbError) throw dbError;
-  
+
       // Step 4: Send email with EmailJS (without images)
       const templateParams = {
         from_name: formData.name,
@@ -134,9 +134,9 @@ const Shiloh = () => {
         placement: formData.placement,
         additional_info: formData.additionalInfo || 'None provided',
       };
-  
+
       const result = await sendEmail(templateParams, ('Shiloh'));
-  
+
       if (result.status === 200) {
         alert('Your inquiry has been sent successfully!');
         setFormData({
@@ -217,9 +217,8 @@ const Shiloh = () => {
           {categories.map((category) => (
             <button
               key={category}
-              className={`FilterButton ${
-                selectedCategory === category ? 'active' : ''
-              }`}
+              className={`FilterButton ${selectedCategory === category ? 'active' : ''
+                }`}
               onClick={() => setSelectedCategory(category)}
             >
               {category}
@@ -247,117 +246,128 @@ const Shiloh = () => {
           </button>
         )}
         <dialog ref={dialogRef} className="BookingDialog">
-          <h3>Important Information About Booking</h3>
+          <h3>Booking Process Overview</h3>
           <div className="DialogContent">
-            <p>Fill out the form to start your booking process.</p>
+            <p>
+              Here's what happens when you request an appointment:
+            </p>
+            <ol>
+              <li>Create an inquiry using the form below with details about your tattoo.</li>
+              <li>We’ll review your submission and send you a personalized booking link.</li>
+              <li>Use the link to select your preferred date and time.</li>
+              <li>Your appointment will be confirmed after approval and payment of a deposit.</li>
+            </ol>
+            <p>
+              Feel free to reach out with any questions during the process!
+            </p>
           </div>
           <button className="DialogButton" onClick={handleDialogClose}>
             I Understand & Agree
           </button>
         </dialog>
         {showForm && (
-  <form className="InquiryForm" onSubmit={handleFormSubmit}>
-    <div className="FormGroup">
-      <label htmlFor="name">Full Name *</label>
-      <input
-        type="text"
-        id="name"
-        name="name"
-        required
-        value={formData.name}
-        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-      />
-    </div>
-    <div className="FormGroup">
-      <label htmlFor="email">Email *</label>
-      <input
-        type="email"
-        id="email"
-        name="email"
-        required
-        value={formData.email}
-        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-      />
-    </div>
-    <div className="FormGroup">
-      <label htmlFor="phone">Phone Number</label>
-      <input
-        type="tel"
-        id="phone"
-        name="phone"
-        value={formData.phone}
-        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-      />
-    </div>
-    <div className="FormGroup">
-      <label htmlFor="tattooDescription">Tattoo Description *</label>
-      <textarea
-        id="tattooDescription"
-        name="tattoo_description"
-        required
-        value={formData.tattooDescription}
-        onChange={(e) =>
-          setFormData({ ...formData, tattooDescription: e.target.value })
-        }
-      />
-    </div>
-    <div className="FormGroup">
-      <label htmlFor="size">Approximate Size *</label>
-      <input
-        type="text"
-        id="size"
-        name="size"
-        required
-        value={formData.size}
-        onChange={(e) => setFormData({ ...formData, size: e.target.value })}
-      />
-    </div>
-    <div className="FormGroup">
-      <label htmlFor="placement">Placement on Body *</label>
-      <input
-        type="text"
-        id="placement"
-        name="placement"
-        required
-        value={formData.placement}
-        onChange={(e) => setFormData({ ...formData, placement: e.target.value })}
-      />
-    </div>
-    <div className="FormGroup">
-      <label htmlFor="references">Reference Images (Max 3)</label>
-      <input
-        type="file"
-        id="references"
-        name="references"
-        multiple
-        accept="image/*"
-        onChange={(e) => {
-          const files = e.target.files;
-          if (files && files.length > 3) {
-            alert('Please select a maximum of 3 images');
-            e.target.value = '';
-            return;
-          }
-          setFormData({ ...formData, references: files });
-        }}
-      />
-    </div>
-    <div className="FormGroup">
-      <label htmlFor="additionalInfo">Additional Information</label>
-      <textarea
-        id="additionalInfo"
-        name="additional_info"
-        value={formData.additionalInfo}
-        onChange={(e) =>
-          setFormData({ ...formData, additionalInfo: e.target.value })
-        }
-      />
-    </div>
-    <button type="submit" className="SubmitButton" disabled={isSubmitting}>
-      {isSubmitting ? 'Sending...' : 'Submit Inquiry'}
-    </button>
-  </form>
-)}
+          <form className="InquiryForm" onSubmit={handleFormSubmit}>
+            <div className="FormGroup">
+              <label htmlFor="name">Full Name *</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              />
+            </div>
+            <div className="FormGroup">
+              <label htmlFor="email">Email *</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              />
+            </div>
+            <div className="FormGroup">
+              <label htmlFor="phone">Phone Number</label>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                value={formData.phone}
+                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+              />
+            </div>
+            <div className="FormGroup">
+              <label htmlFor="tattooDescription">Tattoo Description *</label>
+              <textarea
+                id="tattooDescription"
+                name="tattoo_description"
+                required
+                value={formData.tattooDescription}
+                onChange={(e) =>
+                  setFormData({ ...formData, tattooDescription: e.target.value })
+                }
+              />
+            </div>
+            <div className="FormGroup">
+              <label htmlFor="size">Approximate Size *</label>
+              <input
+                type="text"
+                id="size"
+                name="size"
+                required
+                value={formData.size}
+                onChange={(e) => setFormData({ ...formData, size: e.target.value })}
+              />
+            </div>
+            <div className="FormGroup">
+              <label htmlFor="placement">Placement on Body *</label>
+              <input
+                type="text"
+                id="placement"
+                name="placement"
+                required
+                value={formData.placement}
+                onChange={(e) => setFormData({ ...formData, placement: e.target.value })}
+              />
+            </div>
+            <div className="FormGroup">
+              <label htmlFor="references">Reference Images (Max 3)</label>
+              <input
+                type="file"
+                id="references"
+                name="references"
+                multiple
+                accept="image/*"
+                onChange={(e) => {
+                  const files = e.target.files;
+                  if (files && files.length > 3) {
+                    alert('Please select a maximum of 3 images');
+                    e.target.value = '';
+                    return;
+                  }
+                  setFormData({ ...formData, references: files });
+                }}
+              />
+            </div>
+            <div className="FormGroup">
+              <label htmlFor="additionalInfo">Additional Information</label>
+              <textarea
+                id="additionalInfo"
+                name="additional_info"
+                value={formData.additionalInfo}
+                onChange={(e) =>
+                  setFormData({ ...formData, additionalInfo: e.target.value })
+                }
+              />
+            </div>
+            <button type="submit" className="SubmitButton" disabled={isSubmitting}>
+              {isSubmitting ? 'Sending...' : 'Submit Inquiry'}
+            </button>
+          </form>
+        )}
       </section>
     </div>
   );

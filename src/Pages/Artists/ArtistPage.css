@@ -160,76 +160,7 @@
   box-shadow: 0 4px 15px rgba(0, 128, 128, 0.3);
 }
 
-.InquiryForm {
-  max-width: 600px;
-  margin: 40px auto 0;
-  padding: 30px;
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 8px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  align-items: center;
-  justify-content: center;
-}
-
-.FormGroup {
-  margin-bottom: 20px;
-}
-
-.FormGroup label {
-  display: block;
-  color: #cecece;
-  margin-bottom: 8px;
-  font-size: 0.9rem;
-}
-
-.FormGroup input,
-.FormGroup textarea {
-  width: 100%;
-  padding: 12px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(0, 128, 128, 0.3);
-  border-radius: 4px;
-  color: white;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-}
-
-.FormGroup input[type="file"] {
-  padding: 8px;
-}
-
-.FormGroup textarea {
-  min-height: 100px;
-  resize: vertical;
-}
-
-.FormGroup input:focus,
-.FormGroup textarea:focus {
-  outline: none;
-  border-color: #008080;
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.SubmitButton {
-  width: 100%;
-  padding: 15px;
-  background: linear-gradient(45deg, #008080, #009999);
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-top: 20px;
-}
-
-.SubmitButton:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(0, 128, 128, 0.3);
-}
-
+/* Booking Dialog Updates */
 .BookingDialog {
   max-width: 600px;
   width: 90%;
@@ -249,35 +180,19 @@
 .BookingDialog h3 {
   color: #008080;
   font-size: 1.8rem;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
   text-align: center;
 }
 
-.DialogContent {
-  margin-bottom: 30px;
-}
-
-.DialogContent h4 {
-  color: #008080;
-  font-size: 1.2rem;
-  margin: 20px 0 10px;
-}
-
-.DialogContent ol,
-.DialogContent ul {
-  margin: 10px 0;
+.DialogContent ol {
   padding-left: 20px;
-}
-
-.DialogContent li {
-  color: #cecece;
-  margin: 8px 0;
-  line-height: 1.4;
-}
-
-.DialogContent p {
+  margin-top: 20px;
   color: #cecece;
   line-height: 1.6;
+}
+
+.DialogContent ol li {
+  margin-bottom: 10px;
 }
 
 .DialogButton {
@@ -299,21 +214,75 @@
   box-shadow: 0 4px 15px rgba(0, 128, 128, 0.3);
 }
 
-
-@media (max-width: 480px) {
-  .BookingDialog {
-    padding: 20px;
-  }
-
-  .BookingDialog h3 {
-    font-size: 1.5rem;
-  }
-
-  .DialogContent h4 {
-    font-size: 1.1rem;
-  }
+/* Inquiry Form Styling Updates */
+.InquiryForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 600px;
+  margin: 40px auto 0;
+  padding: 30px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
+.FormGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.FormGroup label {
+  margin-bottom: 5px;
+  color: #cecece;
+  font-size: 1rem;
+}
+
+.FormGroup input,
+.FormGroup textarea {
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(0, 128, 128, 0.3);
+  border-radius: 4px;
+  color: white;
+}
+
+.FormGroup input[type="file"] {
+  padding: 8px;
+}
+
+.FormGroup textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.FormGroup input:focus,
+.FormGroup textarea:focus {
+  border-color: #008080;
+}
+
+/* Submit Button */
+.SubmitButton {
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(45deg, #008080, #009999);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 20px;
+}
+
+.SubmitButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 128, 128, 0.3);
+}
+
+/* Media Queries */
 @media (max-width: 992px) {
   .ArtistProfile {
     flex-direction: column;
@@ -366,5 +335,13 @@
   .FilterButton {
     padding: 6px 15px;
     font-size: 0.8rem;
+  }
+
+  .BookingDialog h3 {
+    font-size: 1.5rem;
+  }
+
+  .DialogButton {
+    font-size: 0.9rem;
   }
 }
