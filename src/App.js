@@ -19,15 +19,15 @@ import { SessionProvider } from './Context/SessionContext';
 import ProtectedRoute from './Context/ProtectedRoute';
 import Gallery from './Pages/Gallery/Gallery';
 import Shiloh from './Pages/Artists/Shiloh';
+import ManageAccount from './Components/ManageAccount/ManageAccount';
+import ManageEmployees from './Pages/ManageEmployees/ManageEmployees';
 
 function App() {
   return (
     <div className="App">
-      {/* Define the routes for the application */}
       <Navbar />
       <Routes>
         {/* Public Routes */}
-
         <Route path="/" element={<Home />} />
         <Route path="/Shiloh" element={<Shiloh />} />
         <Route path="/Audrey" element={<Audrey />} />
@@ -37,8 +37,9 @@ function App() {
         <Route path="/faq" element={<FAQ />} />
         <Route path="/policies" element={<Policies />} />
         <Route path="/gallery" element={<Gallery />} />
-        <Route path="/login" element={
+        <Route path="/book-appointment/:token" element={<BookAppointment />} />
 
+        <Route path="/login" element={
           <SessionProvider>
             <Login />
           </SessionProvider>
@@ -52,10 +53,10 @@ function App() {
             </ProtectedRoute>
           </SessionProvider>
         } />
+         
         <Route
           path="/generate-booking-link/:artistId/:clientEmail"
           element={
-
             <SessionProvider>
               <ProtectedRoute>
                 <GenerateBookingLink />
@@ -63,9 +64,23 @@ function App() {
             </SessionProvider>
           }
         />
-        <Route path="/book-appointment/:token" element={<BookAppointment />} />
 
-        <Route path="/test" element={<Test />} />
+        <Route path="/manage-account" element={
+          <SessionProvider>
+            <ProtectedRoute>
+              <ManageAccount />
+            </ProtectedRoute>
+          </SessionProvider>
+        }/>
+
+        <Route path="/manage-employees" element={
+          <SessionProvider>
+            <ProtectedRoute>
+              <ManageEmployees />
+            </ProtectedRoute>
+          </SessionProvider>
+        } />
+
         {/* Catch-all route for undefined paths */}
         <Route path="*" element={<NotFound />} />
       </Routes>

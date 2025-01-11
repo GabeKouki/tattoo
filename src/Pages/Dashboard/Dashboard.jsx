@@ -239,14 +239,32 @@ const Dashboard = () => {
     });
   };
 
-  const handleTest = async (inquiry) => {
-    // console.log('Test function called');
-    // console.log('Session:', session);
-    // console.log('User:', session.user.id)
-    // console.log('User:', session?.user.user_metadata.name);
-    // console.log('Role:', session.user.app_metadata.role);
-    console.log('Inquiry:', inquiry.client_email)
-  }
+  const handleTest = async () => {
+    try {
+      // Query the `users` table to fetch the name based on the session user ID
+      const { data, error } = await supabase
+        .from('users')
+        .select('name') // Select only the 'name' column for efficiency
+        .eq('id', session.user.id)
+        .single(); // Ensure it returns a single result
+  
+      if (error) {
+        throw new Error('Failed to fetch user name.');
+      }
+  
+      console.log('Fetched User Name:', data.name); // Log the fetched name
+    } catch (err) {
+      console.error('Error fetching user data:', err);
+      alert('Failed to fetch user data.');
+    }
+  
+    // Debugging session data
+    console.log('Test function called');
+    console.log('Session:', session);
+    console.log('User ID:', session.user.id);
+    console.log('User Name:', session?.user.user_metadata);
+    console.log('User Role:', session.user.app_metadata.role);
+  };
   return (
     <div className="Dashboard">
       <h1>Hello {session?.user.user_metadata.name || 'Artist'}</h1>
@@ -285,10 +303,12 @@ const Dashboard = () => {
               <span>Logout</span>
             </button>
 
-            <button className="action-button small" onClick={handleTest}>
+{ session.user.app_metadata.role === 'admin' && (
+            <button className="action-button small" onClick={() => navigate('/manage-employees')}>
               <span className="material-icons">groups</span>
               <span>Manage Employees</span>
             </button>
+            )}
           </div>
         </div>
       )}

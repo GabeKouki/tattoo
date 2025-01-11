@@ -6,11 +6,10 @@ import './Login.css'
 
 
 const Login = () => {
-  console.log('Session:');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const { setSession } = useSession(); // Get context setter
+  const { setSession } = useSession();
   const navigate = useNavigate();
 
 
@@ -19,25 +18,35 @@ const Login = () => {
     setError('');
 
     try {
-      const { data: sessionData, error } = await supabase.auth.signInWithPassword({
+      // Authenticate with auth.users
+      const { data: sessionData, error: sessionError } = await supabase.auth.signInWithPassword({
         email,
         password,
-        options: {
-          expiresIn: 10
-        }
       });
 
-      if (error) throw error;
-
-      if (sessionData.session) {
-        setSession(sessionData.session); // Update session context
-        navigate('/dashboard');
-      } else {
-        setError('Login failed. No session found.');
+      if (sessionError || !sessionData.session) {
+        throw new Error('Invalid email or password.');
       }
+
+      const userId = sessionData.user.id;
+
+      // Fetch role and metadata from users table
+      const { data: userMetadata, error: metadataError } = await supabase
+        .from('users')
+        .select('*')
+        .eq('id', userId)
+        .single();
+
+      if (metadataError || !userMetadata) {
+        throw new Error('Unable to fetch user metadata.');
+      }
+
+      // Set session and metadata
+      setSession({ ...sessionData.session, userMetadata });
+      navigate('/dashboard');
     } catch (err) {
       console.error('Login error:', err);
-      setError('Invalid email or password.');
+      setError(err.message || 'Login failed. Please try again.');
     }
   };
 

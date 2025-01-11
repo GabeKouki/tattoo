@@ -59,6 +59,7 @@ const ArtistAppointment = ({ viewingAppointments, setViewingAppointments }) => {
             <div className="card appointment-card" key={appointment.id}>
               <div className="card-header">
                 <h2>{appointment.client_name}</h2>
+                <p>{appointment.status}</p>
                 <span className={`status-badge ${appointment.status}`}>{appointment.status}</span>
               </div>
 
