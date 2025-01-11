@@ -84,7 +84,7 @@ const ArtistCard = ({ artist }) => {
                 Specializing in {artist.specialty.toLowerCase()} designs with a focus on 
                 creating unique, personalized artwork for each client.
               </p>
-              <div className="card-footer">
+              <div className="artist-card-footer">
                 <span className="flip-hint">Click to reverse</span>
               </div>
             </div>
