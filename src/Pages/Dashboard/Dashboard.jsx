@@ -17,18 +17,17 @@ const Dashboard = () => {
   const [viewingSchedule, setViewingSchedule] = useState(false);
   const [schedule, setSchedule] = useState([]);
   const [artistMapping, setArtistMapping] = useState({});
-
+  const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
     const fetchArtistMapping = async () => {
       try {
         const { data, error } = await supabase
-          .from('users') // Replace 'artists' with the correct table name for storing artist details
+          .from('users')
           .select('id, name');
 
         if (error) throw error;
 
-        // Create a mapping of artist_id to artist name
         const mapping = {};
         data.forEach((artist) => {
           mapping[artist.id] = artist.name;
@@ -44,9 +43,7 @@ const Dashboard = () => {
     if (!session) {
       navigate('/login');
     }
-
   }, [session, navigate]);
-
 
   const fetchSchedule = async () => {
     setLoading(true);
@@ -54,12 +51,11 @@ const Dashboard = () => {
       const { data, error } = await supabase
         .from('appointments')
         .select('*')
-        .eq('artist_id', session.user.id) // Fetch only the logged-in artist's appointments
+        .eq('artist_id', session.user.id)
         .order('date', { ascending: true });
 
       if (error) throw error;
 
-      console.log('Schedule:', data);
       setSchedule(data);
       setViewingSchedule(true);
     } catch (err) {
@@ -71,12 +67,9 @@ const Dashboard = () => {
   };
 
   const handleLogout = async () => {
-    await logout(); // Ends the session
-    navigate('/login'); // Redirect to the login page
+    await logout();
+    navigate('/login');
   };
-
-
-
 
   const fetchInquiries = async () => {
     setLoading(true);
@@ -91,7 +84,6 @@ const Dashboard = () => {
 
       if (error) throw error;
 
-      console.log('Fetched Inquiries:', data); // Debug fetched inquiries
       setInquiries(data);
       setViewingInquiries(true);
     } catch (err) {
@@ -104,15 +96,12 @@ const Dashboard = () => {
 
   const handleDeleteInquiry = async (inquiry) => {
     try {
-      console.log('Inquiry passed to handleDeleteInquiry:', inquiry);
-
       const { error } = await supabase
         .from('inquiries')
         .delete()
         .eq('id', inquiry.id);
 
       if (error) {
-        console.log('Error deleting inquiry:', error)
         alert('Failed to delete inquiry.');
         return;
       }
@@ -124,11 +113,9 @@ const Dashboard = () => {
     }
 
     fetchInquiries();
-  }
-
+  };
 
   const handleAccept = async (inquiry) => {
-    console.log('Inquiry passed to handleAccept:', inquiry);
     try {
       const { error } = await supabase
         .from('inquiries')
@@ -136,9 +123,7 @@ const Dashboard = () => {
         .eq('id', inquiry.id);
 
       if (error) throw error;
-      console.log(inquiry.id)
 
-      // Redirect and pass the inquiryID and clientEmail as state
       navigate(`/generate-booking-link/${inquiry.id}/${encodeURIComponent(inquiry.client_email)}`, {
         state: { inquiryID: inquiry.id, clientEmail: inquiry.client_email },
       });
@@ -149,7 +134,6 @@ const Dashboard = () => {
   };
 
   const handleReject = async (inquiry) => {
-    // Create dialog for rejection reason
     const reasonDialog = document.createElement('dialog');
     reasonDialog.innerHTML = `
       <div style="padding: 20px; min-width: 300px;">
@@ -172,7 +156,6 @@ const Dashboard = () => {
     document.body.appendChild(reasonDialog);
     reasonDialog.showModal();
 
-    // Handle dialog buttons
     const cancelButton = reasonDialog.querySelector('#cancel-reject');
     const confirmButton = reasonDialog.querySelector('#confirm-reject');
     const reasonText = reasonDialog.querySelector('#rejection-reason');
@@ -191,7 +174,6 @@ const Dashboard = () => {
 
       setLoading(true);
       try {
-        // Update inquiry status in database
         const { error } = await supabase
           .from('inquiries')
           .update({
@@ -202,23 +184,13 @@ const Dashboard = () => {
 
         if (error) throw error;
 
-        console.log('Sending email with params:', {
-          to_name: inquiry.client_name,
-          to_email: inquiry.client_email,
-          message: reason,
-          from_name: session?.user.user_metadata.name || 'The Artist',
-          reply_to: inquiry.client_email
-      });
-
-        // Send rejection email
         await sendRejectionEmail({
-          clientEmail: inquiry.client_email, 
-          clientName: inquiry.client_name,    
-          rejectionReason: reason,                   
+          clientEmail: inquiry.client_email,
+          clientName: inquiry.client_name,
+          rejectionReason: reason,
           artistName: session?.user.user_metadata.name || 'The Artist',
-      });
-        // Update local state
-        // setInquiries((prev) => prev.filter((i) => i.id !== inquiry.id));
+        });
+
         alert(`Inquiry from ${inquiry.client_name} has been rejected and notification email sent.`);
       } catch (err) {
         console.error('Error in rejection process:', err);
@@ -231,7 +203,6 @@ const Dashboard = () => {
       }
     };
 
-    // Handle dialog close
     reasonDialog.addEventListener('close', () => {
       if (document.body.contains(reasonDialog)) {
         document.body.removeChild(reasonDialog);
@@ -241,30 +212,40 @@ const Dashboard = () => {
 
   const handleTest = async () => {
     try {
-      // Query the `users` table to fetch the name based on the session user ID
       const { data, error } = await supabase
         .from('users')
-        .select('name') // Select only the 'name' column for efficiency
+        .select('name')
         .eq('id', session.user.id)
-        .single(); // Ensure it returns a single result
-  
+        .single();
+
       if (error) {
         throw new Error('Failed to fetch user name.');
       }
-  
-      console.log('Fetched User Name:', data.name); // Log the fetched name
+
+      console.log('Fetched User Name:', data.name);
     } catch (err) {
       console.error('Error fetching user data:', err);
       alert('Failed to fetch user data.');
     }
-  
-    // Debugging session data
+
     console.log('Test function called');
     console.log('Session:', session);
     console.log('User ID:', session.user.id);
     console.log('User Name:', session?.user.user_metadata);
     console.log('User Role:', session.user.app_metadata.role);
   };
+
+  const calculateTimeAgo = (dateString) => {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffInMs = now - date;
+    const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+
+    if (diffInDays === 0) return 'Today';
+    if (diffInDays === 1) return '1 day ago';
+    return `${diffInDays} days ago`;
+  };
+
   return (
     <div className="Dashboard">
       <h1>Hello {session?.user.user_metadata.name || 'Artist'}</h1>
@@ -303,11 +284,11 @@ const Dashboard = () => {
               <span>Logout</span>
             </button>
 
-{ session.user.app_metadata.role === 'admin' && (
-            <button className="action-button small" onClick={() => navigate('/manage-employees')}>
-              <span className="material-icons">groups</span>
-              <span>Manage Employees</span>
-            </button>
+            {session.user.app_metadata.role === 'admin' && (
+              <button className="action-button small" onClick={() => navigate('/manage-employees')}>
+                <span className="material-icons">groups</span>
+                <span>Manage Employees</span>
+              </button>
             )}
           </div>
         </div>
@@ -340,6 +321,7 @@ const Dashboard = () => {
                     <h2>{`${inquiry.client_name}'s Inquiry`}</h2>
                     <span className={`status-badge ${inquiry.status}`}>{inquiry.status}</span>
                   </div>
+                  <p className="OwnerText">Owner: {artistMapping[inquiry.artist_id] || 'Unknown'}</p>
 
                   <div className="card-content">
                     <div className="info-group">
@@ -372,14 +354,44 @@ const Dashboard = () => {
                       <p>{inquiry.additional_info}</p>
                     </div>
 
+                    <div className="info-group">
+                      <span className="material-icons">timer</span>
+                      <p>{`Submitted: ${calculateTimeAgo(inquiry.created_at)}`}</p>
+                    </div>
 
                     {inquiry.reference_images && inquiry.reference_images.length > 0 && (
                       <div className="reference-images">
                         <h4>Reference Images</h4>
                         <div className="images-grid">
                           {inquiry.reference_images.map((img, idx) => (
-                            <img key={idx} src={img} alt={`Reference ${idx + 1}`} />
+                            <img
+                              key={idx}
+                              src={img}
+                              alt={`Reference ${idx + 1}`}
+                              onClick={() => setSelectedImage(img)}
+                            />
                           ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {selectedImage && (
+                      <div
+                        className="image-modal"
+                        onClick={() => setSelectedImage(null)}
+                        tabIndex={0}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Escape') setSelectedImage(null);
+                        }}
+                      >
+                        <div className="modal-content">
+                          <img src={selectedImage} alt="Enlarged view" />
+                          <span
+                            className="close-modal"
+                            onClick={() => setSelectedImage(null)}
+                          >
+                            &times;
+                          </span>
                         </div>
                       </div>
                     )}
@@ -394,17 +406,11 @@ const Dashboard = () => {
                       <span className="material-icons">cancel</span>
                       Reject
                     </button>
-                    {/* //TODO Delete any inquiry where status has not changed for > 30 days */}
                     <button className="action-btn delete" onClick={() => handleDeleteInquiry(inquiry)}>
                       <span className="material-icons">delete</span>
                       Delete
                     </button>
                   </div>
-                  {session.user.app_metadata.role === 'admin'&& (
-                  <div className="card-footer">
-                    <p>Owner: {artistMapping[inquiry.artist_id] || 'Unknown'}</p>
-                  </div>
-                  )}
                 </div>
               ))
             )}
