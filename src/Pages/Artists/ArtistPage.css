@@ -261,6 +261,16 @@
   outline: none; /* Removes the browser's default focus outline */
   /* border-color: rgba(255, 255, 255, 0.05); Matches the regular border color */
 }
+.file-upload-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.file-info {
+  color: #94a3b8;
+  font-size: 0.875rem;
+}
 
 /* Submit Button */
 .SubmitButton {

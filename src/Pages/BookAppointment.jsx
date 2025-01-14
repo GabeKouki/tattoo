@@ -26,18 +26,25 @@ const BookAppointment = () => {
   const { token } = useParams();
   const [bookingDetails, setBookingDetails] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  
+  // Multi-session state
+  const [currentSession, setCurrentSession] = useState(0);
+  const [sessionBookings, setSessionBookings] = useState([]);
+  
+  // Calendar state
   const [selectedDate, setSelectedDate] = useState(null);
   const [availableSlots, setAvailableSlots] = useState([]);
   const [selectedStartTime, setSelectedStartTime] = useState(null);
   const [calculatedEndTime, setCalculatedEndTime] = useState(null);
-  const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchBookingDetails = async () => {
       try {
         const { data, error } = await supabase
           .from("booking_links")
-          .select("*")
+          .select("*, inquiries(*)")
           .eq("token", token)
           .single();
 
@@ -51,6 +58,11 @@ const BookAppointment = () => {
         }
 
         setBookingDetails(data);
+        
+        // Initialize session bookings array
+        if (data.is_multi_session) {
+          setSessionBookings(new Array(data.sessions_info.length).fill(null));
+        }
       } catch (err) {
         setError(err.message);
       } finally {
@@ -60,17 +72,6 @@ const BookAppointment = () => {
 
     fetchBookingDetails();
   }, [token]);
-
-  const addMinutes = (time, minutes) => {
-    const [hours, mins] = time.split(":").map(Number);
-    const date = new Date();
-    date.setHours(hours);
-    date.setMinutes(mins + minutes);
-    return `${date.getHours().toString().padStart(2, "0")}:${date
-      .getMinutes()
-      .toString()
-      .padStart(2, "0")}`;
-  };
 
   const fetchAvailability = async (date) => {
     try {
@@ -101,18 +102,17 @@ const BookAppointment = () => {
       if (appointmentsError) throw appointmentsError;
 
       const slots = [];
-      const duration = bookingDetails.duration * 60; // Convert to minutes
+      const currentSession = bookingDetails.sessions_info[currentSession];
+      const duration = currentSession.duration * 60; // Convert to minutes
 
       availability.forEach((time) => {
         let [currentHours, currentMinutes] = time.start_time.split(":").map(Number);
         const [endHours, endMinutes] = time.end_time.split(":").map(Number);
         
-        // Generate hourly slots
         while (currentHours < endHours || (currentHours === endHours && currentMinutes < endMinutes)) {
           const startTime = `${currentHours.toString().padStart(2, "0")}:${currentMinutes.toString().padStart(2, "0")}`;
           const endTime = addMinutes(startTime, duration);
 
-          // Check if slot overlaps with any existing appointment
           const isBlocked = appointments.some((appointment) => {
             const apptStart = appointment.start_time;
             const apptEnd = appointment.end_time;
@@ -128,7 +128,6 @@ const BookAppointment = () => {
             slots.push(startTime);
           }
 
-          // Move to next hour
           currentMinutes = 0;
           currentHours += 1;
         }
@@ -150,61 +149,193 @@ const BookAppointment = () => {
 
   const handleTimeSelection = (startTime) => {
     setSelectedStartTime(startTime);
-    const endTime = addMinutes(startTime, bookingDetails.duration * 60);
+    const currentSession = bookingDetails.sessions_info[currentSession];
+    const endTime = addMinutes(startTime, currentSession.duration * 60);
     setCalculatedEndTime(endTime);
   };
-
-  const handleScheduleAppointment = async () => {
+  const handleSessionBooking = () => {
     if (!selectedDate || !selectedStartTime) {
-      alert("Please select a date and time.");
+      setError("Please select both date and time.");
       return;
     }
 
-    try {
-      const { error } = await supabase.from("appointments").insert([
-        {
-          artist_id: bookingDetails.artist_id,
-          client_name: bookingDetails.client_name,
-          client_email: bookingDetails.client_email,
-          duration: bookingDetails.duration,
-          date: selectedDate.toISOString().split("T")[0],
-          start_time: selectedStartTime,
-          end_time: calculatedEndTime,
-          status: "pending",
-        },
-      ]);
+    const newSessionBookings = [...sessionBookings];
+    newSessionBookings[currentSession] = {
+      date: selectedDate.toISOString().split("T")[0],
+      start_time: selectedStartTime,
+      end_time: calculatedEndTime,
+      duration: bookingDetails.sessions_info[currentSession].duration
+    };
+    setSessionBookings(newSessionBookings);
 
-      if (error) throw error;
-
-      alert("Appointment scheduled successfully!");
-      // You might want to redirect the user or clear the form here
-    } catch (err) {
-      console.error("Error scheduling appointment:", err);
-      alert("Failed to schedule appointment.");
+    if (currentSession < bookingDetails.sessions_info.length - 1) {
+      // Move to next session
+      setCurrentSession(currentSession + 1);
+      setSelectedDate(null);
+      setSelectedStartTime(null);
+      setCalculatedEndTime(null);
+      setAvailableSlots([]);
     }
   };
 
-  if (loading) return <div className="loading-state">Loading booking details...</div>;
-  if (error) return <div className="error-state">{error}</div>;
+  const handlePayment = async () => {
+    try {
+      setLoading(true);
+      // Create Stripe payment session
+      const { data: stripeSession, error: stripeError } = await supabase.functions.invoke('create-payment-session', {
+        body: {
+          amount: 10000, // $100 in cents
+          success_url: `${window.location.origin}/book-appointment/${token}/success`,
+          cancel_url: `${window.location.origin}/book-appointment/${token}`,
+          customer_email: bookingDetails.client_email
+        }
+      });
+
+      if (stripeError) throw stripeError;
+
+      // Redirect to Stripe checkout
+      window.location.href = stripeSession.url;
+    } catch (err) {
+      console.error('Payment error:', err);
+      setError('Failed to process payment. Please try again.');
+      setLoading(false);
+    }
+  };
+
+  const handleFinalBooking = async () => {
+    try {
+      setLoading(true);
+      const parentAppointment = {
+        artist_id: bookingDetails.artist_id,
+        client_name: bookingDetails.inquiries.client_name,
+        client_email: bookingDetails.client_email,
+        client_phone: bookingDetails.inquiries.client_phone,
+        is_multi_session: bookingDetails.is_multi_session,
+        deposit_paid: false,
+        status: 'pending'
+      };
+
+      // Create parent appointment
+      const { data: parentData, error: parentError } = await supabase
+        .from('appointments')
+        .insert([parentAppointment])
+        .select()
+        .single();
+
+      if (parentError) throw parentError;
+
+      // Create individual session appointments
+      const sessionAppointments = sessionBookings.map((session, index) => ({
+        artist_id: bookingDetails.artist_id,
+        client_name: bookingDetails.inquiries.client_name,
+        client_email: bookingDetails.client_email,
+        client_phone: bookingDetails.inquiries.client_phone,
+        date: session.date,
+        start_time: session.start_time,
+        end_time: session.end_time,
+        duration: session.duration,
+        is_multi_session: true,
+        session_number: index + 1,
+        parent_appointment_id: parentData.id,
+        deposit_paid: false,
+        status: 'pending'
+      }));
+
+      const { error: sessionsError } = await supabase
+        .from('appointments')
+        .insert(sessionAppointments);
+
+      if (sessionsError) throw sessionsError;
+
+      setSuccess('Appointments scheduled successfully! Proceeding to deposit payment...');
+      setTimeout(() => handlePayment(), 2000);
+    } catch (err) {
+      console.error('Booking error:', err);
+      setError('Failed to schedule appointments. Please try again.');
+      setLoading(false);
+    }
+  };
+
+  const addMinutes = (time, minutes) => {
+    const [hours, mins] = time.split(":").map(Number);
+    const date = new Date();
+    date.setHours(hours);
+    date.setMinutes(mins + minutes);
+    return `${date.getHours().toString().padStart(2, "0")}:${date
+      .getMinutes()
+      .toString()
+      .padStart(2, "0")}`;
+  };
+
+  if (loading) return (
+    <div className="book-appointment">
+      <div className="loading-container">
+        <div className="loading-spinner"></div>
+        <p>Loading booking details...</p>
+      </div>
+    </div>
+  );
+
+  if (error) return (
+    <div className="book-appointment">
+      <div className="error-container">
+        <span className="material-icons">error</span>
+        <p>{error}</p>
+      </div>
+    </div>
+  );
 
   return (
     <div className="book-appointment">
       <div className="booking-container">
-        <h1>Book Your Appointment</h1>
+        <div className="booking-header">
+          <h1>Book Your Appointment</h1>
+          {bookingDetails?.is_multi_session && (
+            <div className="session-progress">
+              {bookingDetails.sessions_info.map((_, index) => (
+                <div 
+                  key={index}
+                  className={`progress-step ${index === currentSession ? 'active' : ''} 
+                    ${sessionBookings[index] ? 'completed' : ''}`}
+                >
+                  Session {index + 1}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
         
         <div className="booking-details">
-          <div className="detail-item">
-            <span className="label">Client:</span>
-            <span className="value">{bookingDetails.client_name}</span>
+          <div className="info-group">
+            <span className="material-icons">person</span>
+            <div>
+              <label>Client</label>
+              <p>{bookingDetails?.inquiries.client_name}</p>
+            </div>
           </div>
-          <div className="detail-item">
-            <span className="label">Email:</span>
-            <span className="value">{bookingDetails.client_email}</span>
+          <div className="info-group">
+            <span className="material-icons">email</span>
+            <div>
+              <label>Email</label>
+              <p>{bookingDetails?.client_email}</p>
+            </div>
           </div>
-          <div className="detail-item">
-            <span className="label">Duration:</span>
-            <span className="value">{bookingDetails.duration} hours</span>
+          <div className="info-group">
+            <span className="material-icons">schedule</span>
+            <div>
+              <label>Duration</label>
+              <p>{bookingDetails?.sessions_info[currentSession].duration} hours</p>
+            </div>
           </div>
+          {bookingDetails?.sessions_info[currentSession].notes && (
+            <div className="info-group">
+              <span className="material-icons">note</span>
+              <div>
+                <label>Session Notes</label>
+                <p>{bookingDetails.sessions_info[currentSession].notes}</p>
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="calendar-section">
@@ -235,33 +366,64 @@ const BookAppointment = () => {
                 ))
               )}
             </div>
+          </div>
+        )}
 
-            {selectedStartTime && calculatedEndTime && (
-              <div className="appointment-summary">
-                <h3>Appointment Details</h3>
-                <div className="time-details">
-                  <div className="time-item">
-                    <span className="label">Start Time:</span>
-                    <span className="value">{timeHelpers.convertTo12Hour(selectedStartTime)}</span>
-                  </div>
-                  <div className="time-item">
-                    <span className="label">End Time:</span>
-                    <span className="value">{timeHelpers.convertTo12Hour(calculatedEndTime)}</span>
-                  </div>
+        {selectedStartTime && (
+          <div className="appointment-summary">
+            <h3>Session {currentSession + 1} Details</h3>
+            <div className="summary-details">
+              <div className="summary-item">
+                <span className="material-icons">event</span>
+                <div>
+                  <label>Date</label>
+                  <p>{selectedDate.toLocaleDateString('en-US', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                  })}</p>
                 </div>
               </div>
-            )}
+              <div className="summary-item">
+                <span className="material-icons">schedule</span>
+                <div>
+                  <label>Time</label>
+                  <p>{timeHelpers.convertTo12Hour(selectedStartTime)} - {timeHelpers.convertTo12Hour(calculatedEndTime)}</p>
+                </div>
+              </div>
+            </div>
           </div>
         )}
 
         {selectedStartTime && (
           <button 
-            onClick={handleScheduleAppointment}
-            className="schedule-button"
+            className="action-button"
+            onClick={currentSession === bookingDetails.sessions_info.length - 1 ? 
+              handleFinalBooking : handleSessionBooking}
+            disabled={loading}
           >
-            Schedule Appointment
+            {loading ? (
+              <>
+                <span className="material-icons spinning">sync</span>
+                Processing...
+              </>
+            ) : currentSession === bookingDetails.sessions_info.length - 1 ? (
+              <>
+                <span className="material-icons">check_circle</span>
+                Complete Booking & Pay Deposit
+              </>
+            ) : (
+              <>
+                <span className="material-icons">arrow_forward</span>
+                Book Next Session
+              </>
+            )}
           </button>
         )}
+
+        {success && <div className="success-message">{success}</div>}
+        {error && <div className="error-message">{error}</div>}
       </div>
     </div>
   );

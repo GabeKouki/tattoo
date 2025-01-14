@@ -10,6 +10,8 @@ const ManageAccount = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+  const [isEditing, setIsEditing] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -74,7 +76,10 @@ const ManageAccount = () => {
       }
 
       setMessage('Profile updated successfully!');
-      navigate('/dashboard')
+      setIsEditing(false);
+      setTimeout(() => {
+        navigate('/dashboard');
+      }, 2000);
     } catch (err) {
       console.error('Error updating profile:', err);
       setError('Failed to update profile. Please try again.');
@@ -84,53 +89,111 @@ const ManageAccount = () => {
   };
 
   return (
-    <div className="edit-profile-container">
-      <div className="content-container">
+    <div className="manage-account-container">
+      <div className="manage-account-header">
         <button className="back-button" onClick={() => navigate('/dashboard')}>
           <span className="material-icons">arrow_back</span>
           Back to Dashboard
         </button>
+        <h1>Account Settings</h1>
       </div>
-      <h1>Edit Profile</h1>
-      <div className="form-group">
-        <label htmlFor="name">Name</label>
-        <input
-          type="text"
-          id="name"
-          value={profile.name}
-          onChange={(e) => setProfile({ ...profile, name: e.target.value })}
-          placeholder="Enter your name"
-        />
+
+      <div className="profile-card">
+        <div className="profile-header">
+          <div className="profile-avatar">
+            <span className="material-icons">account_circle</span>
+            <h2>{profile.name || 'Artist'}</h2>
+          </div>
+          <button 
+            className="edit-button"
+            onClick={() => setIsEditing(!isEditing)}
+          >
+            <span className="material-icons">
+              {isEditing ? 'close' : 'edit'}
+            </span>
+            {isEditing ? 'Cancel' : 'Edit Profile'}
+          </button>
+        </div>
+
+        <div className="profile-content">
+          <div className="form-group">
+            <label>
+              <span className="material-icons">badge</span>
+              Name
+            </label>
+            <input
+              type="text"
+              value={profile.name}
+              onChange={(e) => setProfile({ ...profile, name: e.target.value })}
+              disabled={!isEditing}
+              placeholder="Enter your name"
+            />
+          </div>
+
+          <div className="form-group">
+            <label>
+              <span className="material-icons">phone</span>
+              Phone
+            </label>
+            <input
+              type="tel"
+              value={profile.phone}
+              onChange={(e) => setProfile({ ...profile, phone: e.target.value })}
+              disabled={!isEditing}
+              placeholder="Enter your phone number"
+            />
+          </div>
+
+          {isEditing && (
+            <div className="form-group">
+              <label>
+                <span className="material-icons">lock</span>
+                New Password
+              </label>
+              <div className="password-input-container">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  value={profile.password}
+                  onChange={(e) => setProfile({ ...profile, password: e.target.value })}
+                  placeholder="Enter new password"
+                />
+                <button
+                  type="button"
+                  className="toggle-password"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  <span className="material-icons">
+                    {showPassword ? 'visibility_off' : 'visibility'}
+                  </span>
+                </button>
+              </div>
+            </div>
+          )}
+
+          {message && <div className="message success">{message}</div>}
+          {error && <div className="message error">{error}</div>}
+
+          {isEditing && (
+            <button
+              onClick={handleUpdateProfile}
+              disabled={loading}
+              className="update-button"
+            >
+              {loading ? (
+                <>
+                  <span className="material-icons spinning">sync</span>
+                  Updating...
+                </>
+              ) : (
+                <>
+                  <span className="material-icons">save</span>
+                  Save Changes
+                </>
+              )}
+            </button>
+          )}
+        </div>
       </div>
-      <div className="form-group">
-        <label htmlFor="phone">Phone</label>
-        <input
-          type="tel"
-          id="phone"
-          value={profile.phone}
-          onChange={(e) => setProfile({ ...profile, phone: e.target.value })}
-          placeholder="Enter your phone number"
-        />
-      </div>
-      <div className="form-group">
-        <label htmlFor="password">New Password</label>
-        <input
-          type="password"
-          id="password"
-          value={profile.password}
-          onChange={(e) => setProfile({ ...profile, password: e.target.value })}
-          placeholder="Enter a new password"
-        />
-      </div>
-      <button
-        onClick={handleUpdateProfile}
-        disabled={loading}
-        className="update-button"
-      >
-        {loading ? 'Updating...' : 'Update Profile'}
-      </button>
-      {message && <p className="message success">{message}</p>}
-      {error && <p className="message error">{error}</p>}
     </div>
   );
 };
