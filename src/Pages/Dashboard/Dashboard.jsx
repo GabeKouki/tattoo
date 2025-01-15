@@ -24,6 +24,7 @@ const Dashboard = () => {
     todayAppointments: 0,
     weeklyAppointments: 0
   });
+  const [inquiryFilter, setInquiryFilter] = useState('pending');
 
   useEffect(() => {
     const fetchArtistMapping = async () => {
@@ -50,7 +51,8 @@ const Dashboard = () => {
         const { data: appointmentsData, error: appointmentsError } = await supabase
           .from('appointments')
           .select('*')
-          .eq('artist_id', session.user.id);
+          .eq('artist_id', session.user.id)
+          .gte('session_number', 0);
 
         // Get pending inquiries
         const { data: inquiriesData, error: inquiriesError } = await supabase
@@ -64,14 +66,13 @@ const Dashboard = () => {
         // Calculate today's appointments
         const today = new Date().toISOString().split('T')[0];
         const todayAppts = appointmentsData.filter(apt =>
-          apt.date.startsWith(today)
+          apt.date.startsWith(today) && apt.parent_appointment_id !== null
         ).length;
 
-        // Calculate this week's appointments
         const weekStart = new Date();
         weekStart.setDate(weekStart.getDate() - weekStart.getDay());
         const weeklyAppts = appointmentsData.filter(apt =>
-          new Date(apt.date) >= weekStart
+          new Date(apt.date) >= weekStart && apt.parent_appointment_id !== null
         ).length;
 
         setDashboardStats({
@@ -93,6 +94,12 @@ const Dashboard = () => {
     }
   }, [session, navigate]);
 
+  useEffect(() => {
+    if (viewingInquiries) {
+      fetchInquiries();
+    }
+  }, [inquiryFilter, viewingInquiries]);
+
   const fetchSchedule = async () => {
     setLoading(true);
     try {
@@ -100,6 +107,7 @@ const Dashboard = () => {
         .from('appointments')
         .select('*')
         .eq('artist_id', session.user.id)
+        .not('booking_id', 'is', null) // Exclude rows where booking_id is null
         .order('date', { ascending: true });
 
       if (error) throw error;
@@ -134,14 +142,13 @@ const Dashboard = () => {
         query = query.eq('artist_id', session.user.id);
       }
 
+      if (inquiryFilter !== 'all') {
+        query = query.eq('status', inquiryFilter);
+      }
+
       const { data, error } = await query;
 
       if (error) throw error;
-
-      // Log the first inquiry to check its structure
-      if (data && data.length > 0) {
-        console.log('Sample inquiry data:', data[0]);
-      }
 
       setInquiries(data);
       setViewingInquiries(true);
@@ -175,6 +182,7 @@ const Dashboard = () => {
   };
 
   const handleAccept = async (inquiry) => {
+
     try {
       const { error } = await supabase
         .from('inquiries')
@@ -422,6 +430,32 @@ const Dashboard = () => {
             Back to Dashboard
           </button>
 
+          <div className="inquiry-filter">
+            <button
+              className={inquiryFilter === 'all' ? 'active' : ''}
+              onClick={() => setInquiryFilter('all')}
+            >
+              All
+            </button>
+            <button
+              className={inquiryFilter === 'pending' ? 'active' : ''}
+              onClick={() => setInquiryFilter('pending')}
+            >
+              Pending
+            </button>
+            <button
+              className={inquiryFilter === 'accepted' ? 'active' : ''}
+              onClick={() => setInquiryFilter('accepted')}
+            >
+              Accepted
+            </button>
+            <button
+              className={inquiryFilter === 'rejected' ? 'active' : ''}
+              onClick={() => setInquiryFilter('rejected')}
+            >
+              Rejected
+            </button>
+          </div>
           {inquiries.length === 0 ? (
             <div className="empty-state">
               <span className="material-icons">inbox</span>
@@ -432,6 +466,9 @@ const Dashboard = () => {
               {inquiries.map((inquiry) => (
                 <div className="inquiry-row" key={inquiry.id}>
                   <div className="inquiry-header">
+                    <div className="InquiryButtons">
+
+                    </div>
                     <div className="inquiry-main-info">
                       <h2>{inquiry.client_name}'s Inquiry</h2>
                       <span className={`status-badge ${inquiry.status}`}>{inquiry.status}</span>

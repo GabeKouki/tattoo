@@ -16,8 +16,7 @@ const artists = [
     specialty: "Realism",
     image: ShilohHix,
     email: "tattoos.by.shiloh@gmail.com",
-    experience: "10 years",
-    availability: "Mon-Fri",
+    experience: "Experience: xx years",
     slug: "Shiloh",
     socials: {
       instagram: "shiloh_tattoos",
@@ -31,8 +30,7 @@ const artists = [
     specialty: "Black & Grey Realism",
     image: AudreyJenkins,
     email: "tattoos.by.audrey@gmail.com",
-    experience: "8 years",
-    availability: "Mon-Fri",
+    experience: "Experience: xx years",
     slug: "Audrey",
     socials: {
       instagram: "jane_tattoos",
@@ -46,8 +44,7 @@ const artists = [
     specialty: "Color",
     image: Christina,
     email: "tattoos.by.christina@gmail.com",
-    experience: "12 years",
-    availability: "Tue-Sat",
+    experience: "Experience: xx years",
     slug: "Christina",
     socials: {
       instagram: "christina_tattoos",
@@ -73,11 +70,8 @@ const ArtistCard = ({ artist }) => {
             <div className="artist-info">
               <h3>{artist.name}</h3>
               <div className="artist-details">
-                <span className="detail-item">
+                <span className="detail-item-card">
                   <i className="far fa-clock"></i> {artist.experience}
-                </span>
-                <span className="detail-item">
-                  <i className="far fa-calendar"></i> {artist.availability}
                 </span>
               </div>
               <p className="artist-bio">

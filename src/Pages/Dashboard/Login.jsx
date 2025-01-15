@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../Utils/SupabaseClient';
 import { useSession } from '../../Context/SessionContext';
-import './Login.css'
+import './Login.css';
 
+// Import icons from react-icons
+import { FiMail, FiLock, FiLogIn, FiAlertCircle } from 'react-icons/fi';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -11,7 +13,6 @@ const Login = () => {
   const [error, setError] = useState('');
   const { setSession } = useSession();
   const navigate = useNavigate();
-
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -56,9 +57,7 @@ const Login = () => {
         <h1>Artist Login</h1>
         <form onSubmit={handleLogin}>
           <div className="input-group">
-            <label htmlFor="email">Email</label>
             <div className="input-wrapper">
-              <span className="material-icons">email</span>
               <input
                 id="email"
                 type="email"
@@ -71,9 +70,7 @@ const Login = () => {
           </div>
 
           <div className="input-group">
-            <label htmlFor="password">Password</label>
             <div className="input-wrapper">
-              <span className="material-icons">lock</span>
               <input
                 id="password"
                 type="password"
@@ -85,14 +82,16 @@ const Login = () => {
             </div>
           </div>
 
-          {error && <div className="error-message">
-            <span className="material-icons">error</span>
-            {error}
-          </div>}
+          {error && (
+            <div className="error-message">
+              <FiAlertCircle style={{ marginRight: '8px' }} />
+              {error}
+            </div>
+          )}
 
           <div className="button-group">
             <button type="submit" className="login-button">
-              <span className="material-icons">login</span>
+              <FiLogIn style={{ marginRight: '8px' }} />
               Login
             </button>
           </div>

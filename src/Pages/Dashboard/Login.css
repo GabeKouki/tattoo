@@ -4,34 +4,24 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  /* background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab); */
-  background-size: 400% 400%;
-  /* animation: gradient 15s ease infinite; */
-  /* padding: 20px; */
+  background: linear-gradient(135deg, #1e1e1e, #2b2b2b);
+  padding: 20px;
 }
 
-/* @keyframes gradient {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-} */
-
 .login-card {
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(10px);
+  background: #2a2a2a;
   padding: 2.5rem;
-  border-radius: 20px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   width: 100%;
   max-width: 400px;
 }
 
 .login-card h1 {
-  color: #2c3e50;
+  color: #ffffff;
   text-align: center;
   margin-bottom: 2rem;
   font-size: 2rem;
-  font-weight: 600;
 }
 
 .input-group {
@@ -41,51 +31,46 @@
 .input-group label {
   display: block;
   margin-bottom: 0.5rem;
-  color: #2c3e50;
+  color: #ffffff;
   font-weight: 500;
 }
 
 .input-wrapper {
   position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.input-wrapper .material-icons {
-  position: absolute;
-  left: 12px;
-  color: #64748b;
 }
 
 .input-wrapper input {
   width: 100%;
-  padding: 12px 12px 12px 45px;
-  border: 2px solid #e2e8f0;
-  border-radius: 10px;
+  padding: 12px 12px 12px 40px; /* Adjusted padding-left for icons */
+  border: 2px solid #555555;
+  border-radius: 8px;
   font-size: 1rem;
+  background: #1f1f1f;
+  color: #ffffff;
   transition: all 0.3s ease;
-  background: white;
 }
 
 .input-wrapper input:focus {
-  border-color: #23a6d5;
-  box-shadow: 0 0 0 3px rgba(35, 166, 213, 0.1);
+  border-color: #00b8b8;
   outline: none;
 }
 
+.input-icon {
+  position: absolute;
+  top: 50%;
+  left: 12px; /* Properly position the icon */
+  transform: translateY(-50%);
+  color: #888888;
+  font-size: 1.2rem;
+}
+
 .error-message {
-  background: #fee2e2;
-  color: #dc2626;
+  background: #ff4d4d;
+  color: #ffffff;
   padding: 12px;
   border-radius: 8px;
   margin-bottom: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.error-message .material-icons {
-  font-size: 20px;
+  text-align: center;
 }
 
 .button-group {
@@ -95,27 +80,18 @@
 .login-button {
   width: 100%;
   padding: 12px;
-  background: #23a6d5;
+  background: #00b8b8;
   color: white;
   border: none;
-  border-radius: 10px;
+  border-radius: 8px;
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
 }
 
 .login-button:hover {
-  background: #1a8bb4;
-  transform: translateY(-2px);
-}
-
-.login-button:active {
-  transform: translateY(0);
+  background: #009999;
 }
 
 @media (max-width: 480px) {
@@ -125,76 +101,5 @@
 
   .login-card h1 {
     font-size: 1.5rem;
-  }
-
-  .input-wrapper input {
-    padding: 10px 10px 10px 40px;
-  }
-}
-/* Status message container */
-.statusMessage {
-  margin-top: 1rem;
-  text-align: center;
-  font-size: 0.95rem;
-  font-weight: 600;
-}
-
-/* Color-coded success/error styling */
-.success {
-  color: #15803d; /* green-700 */
-}
-
-.error {
-  color: #dc2626; /* red-600 */
-}
-
-/* 
-  Basic responsive breakpoints for all screen sizes:
-  Feel free to adjust these to your exact design preferences.
-*/
-
-/* For screens up to 600px wide (small devices) */
-@media (max-width: 600px) {
-  .container {
-    margin: 2rem auto;
-    padding: 1rem;
-  }
-
-  .header {
-    font-size: 1.25rem;
-  }
-
-  label,
-  input {
-    font-size: 0.9rem;
-  }
-
-  .button {
-    font-size: 0.9rem;
-  }
-
-  .statusMessage {
-    font-size: 0.85rem;
-  }
-}
-
-/* For screens between 601px and 900px (tablets, small laptops) */
-@media (min-width: 601px) and (max-width: 900px) {
-  .container {
-    width: 80%;
-  }
-}
-
-/* For screens between 901px and 1200px (larger laptops) */
-@media (min-width: 901px) and (max-width: 1200px) {
-  .container {
-    width: 60%;
-  }
-}
-
-/* For screens wider than 1200px (desktops) */
-@media (min-width: 1201px) {
-  .container {
-    width: 400px; /* Use a fixed width for large screens */
   }
 }

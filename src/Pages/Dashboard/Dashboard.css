@@ -472,6 +472,35 @@
   border-bottom: 1px solid #475569;
 }
 
+.inquiry-filter {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.inquiry-filter button {
+  padding: 0.6rem 1rem;
+  background: #2a3649;
+  border: 1px solid #334155;
+  border-radius: 6px;
+  color: #e2e8f0;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.inquiry-filter button:hover {
+  background: #334155;
+}
+
+.inquiry-filter button.active {
+  background: #60a5fa;
+  color: #fff;
+}
+
+
 .info-group {
   display: flex;
   align-items: flex-start;
@@ -543,6 +572,7 @@
 
 .description-text:not(.expanded) {
   display: -webkit-box;
+  line-clamp: 3;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
 }

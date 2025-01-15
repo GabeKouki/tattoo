@@ -2,6 +2,7 @@ import './ArtistAppointment.css';
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../../Utils/SupabaseClient';
 import { useSession } from '../../Context/SessionContext';
+import { set } from 'date-fns';
 
 const ArtistAppointment = ({ viewingAppointments, setViewingAppointments }) => {
   const { session } = useSession();
@@ -9,6 +10,7 @@ const ArtistAppointment = ({ viewingAppointments, setViewingAppointments }) => {
   const [appointments, setAppointments] = useState([]);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [bookingData, setBookingData] = useState(null);
 
   const fetchAppointments = async () => {
     setLoading(true);
@@ -34,7 +36,7 @@ const ArtistAppointment = ({ viewingAppointments, setViewingAppointments }) => {
       }
 
       const { data, error: fetchError } = await query;
-      
+
       if (fetchError) throw fetchError;
 
       setAppointments(data.map(appointment => ({
@@ -58,9 +60,11 @@ const ArtistAppointment = ({ viewingAppointments, setViewingAppointments }) => {
   const calculateTimeAgo = (dateString) => {
     const date = new Date(dateString);
     const now = new Date();
-    const diffInMs = now - date;
+    const diffInMs = date - now;
+    const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60));
     const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
 
+    if (diffInHours < 24) return `${diffInHours} hour${diffInHours === 1 ? '' : 's'} ago`;
     if (diffInDays === 0) return 'Today';
     if (diffInDays === 1) return 'Yesterday';
     if (diffInDays < 7) return `${diffInDays} days ago`;
@@ -103,19 +107,34 @@ const ArtistAppointment = ({ viewingAppointments, setViewingAppointments }) => {
     }
   };
 
+  const handlePaymentReminder = async (bookingId) => {
+    console.log('Payment reminder clicked');
+    console.log('Appointment ID:', bookingId);
+
+    const { data, error} = await supabase
+    .from('booking_links')
+    .select('*')
+    .eq('id', bookingId);
+
+    if (error) throw error;
+
+    setBookingData(data);
+    console.log('Booking link data:', bookingData[0].token);
+  }
+
   const AppointmentActions = ({ appointment, isSession = false }) => (
     <div className="appointment-actions">
-      {appointment.status === 'pending' && (
+      {appointment.status === 'paid' && (
         <>
-          <button 
-            className="action-btn confirm" 
-            onClick={() => handleStatusChange(appointment.id, 'confirmed', isSession)}
+          <button
+            className="action-btn confirm"
+            onClick={() => handleStatusChange(appointment.id, 'approved', isSession)}
           >
             <span className="material-icons">check_circle</span>
             Confirm
           </button>
-          <button 
-            className="action-btn reschedule" 
+          <button
+            className="action-btn reschedule"
             onClick={() => handleStatusChange(appointment.id, 'reschedule', isSession)}
           >
             <span className="material-icons">schedule</span>
@@ -123,14 +142,23 @@ const ArtistAppointment = ({ viewingAppointments, setViewingAppointments }) => {
           </button>
         </>
       )}
-      {appointment.status === 'confirmed' && (
-        <button 
-          className="action-btn cancel" 
-          onClick={() => handleStatusChange(appointment.id, 'cancelled', isSession)}
-        >
-          <span className="material-icons">cancel</span>
-          Cancel
-        </button>
+      {appointment.status === 'scheduled' && (
+        <>
+          <button
+            className="action-btn cancel"
+            onClick={() => handleStatusChange(appointment.id, 'cancelled', isSession)}
+          >
+            <span className="material-icons">cancel</span>
+            Cancel
+          </button>
+          <button
+            className="action-btn cancel"
+            onClick={() => handlePaymentReminder(appointment.booking_id)}
+          >
+            <span className="material-icons">payments</span>
+            Send Payment Reminder
+          </button>
+        </>
       )}
     </div>
   );
@@ -150,8 +178,8 @@ const ArtistAppointment = ({ viewingAppointments, setViewingAppointments }) => {
       ) : (
         <div className="appointments-list">
           {appointments.map((appointment) => (
-            <div 
-              key={appointment.id} 
+            <div
+              key={appointment.id}
               className={`appointment-card ${appointment.is_multi_session ? 'multi-session' : ''}`}
             >
               <div className="appointment-header">

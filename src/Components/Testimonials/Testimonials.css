@@ -1,181 +1,206 @@
 .TestimonialsSection {
-  height: 350px;
   background-color: #222;
+  color: #d6ba8b;
+  text-align: center;
   position: relative;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+  min-height: 350px;
 }
 
 .TestimonialsContainer {
-  max-width: 1200px;
-  width: 100%;
-  padding: 0 40px;
-  position: relative;
-}
-
-.QuoteIcon {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 200px;
-  color: #5c5c5c;
-  z-index: 0;
-}
-
-.TestimonialContent {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 30px;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
   position: relative;
   z-index: 1;
-}
-
-.TestimonialTrack {
-  width: 700px;
-  overflow: hidden;
-}
-
-.TestimonialSlider {
-  display: flex;
-  transition: transform 0.5s ease-in-out;
-  width: 100%;
-}
-
-.TestimonialItem {
-  margin-top: 50px;
   padding: 20px;
-  min-width: 700px; /* Match track width */
-  width: 700px; /* Explicit width */
-  flex-shrink: 0; /* Prevent shrinking */
-  padding: 20px;
-  text-align: center;
-  box-sizing: border-box; /* Include padding in width */
 }
 
-.Quote {
-  font-size: 1.2rem;
-  color: #ffffff;
-  margin-bottom: 20px;
+.QuoteText {
+  font-size: 1.4rem;
+  margin: 20px 0;
+  color: white;
+  text-shadow:1px 1px 1px #fff, 1px 1px 1px #ccc;
+  font-style: italic;
   line-height: 1.6;
-  max-width: 600px; /* Prevent text from getting too wide */
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.TestimonialFooter {
+  padding: 0 20px;
+  min-height: 165px;
+  max-height: 165px;
+  min-width: 800px;
+  max-width: 800px;
   display: flex;
-  flex-direction: column;
+  text-align: center;
   align-items: center;
-  gap: 5px;
+  justify-content: center;
 }
 
-.Author {
-  color: white;
-  font-size: 1.1rem;
-  font-weight: 600;
+.QuoteAuthor {
+
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 1rem;
+  color: #008080;
 }
 
-.Date {
-  color: #cecece;
-  font-size: 0.9rem;
+.QuoteIcons {
+  font-size: 3rem;
+  opacity: 0.2;
+
+  color: #00ffff;
+  position: absolute;
 }
 
-.NavButton {
-  background: transparent;
-  border: none;
-  color: white;
-  font-size: 2.5rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  padding: 10px;
+.TopQuote {
+  top: -10px;
+  left: 20px;
+}
+
+.BottomQuote {
+  bottom: 0px;
+  right: 20px;
+}
+
+.Controls {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0; /* Prevent button from shrinking */
-}
-
-.NavButton:hover {
-  color: #ccc;
-  transform: scale(1.1);
-}
-
-.TestimonialDots {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
+  gap: 20px;
   margin-top: 20px;
-  padding-bottom: 40px;
 }
 
-.Dot {
-  width: 10px;
-  height: 10px;
+.Arrow {
+  font-size: 2rem;
+  cursor: pointer;
+  color: #008080;
+  transition: color 0.3s;
+}
+
+.Arrow:hover {
+  color: #ffffff;
+}
+
+.SlideIndicator {
+  display: flex;
+  gap: 10px;
+}
+
+.Bubble {
+  width: 12px;
+  height: 12px;
+  background-color: #008080;
+  opacity: 0.5;
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.3);
-  transition: all 0.3s ease;
+  cursor: pointer;
+  transition: opacity 0.3s;
 }
 
-.Dot.active {
-  background-color: white;
-  transform: scale(1.2);
+.Bubble.Active {
+  opacity: 1;
+}
+
+.Bubble:hover {
+  opacity: 0.8;
+}
+
+.slide-in-right {
+  animation: slideInRight 0.8s ease-in-out;
+}
+
+.slide-in-left {
+  animation: slideInLeft 0.58s ease-in-out;
+}
+
+.slide-out-right {
+  animation: slideOutRight 0.8s ease-in-out;
+}
+
+.slide-out-left {
+  animation: slideOutLeft 0.8s ease-in-out;
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(50px);
+    opacity: 0;
+  }
+}
+
+@keyframes slideOutLeft {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-50px);
+    opacity: 0;
+  }
 }
 
 @media (max-width: 768px) {
-  .TestimonialsContainer {
-    padding: 0 20px;
+  .QuoteText {
+    font-size: 1.2rem;
+    padding: 0 15px;
   }
 
-  .TestimonialTrack {
-    width: 500px;
+  .QuoteAuthor {
+    font-size: 0.9rem;
   }
 
-  .TestimonialItem {
-    min-width: 500px;
-    width: 500px;
+  .Arrow {
+    font-size: 1.5rem;
   }
 
-  .Quote {
-    font-size: 1.1rem;
-    max-width: 400px;
-  }
-
-  .QuoteIcon {
-    font-size: 150px;
-  }
-
-  .NavButton {
-    font-size: 2rem;
+  .Bubble {
+    width: 10px;
+    height: 10px;
   }
 }
 
-@media (max-width: 576px) {
-  .TestimonialTrack {
-    width: 300px;
-  }
-
-  .TestimonialItem {
-    min-width: 300px;
-    width: 300px;
-  }
-
-  .Quote {
+@media (max-width: 480px) {
+  .QuoteText {
     font-size: 1rem;
-    max-width: 260px;
+    padding: 0 10px;
   }
 
-  .Author {
-    font-size: 1rem;
+  .QuoteAuthor {
+    font-size: 0.8rem;
   }
 
-  .QuoteIcon {
-    font-size: 100px;
+  .Arrow {
+    font-size: 1.2rem;
   }
 
-  .NavButton {
-    font-size: 1.5rem;
+  .Bubble {
+    width: 8px;
+    height: 8px;
   }
 }

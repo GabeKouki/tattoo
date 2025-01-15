@@ -36,7 +36,6 @@ export const sendEmail = async (templateParams, artistID) => {
     publicKey
   );
   
-  console.log('Email sent successfully:', response);
   return response;
 }
 

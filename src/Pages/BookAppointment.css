@@ -118,9 +118,9 @@
 }
 
 .calendar-section h2 {
-  color: #f1f5f9;
   font-size: 1.25rem;
-  margin-bottom: 1rem;
+  color: #f1f5f9;
+  margin-bottom: 1.5rem;
 }
 
 /* Custom Calendar Styling */
@@ -130,41 +130,6 @@
   border: 1px solid #475569 !important;
   border-radius: 8px;
   padding: 1rem;
-}
-
-.react-calendar__tile {
-  padding: 1em 0.5em;
-  background: #334155;
-  color: #f1f5f9;
-  border-radius: 4px;
-}
-
-.react-calendar__tile:enabled:hover,
-.react-calendar__tile:enabled:focus {
-  background: #3b82f6;
-  color: white;
-}
-
-.react-calendar__tile--active {
-  background: #2563eb !important;
-  color: white;
-}
-
-.react-calendar__tile--now {
-  background: #475569;
-}
-
-.react-calendar__navigation button {
-  color: #f1f5f9;
-}
-
-.react-calendar__navigation button:enabled:hover,
-.react-calendar__navigation button:enabled:focus {
-  background: #334155;
-}
-
-.react-calendar__month-view__weekdays {
-  color: #94a3b8;
 }
 
 /* Time Selection */

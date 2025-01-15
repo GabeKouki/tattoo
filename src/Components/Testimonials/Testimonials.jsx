@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faQuoteLeft, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import './Testimonials.css';
+import React, { useState, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faQuoteLeft, faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import "./Testimonials.css";
 
 const testimonials = [
   {
@@ -21,8 +21,8 @@ const testimonials = [
   },
   {
     id: 4,
-    quote: "Elsa did my husband and I's wedding date tattoos and I love them!! She's so soft handed and the atmosphere was great.  Will definitely be coming back next time we are in Colorado!",
-    author: "Jessica S,",
+    quote: "Elsa did my husband and I's wedding date tattoos and I love them!! She's so soft-handed and the atmosphere was great. Will definitely be coming back next time we are in Colorado!",
+    author: "Jessica S.",
   },
   {
     id: 5,
@@ -33,67 +33,74 @@ const testimonials = [
     id: 6,
     quote: "Barrett's color techniques are really incredible. She reimagined a large back piece I've had for 4 years that needed transformation and serious color. We have done session 1 of 3. She is patient & kind. All the gals in the shop have such fun character, I enjoyed my experience and look forward to my next session.",
     author: "Unkempt R.",
-  }
+  },
 ];
 
 const Testimonials = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [slideDirection, setSlideDirection] = useState("");
+  const [animating, setAnimating] = useState(false);
+
+  const handleAnimationEnd = () => {
+    setSlideDirection("");
+    setAnimating(false);
+  };
 
   const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+    if (animating) return;
+    setSlideDirection("slide-out-right");
+    setAnimating(true);
+    setTimeout(() => {
+      setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+      setSlideDirection("slide-in-right");
+    }, 500);
   };
 
   const prevSlide = () => {
-    setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+    if (animating) return;
+    setSlideDirection("slide-out-left");
+    setAnimating(true);
+    setTimeout(() => {
+      setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+      setSlideDirection("slide-in-left");
+    }, 500);
   };
 
   return (
     <section className="TestimonialsSection">
       <div className="TestimonialsContainer">
-        <FontAwesomeIcon icon={faQuoteLeft} className="QuoteIcon" />
-        
-        <div className="TestimonialContent">
-          <button 
-            className="NavButton PrevButton" 
-            onClick={prevSlide}
-            aria-label="Previous testimonial"
-          >
-            <FontAwesomeIcon icon={faChevronLeft} />
-          </button>
-
-          <div className="TestimonialTrack">
-            <div 
-              className="TestimonialSlider" 
-              style={{ transform: `translateX(-${currentIndex * 100}%)` }}
-            >
-              {testimonials.map((testimonial, index) => (
-                <div key={testimonial.id} className="TestimonialItem">
-                  <p className="Quote">{testimonial.quote}</p>
-                  <div className="TestimonialFooter">
-                    <p className="Author">{testimonial.author}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
+        <FontAwesomeIcon icon={faQuoteLeft} className="QuoteIcons TopQuote" />
+        <div
+          className={`QuoteText ${slideDirection}`}
+          onAnimationEnd={handleAnimationEnd}
+        >
+          {testimonials[currentIndex].quote}
+        </div>
+        <p className={`QuoteAuthor ${slideDirection}`} onAnimationEnd={handleAnimationEnd}>{testimonials[currentIndex].author}</p>
+        <div className="Controls">
+          <FontAwesomeIcon icon={faChevronLeft} className="Arrow" onClick={prevSlide} />
+          <div className="SlideIndicator">
+            {testimonials.map((_, index) => (
+              <span
+                key={index}
+                className={`Bubble ${index === currentIndex ? "Active" : ""}`}
+                onClick={() => {
+                  if (!animating && index !== currentIndex) {
+                    const goingRight = index > currentIndex;
+                    setSlideDirection(goingRight ? "slide-out-right" : "slide-out-left");
+                    setAnimating(true);
+                    setTimeout(() => {
+                      setCurrentIndex(index);
+                      setSlideDirection(goingRight ? "slide-in-right" : "slide-in-left");
+                    }, 500);
+                  }
+                }}
+              />
+            ))}
           </div>
-
-          <button 
-            className="NavButton NextButton" 
-            onClick={nextSlide}
-            aria-label="Next testimonial"
-          >
-            <FontAwesomeIcon icon={faChevronRight} />
-          </button>
+          <FontAwesomeIcon icon={faChevronRight} className="Arrow" onClick={nextSlide} />
         </div>
-
-        <div className="TestimonialDots">
-          {testimonials.map((_, index) => (
-            <span 
-              key={index} 
-              className={`Dot ${index === currentIndex ? 'active' : ''}`}
-            />
-          ))}
-        </div>
+        <FontAwesomeIcon icon={faQuoteLeft} className="QuoteIcons BottomQuote" />
       </div>
     </section>
   );
