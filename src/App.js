@@ -14,13 +14,13 @@ import Dashboard from './Pages/Dashboard/Dashboard';
 import GenerateBookingLink from './Pages/GenerateBookingLink';
 import BookAppointment from './Pages/BookAppointment';
 import Navbar from './Components/Navbar/Navbar';
-import Test from './Components/Test';
 import { SessionProvider } from './Context/SessionContext';
 import ProtectedRoute from './Context/ProtectedRoute';
 import Gallery from './Pages/Gallery/Gallery';
-import Shiloh from './Pages/Artists/Shiloh';
+import Barrett from './Pages/Artists/Barrett';
 import ManageAccount from './Components/ManageAccount/ManageAccount';
 import ManageEmployees from './Pages/ManageEmployees/ManageEmployees';
+import ManageTestimonials from './Pages/ManageTestimonials/ManageTestimonials';
 
 function App() {
   return (
@@ -29,7 +29,7 @@ function App() {
       <Routes>
         {/* Public Routes */}
         <Route path="/" element={<Home />} />
-        <Route path="/Shiloh" element={<Shiloh />} />
+        <Route path="/Barrett" element={<Barrett />} />
         <Route path="/Audrey" element={<Audrey />} />
         <Route path="/Christina" element={<Christina />} />
         <Route path="/booking" element={<Booking />} />
@@ -77,6 +77,14 @@ function App() {
           <SessionProvider>
             <ProtectedRoute>
               <ManageEmployees />
+            </ProtectedRoute>
+          </SessionProvider>
+        } />
+
+        <Route path="/manage-testimonials" element={
+          <SessionProvider>
+            <ProtectedRoute>
+              <ManageTestimonials />
             </ProtectedRoute>
           </SessionProvider>
         } />

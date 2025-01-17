@@ -368,7 +368,7 @@ const BookAppointment = () => {
           client_phone: bookingDetails.inquiries.client_phone,
           is_multi_session: true,
           deposit_paid: false,
-          status: 'waiting',
+          status: 'scheduled',
           date: appointmentData[0].date,
           start_time: appointmentData[0].start_time,
           end_time: appointmentData[0].end_time,
@@ -386,9 +386,11 @@ const BookAppointment = () => {
         if (parentError) throw parentError;
 
         // Update child appointments with parent ID
+        //TODO CHeck if the fix worked
         const sessionAppointments = appointmentData.map(appointment => ({
           ...appointment,
-          parent_appointment_id: parentData.id
+          parent_appointment_id: parentData.id,
+          status: 'scheduled'
         }));
 
         const { error: sessionsError } = await supabase

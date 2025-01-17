@@ -13,7 +13,7 @@ const About = () => {
 
   const handleNavigate = () => {
 
-    navigate('/gallery');
+    navigate('/booking');
   }
   return (
     <section id="about" className="AboutSection">
@@ -70,7 +70,7 @@ const About = () => {
 
         <div className="AboutCTA">
           <button className="CTAButton Secondary" onClick={scrollToArtists}>Meet Our Artists</button>
-          <button className="CTAButton Secondary" onClick={handleNavigate}>View Our Work</button>
+          <button className="CTAButton Secondary" onClick={handleNavigate}>Book Now</button>
         </div>
       </div>
     </section>

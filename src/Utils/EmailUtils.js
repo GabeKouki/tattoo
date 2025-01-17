@@ -69,3 +69,33 @@ export const sendRejectionEmail = async ({ clientEmail, rejectionReason, clientN
     throw error;
   }
 };
+
+export const sendBookingLinkEmail = async ({ to_email, client_name, artist_name, bookingLink }) => {
+  try {
+    const serviceId = process.env.REACT_APP_MAIN_EMAILJS_SERVICE_ID;
+    const templateId = process.env.REACT_APP_MAIN_EMAILJS_BOOKING_LINK_TEMPLATE_ID;
+    const publicKey = process.env.REACT_APP_MAIN_EMAILJS_PUBLIC_KEY;
+
+    const templateParams = {
+      to_email: to_email,
+      client_name: client_name,
+      booking_link: bookingLink,
+      artist_name: artist_name
+    }
+
+    const response = await emailjs.send(
+      serviceId,
+      templateId,
+      templateParams,
+      publicKey
+    );
+
+    console.log('Booking link email sent successfully:', response);
+    return response;
+
+  } catch (error) {
+    console.error('Error sending booking link email:', error);
+    alert('Failed to send booking link email. Please try again.');
+    throw error;
+  }
+};

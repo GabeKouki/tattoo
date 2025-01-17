@@ -6,18 +6,20 @@ import { faXTwitter } from '@fortawesome/free-brands-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import './ArtistCards.css';
 import AudreyJenkins from '../../Images/Audrey.jpeg';
-import ShilohHix from '../../Images/Shiloh.jpg';
+import BarrettLeary from '../../Images/Barrett.jpg';
 import Christina from '../../Images/Christina.jpg';
+
+
 
 const artists = [
   {
     id: 1,
-    name: "Shiloh Hix",
+    name: "Barrett Leary",
     specialty: "Realism",
-    image: ShilohHix,
-    email: "tattoos.by.shiloh@gmail.com",
+    image: BarrettLeary,
+    email: "tattoos.by.barrett@gmail.com",
     experience: "Experience: xx years",
-    slug: "Shiloh",
+    slug: "Barrett",
     socials: {
       instagram: "shiloh_tattoos",
       twitter: "shiloh_ink",

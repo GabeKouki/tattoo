@@ -2,15 +2,17 @@ import './ArtistAppointment.css';
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../../Utils/SupabaseClient';
 import { useSession } from '../../Context/SessionContext';
-import { set } from 'date-fns';
 
-const ArtistAppointment = ({ viewingAppointments, setViewingAppointments }) => {
+const ArtistAppointment = ({ viewingAppointments, setViewingAppointments, artistMapping }) => {
   const { session } = useSession();
   const [loading, setLoading] = useState(false);
   const [appointments, setAppointments] = useState([]);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [bookingData, setBookingData] = useState(null);
+  const [artistNames, setArtistNames] = useState({});
+  const [artistFilter, setArtistFilter] = useState('all');
+
 
   const fetchAppointments = async () => {
     setLoading(true);
@@ -56,6 +58,12 @@ const ArtistAppointment = ({ viewingAppointments, setViewingAppointments }) => {
       fetchAppointments();
     }
   }, [viewingAppointments, session]);
+
+  useEffect(() => {
+    appointments.forEach(appointment => {
+      fetchArtistName(appointment);
+    });
+  }, [appointments]);
 
   const calculateTimeAgo = (dateString) => {
     const date = new Date(dateString);
@@ -111,16 +119,40 @@ const ArtistAppointment = ({ viewingAppointments, setViewingAppointments }) => {
     console.log('Payment reminder clicked');
     console.log('Appointment ID:', bookingId);
 
-    const { data, error} = await supabase
-    .from('booking_links')
-    .select('*')
-    .eq('id', bookingId);
+    const { data, error } = await supabase
+      .from('booking_links')
+      .select('*')
+      .eq('id', bookingId);
 
     if (error) throw error;
 
     setBookingData(data);
     console.log('Booking link data:', bookingData[0].token);
   }
+
+  const fetchArtistName = async (appointment) => {
+    try {
+      const { data, error } = await supabase
+        .from('users')
+        .select('name')
+        .eq('id', appointment.artist_id)
+        .single();
+
+      if (error) throw error;
+
+      setArtistNames(prev => ({
+        ...prev,
+        [appointment.artist_id]: data.name
+      }));
+    } catch (err) {
+      console.error('Error fetching artist name:', err);
+      setArtistNames(prev => ({
+        ...prev,
+        [appointment.artist_id]: 'Unknown'
+      }));
+    }
+  };
+
 
   const AppointmentActions = ({ appointment, isSession = false }) => (
     <div className="appointment-actions">
@@ -165,6 +197,20 @@ const ArtistAppointment = ({ viewingAppointments, setViewingAppointments }) => {
 
   return (
     <div className="appointments-container">
+      {session?.user?.app_metadata.role === 'admin' && (
+        <select
+          value={artistFilter}
+          onChange={(e) => setArtistFilter(e.target.value)}
+          className="artist-select"
+        >
+          <option value="all">All Artists</option>
+          {Object.entries(artistMapping).map(([id, name]) => (
+            <option key={id} value={id}>
+              {name}
+            </option>
+          ))}
+        </select>
+      )}
       {loading ? (
         <div className="loading-container">
           <div className="loading-spinner"></div>
@@ -202,6 +248,7 @@ const ArtistAppointment = ({ viewingAppointments, setViewingAppointments }) => {
                 <span className="time-badge">
                   Created {calculateTimeAgo(appointment.created_at)}
                 </span>
+                <p>Artist: {artistNames[appointment.artist_id] || 'Unknown'}</p>
               </div>
 
               <div className="appointment-content">

@@ -94,7 +94,7 @@ const Booking = () => {
               <select id="artist" required value={formData.artist} onChange={handleChange}>
                 <option value="">Choose an artist...</option>
                 <option value="Audrey Jenkins">Audrey Jenkins</option>
-                <option value="Christina Moore">Christina Moore</option>
+                <option value="Christina Moore">Christina Aguilar</option>
                 <option value="Shiloh Barrett">Shiloh Barrett</option>
               </select>
             </div>

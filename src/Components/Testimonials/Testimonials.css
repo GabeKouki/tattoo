@@ -7,38 +7,46 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 350px;
+  min-height: 300px;
+  padding: 20px;
 }
 
 .TestimonialsContainer {
+  width: 100%;
   max-width: 800px;
   margin: 0 auto;
   text-align: center;
   position: relative;
   z-index: 1;
-  padding: 20px;
 }
 
 .QuoteText {
   font-size: 1.4rem;
   margin: 20px 0;
   color: white;
-  text-shadow:1px 1px 1px #fff, 1px 1px 1px #ccc;
+  text-shadow: 1px 1px 1px #fff, 1px 1px 1px #ccc;
   font-style: italic;
   line-height: 1.6;
   padding: 0 20px;
-  min-height: 165px;
-  max-height: 165px;
-  min-width: 800px;
-  max-width: 800px;
+  height: 165px;
+  width: 100%;
   display: flex;
   text-align: center;
   align-items: center;
   justify-content: center;
+  position: relative;
+}
+
+.QuoteText p {
+  position: relative;
+  margin: 0 auto;
+}
+
+.QuoteText::-webkit-scrollbar {
+  display: none;
 }
 
 .QuoteAuthor {
-
   margin-top: 10px;
   font-weight: bold;
   font-size: 1rem;
@@ -48,19 +56,22 @@
 .QuoteIcons {
   font-size: 3rem;
   opacity: 0.2;
-
   color: #00ffff;
   position: absolute;
 }
 
 .TopQuote {
-  top: -10px;
-  left: 20px;
+  top: 0px;
+  transform: translate(-75%, -75%);
+  position: absolute;
+  left: 0px;
 }
 
 .BottomQuote {
   bottom: 0px;
-  right: 20px;
+  position: absolute;
+  right: 0px;
+  transform: translate(75%, 75%)  rotateX(180deg) rotateY(180deg);
 }
 
 .Controls {
@@ -165,14 +176,34 @@
   }
 }
 
+@media (max-width: 1024px) {
+  .TestimonialsContainer {
+    max-width: 700px;
+  }
+
+  .QuoteText {
+    font-size: 1.3rem;
+    height: 150px;
+  }
+}
+
 @media (max-width: 768px) {
+  .TestimonialsContainer {
+    max-width: 90%;
+  }
+
   .QuoteText {
     font-size: 1.2rem;
+    height: 140px;
     padding: 0 15px;
   }
 
   .QuoteAuthor {
     font-size: 0.9rem;
+  }
+
+  .QuoteIcons {
+    font-size: 2.5rem;
   }
 
   .Arrow {
@@ -183,16 +214,39 @@
     width: 10px;
     height: 10px;
   }
+
+  .TopQuote {
+    left: 10px;
+  }
+
+  .BottomQuote {
+    right: 10px;
+  }
 }
 
 @media (max-width: 480px) {
+  .TestimonialsSection {
+    padding: 10px;
+  }
+
+  .TestimonialsContainer {
+    max-width: 95%;
+  }
+
   .QuoteText {
     font-size: 1rem;
+    text-shadow: none;
+    line-height: 1.0;
+    height: 130px;
     padding: 0 10px;
   }
 
   .QuoteAuthor {
     font-size: 0.8rem;
+  }
+
+  .QuoteIcons {
+    font-size: 2rem;
   }
 
   .Arrow {
@@ -202,5 +256,28 @@
   .Bubble {
     width: 8px;
     height: 8px;
+  }
+
+  .TopQuote {
+    left: 5px;
+  }
+
+  .BottomQuote {
+    right: 5px;
+  }
+
+  .Controls {
+    gap: 15px;
+  }
+}
+
+@media (max-width: 320px) {
+  .QuoteText {
+    font-size: 0.9rem;
+    height: 120px;
+  }
+
+  .QuoteIcons {
+    font-size: 1.5rem;
   }
 }

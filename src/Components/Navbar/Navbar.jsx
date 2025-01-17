@@ -23,6 +23,11 @@ const Navbar = () => {
         element.scrollIntoView({ behavior: 'smooth' });
       }
     }
+    setTimeout(() => {
+      if (isOpen) {
+        setIsOpen(false);
+      }
+    }, 800);
   };
 
   //! Handle scroll after navigation
@@ -64,7 +69,7 @@ const Navbar = () => {
             <li className="NavDropdown">
               <button onClick={() => scrollToSection('artists')} className="NavLink">Artists ▾</button>
               <ul className="DropdownContent">
-                <li><Link to="/Shiloh" className="DropdownLink">Shiloh</Link></li>
+                <li><Link to="/Barrett" className="DropdownLink">Barrett</Link></li>
                 <li><Link to="/Audrey" className="DropdownLink">Audrey</Link></li>
                 <li><Link to="/Christina" className="DropdownLink">Christina</Link></li>
               </ul>
@@ -110,9 +115,10 @@ const Navbar = () => {
         <ul className="MobileLinks">
           <li><button onClick={() => scrollToSection('about')} className="MobileLink">About</button></li>
           <li><button onClick={() => scrollToSection('artists')} className="MobileLink">Artists</button></li>
-          <li><button onClick={() => scrollToSection('gallery')} className="MobileLink">Gallery</button></li>
+          <li><Link to="/gallery" className="MobileLink" onClick={closeNavbar}>Gallery</Link></li>
           <li><Link to="/booking" className="MobileLink" onClick={closeNavbar}>Book Now</Link></li>
           <li><Link to="/aftercare" className="MobileLink" onClick={closeNavbar}>Aftercare</Link></li>
+          <li><Link to="/policies" className="MobileLink" onClick={closeNavbar}>Policies</Link></li>
           <li><Link to="/faq" className="MobileLink" onClick={closeNavbar}>FAQ</Link></li>
           <li><button onClick={() => scrollToSection('contact')} className="MobileLink">Contact</button></li>
         </ul>

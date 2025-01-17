@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { supabase } from '../Utils/SupabaseClient';
 import { useSession } from '../Context/SessionContext';
+import { sendBookingLinkEmail } from '../Utils/EmailUtils';
 import './GenerateBookingLink.css';
 
 const GenerateBookingLink = () => {
@@ -15,9 +16,11 @@ const GenerateBookingLink = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-
   const inquiryID = location.state?.inquiryID;
   const clientEmail = location.state?.clientEmail;
+  const [clientName, setClientName] = useState('');
+  const [inquiryData, setInquiryData] = useState([])
+  const [artistName, setArtistName] = useState('')
 
   useEffect(() => {
     if (!session) {
@@ -54,12 +57,12 @@ const GenerateBookingLink = () => {
       expiration.setDate(expiration.getDate() + 7);
 
       // Format sessions info - ensure it's a proper JSONB array
-      const sessionsInfo = isMultiSession ? 
+      const sessionsInfo = isMultiSession ?
         sessions.map((session, index) => ({
           session_number: index + 1,
           duration: parseFloat(session.duration),
           notes: session.notes || null
-        })) : 
+        })) :
         [{
           session_number: 1,
           duration: parseFloat(sessions[0].duration),
@@ -71,8 +74,8 @@ const GenerateBookingLink = () => {
         client_email: clientEmail,
         inquiry_id: inquiryID,
         token: newToken,
-        duration: parseInt(isMultiSession ? 
-          sessions.reduce((sum, s) => sum + parseFloat(s.duration), 0) : 
+        duration: parseInt(isMultiSession ?
+          sessions.reduce((sum, s) => sum + parseFloat(s.duration), 0) :
           sessions[0].duration
         ),
         is_multi_session: isMultiSession,
@@ -105,34 +108,47 @@ const GenerateBookingLink = () => {
   };
 
   const handleSendEmail = async () => {
-    if (!bookingLink) return;
+    if (!bookingLink || !clientEmail) return;
+
+    //! getting the inquiry data
+    try {
+      const { data, error } = await supabase.from('inquiries').select('*').eq('id', inquiryID);
+
+      setInquiryData(data);
+      setClientName(data[0].client_name);
+      if (error) throw error;
+    } catch (error) {
+      setError('Failed to fetch inquiry data: ' + error.message);
+      return
+    }
+
+
+    //! getting the artist name
+    try {
+      const { data, error } = await supabase
+        .from('users')
+        .select('name')
+        .eq('id', inquiryData[0].artist_id)
+
+      setArtistName(data[0].name)
+      if (error) throw error;
+    } catch (error) {
+      setError('Failed to fetch artist name: ' + error.message);
+      return
+    }
+
 
     setLoading(true);
     try {
-      // Send email using your email service
-      const emailContent = {
-        to: clientEmail,
-        subject: `Booking Link for Your Tattoo Appointment${isMultiSession ? 's' : ''}`,
-        artistName: session.user.user_metadata.name,
-        bookingLink,
-        isMultiSession,
-        sessions: sessions.map((session, index) => ({
-          sessionNumber: index + 1,
-          duration: session.duration,
-          notes: session.notes
-        }))
-      };
-
-      const { error } = await supabase.functions.invoke('send-booking-email', {
-        body: emailContent
+      await sendBookingLinkEmail({
+        to_email: clientEmail,
+        client_name: clientName,  //! Fix me
+        artist_name: artistName, //! Fix me
+        bookingLink: bookingLink
       });
-
-      if (error) throw error;
-      setSuccess('Booking link sent successfully! Redirecting to dashboard...');
-      setTimeout(() => navigate('/dashboard'), 2000);
-    } catch (err) {
-      console.error('Error sending email:', err);
-      setError('Failed to send booking link email.');
+      setSuccess('Booking link email sent successfully!');
+    } catch (error) {
+      setError('Failed to send email: ' + error.message);
     } finally {
       setLoading(false);
     }
@@ -187,7 +203,7 @@ const GenerateBookingLink = () => {
                   </button>
                 )}
               </div>
-              
+
               <div className="session-details">
                 <div className="input-group">
                   <label>Duration (hours)</label>
@@ -233,7 +249,7 @@ const GenerateBookingLink = () => {
         {success && <div className="success-message">{success}</div>}
 
         {!bookingLink ? (
-          <button 
+          <button
             className="generate-button"
             onClick={handleGenerateLink}
             disabled={loading}
@@ -265,7 +281,7 @@ const GenerateBookingLink = () => {
                 </button>
               </div>
             </div>
-            <button 
+            <button
               className="send-email-button"
               onClick={handleSendEmail}
               disabled={loading}

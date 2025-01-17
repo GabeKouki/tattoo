@@ -5,7 +5,7 @@ import { useSession } from '../../Context/SessionContext';
 import './Login.css';
 
 // Import icons from react-icons
-import { FiMail, FiLock, FiLogIn, FiAlertCircle } from 'react-icons/fi';
+import { FiLogIn, FiAlertCircle } from 'react-icons/fi';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -56,9 +56,10 @@ const Login = () => {
       <div className="login-card">
         <h1>Artist Login</h1>
         <form onSubmit={handleLogin}>
-          <div className="input-group">
+          <div className="login-input-group">
             <div className="input-wrapper">
               <input
+                className="login-input"
                 id="email"
                 type="email"
                 value={email}
@@ -69,9 +70,10 @@ const Login = () => {
             </div>
           </div>
 
-          <div className="input-group">
+          <div className="login-input-group">
             <div className="input-wrapper">
               <input
+                className="login-input"
                 id="password"
                 type="password"
                 value={password}

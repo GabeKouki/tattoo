@@ -25,6 +25,7 @@ const Dashboard = () => {
     weeklyAppointments: 0
   });
   const [inquiryFilter, setInquiryFilter] = useState('pending');
+  const [artistFilter, setArtistFilter] = useState('all');
 
   useEffect(() => {
     const fetchArtistMapping = async () => {
@@ -48,6 +49,7 @@ const Dashboard = () => {
     const fetchDashboardStats = async () => {
       try {
         // Get total appointments
+        //TODO Fix the total appointments functionality
         const { data: appointmentsData, error: appointmentsError } = await supabase
           .from('appointments')
           .select('*')
@@ -98,7 +100,7 @@ const Dashboard = () => {
     if (viewingInquiries) {
       fetchInquiries();
     }
-  }, [inquiryFilter, viewingInquiries]);
+  }, [inquiryFilter, artistFilter, viewingInquiries]);
 
   const fetchSchedule = async () => {
     setLoading(true);
@@ -136,18 +138,22 @@ const Dashboard = () => {
           *,
           artist:artist_id(name)
         `)
-        .order('created_at', { ascending: false }); // Changed to show newest first
+        .order('created_at', { ascending: false });
 
-      if (session.user.app_metadata.role !== 'admin') {
-        query = query.eq('artist_id', session.user.id);
-      }
-
+      // Apply status filter
       if (inquiryFilter !== 'all') {
         query = query.eq('status', inquiryFilter);
       }
 
-      const { data, error } = await query;
+      // Apply artist filter for admin users
+      if (session.user.app_metadata.role === 'admin' && artistFilter !== 'all') {
+        query = query.eq('artist_id', artistFilter);
+      } else if (session.user.app_metadata.role !== 'admin') {
+        // Non-admin users can only see their own inquiries
+        query = query.eq('artist_id', session.user.id);
+      }
 
+      const { data, error } = await query;
       if (error) throw error;
 
       setInquiries(data);
@@ -284,31 +290,6 @@ const Dashboard = () => {
     });
   };
 
-  const handleTest = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('users')
-        .select('name')
-        .eq('id', session.user.id)
-        .single();
-
-      if (error) {
-        throw new Error('Failed to fetch user name.');
-      }
-
-      console.log('Fetched User Name:', data.name);
-    } catch (err) {
-      console.error('Error fetching user data:', err);
-      alert('Failed to fetch user data.');
-    }
-
-    console.log('Test function called');
-    console.log('Session:', session);
-    console.log('User ID:', session.user.id);
-    console.log('User Name:', session?.user.user_metadata);
-    console.log('User Role:', session.user.app_metadata.role);
-  };
-
   const calculateTimeAgo = (dateString) => {
     const date = new Date(dateString);
     const now = new Date();
@@ -374,17 +355,17 @@ const Dashboard = () => {
           <div className="main-actions">
             <h2>Quick Actions</h2>
             <div className="action-grid">
-              <button className="action-button large" onClick={fetchInquiries}>
+              <button className="dashboard-action-button large" onClick={fetchInquiries}>
                 <span className="material-icons">inbox</span>
                 <span className="action-text">View Inquiries</span>
                 <span className="action-subtext">Check and manage client requests</span>
               </button>
-              <button className="action-button large" onClick={() => setViewingAppointments(true)}>
+              <button className="dashboard-action-button large" onClick={() => setViewingAppointments(true)}>
                 <span className="material-icons">event</span>
                 <span className="action-text">View Appointments</span>
                 <span className="action-subtext">Manage your scheduled sessions</span>
               </button>
-              <button className="action-button large" onClick={fetchSchedule}>
+              <button className="dashboard-action-button large" onClick={fetchSchedule}>
                 <span className="material-icons">calendar_today</span>
                 <span className="action-text">View Schedule</span>
                 <span className="action-subtext">Check your availability</span>
@@ -395,19 +376,25 @@ const Dashboard = () => {
           <div className="secondary-actions">
             <h2>Account Management</h2>
             <div className="secondary-grid">
-              <button className="action-button small" onClick={() => navigate('/manage-account')}>
+              <button className="dashboard-action-button small" onClick={() => navigate('/manage-account')}>
                 <span className="material-icons">manage_accounts</span>
                 <span>Manage Account</span>
               </button>
 
               {session?.user?.app_metadata.role === 'admin' && (
-                <button className="action-button small" onClick={() => navigate('/manage-employees')}>
-                  <span className="material-icons">groups</span>
-                  <span>Manage Employees</span>
-                </button>
+                <>
+                  <button className="dashboard-action-button small" onClick={() => navigate('/manage-employees')}>
+                    <span className="material-icons">groups</span>
+                    <span>Manage Employees</span>
+                  </button>
+                  <button className="dashboard-action-button small" onClick={() => navigate('/manage-testimonials')}>
+                    <span className="material-icons">format_quote</span>
+                    <span>Manage Testimonials</span>
+                  </button>
+                </>
               )}
 
-              <button className="action-button small logout" onClick={handleLogout}>
+              <button className="dashboard-action-button small logout" onClick={handleLogout}>
                 <span className="material-icons">logout</span>
                 <span>Logout</span>
               </button>
@@ -455,6 +442,20 @@ const Dashboard = () => {
             >
               Rejected
             </button>
+            {session?.user?.app_metadata.role === 'admin' && (
+                <select
+                  value={artistFilter}
+                  onChange={(e) => setArtistFilter(e.target.value)}
+                  className="artist-select"
+                >
+                  <option value="all">All Artists</option>
+                  {Object.entries(artistMapping).map(([id, name]) => (
+                    <option key={id} value={id}>
+                      {name}
+                    </option>
+                  ))}
+                </select>
+            )}
           </div>
           {inquiries.length === 0 ? (
             <div className="empty-state">
@@ -535,20 +536,24 @@ const Dashboard = () => {
                       </div>
                     )}
                   </div>
-
                   <div className="inquiry-actions">
-                    <button className="action-btn accept" onClick={() => handleAccept(inquiry)}>
-                      <span className="material-icons">check_circle</span>
-                      Accept Inquiry
-                    </button>
-                    <button className="action-btn reject" onClick={() => handleReject(inquiry)}>
-                      <span className="material-icons">cancel</span>
-                      Reject Inquiry
-                    </button>
-                    <button className="action-btn delete" onClick={() => handleDeleteInquiry(inquiry)}>
-                      <span className="material-icons">delete</span>
-                      Delete Inquiry
-                    </button>
+                    {inquiry.status === 'pending' ? (
+                      <>
+                        <button className="action-btn accept" onClick={() => handleAccept(inquiry)}>
+                          <span className="material-icons">check_circle</span>
+                          Accept Inquiry
+                        </button>
+                        <button className="action-btn reject" onClick={() => handleReject(inquiry)}>
+                          <span className="material-icons">cancel</span>
+                          Reject Inquiry
+                        </button>
+                      </>
+                    ) : (
+                      <button className="action-btn delete" onClick={() => handleDeleteInquiry(inquiry)}>
+                        <span className="material-icons">delete</span>
+                        Delete Inquiry
+                      </button>
+                    )}
                   </div>
                 </div>
               ))}
@@ -566,6 +571,7 @@ const Dashboard = () => {
           <ArtistAppointment
             viewingAppointments={viewingAppointments}
             setViewingAppointments={setViewingAppointments}
+            artistMapping={artistMapping}
           />
         </>
       )}

@@ -14,6 +14,7 @@ const ArtistSchedule = ({ schedule, fetchSchedule, artistId }) => {
   const [recurringWeeks, setRecurringWeeks] = useState(1);
   const [availability, setAvailability] = useState([]);
 
+
   useEffect(() => {
     if (schedule) {
       setAppointments(schedule);

@@ -19,6 +19,33 @@
   transition: all 0.3s ease;
 }
 
+.filter-container {
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.filter-dropdown {
+  padding: 0.5rem 1rem;
+  background: #334155;
+  border: 1px solid #475569;
+  border-radius: 6px;
+  color: #f1f5f9;
+  font-size: 1rem;
+  cursor: pointer;
+  min-width: 200px;
+}
+
+.filter-dropdown:hover {
+  background: #3e4e67;
+}
+
+.filter-label {
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
+
 .appointment-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);

@@ -24,9 +24,11 @@
   font-size: 2rem;
 }
 
-.input-group {
+.login-input-group {
   margin-bottom: 1.5rem;
 }
+
+
 
 .input-group label {
   display: block;
@@ -40,8 +42,8 @@
 }
 
 .input-wrapper input {
-  width: 100%;
-  padding: 12px 12px 12px 40px; /* Adjusted padding-left for icons */
+  width: calc(100% - 28px);
+  padding: 12px 12px 12px 12px; 
   border: 2px solid #555555;
   border-radius: 8px;
   font-size: 1rem;

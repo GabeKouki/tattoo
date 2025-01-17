@@ -3,26 +3,25 @@ import { init } from '@emailjs/browser';
 import { supabase } from '../../Utils/SupabaseClient';
 import { sendEmail } from '../../Utils/EmailUtils';
 import './ArtistPage.css';
-import ShilohsPhoto from '../../Images/Shiloh.jpg';
+import BarrettsPhoto from '../../Images/Barrett.jpg';
 import { ReactComponent as TwitterIcon } from '../../Images/TwitterIcon.svg';
 import { ReactComponent as InstagramIcon } from '../../Images/InstagramIcon.svg';
 import { ReactComponent as FacebookIcon } from '../../Images/FacebookIcon.svg';
-import Shiloh1 from '../../Images/Shiloh1.jpg';
-import Shiloh2 from '../../Images/Shiloh2.jpg';
-import Shiloh3 from '../../Images/Shiloh3.jpg';
-import Shiloh4 from '../../Images/Shiloh4.jpg';
-import Shiloh5 from '../../Images/Shiloh5.jpg';
-import Shiloh6 from '../../Images/Shiloh6.jpg';
-import Shiloh7 from '../../Images/Shiloh7.jpg';
-import Shiloh8 from '../../Images/Shiloh8.jpg';
-import Shiloh9 from '../../Images/Shiloh9.jpg';
-import Shiloh10 from '../../Images/Shiloh10.jpg';
-import Shiloh11 from '../../Images/Shiloh11.jpg';
-import Shiloh12 from '../../Images/Shiloh12.jpg';
-import Shiloh13 from '../../Images/Shiloh13.jpg';
-import Shiloh14 from '../../Images/Shiloh14.jpg';
+import Barrett1 from '../../Images/Barrett1.jpg';
+import Barrett2 from '../../Images/Barrett2.jpg';
+import Barrett3 from '../../Images/Barrett3.jpg';
+import Barrett4 from '../../Images/Barrett4.jpg';
+import Barrett5 from '../../Images/Barrett5.jpg';
+import Barrett6 from '../../Images/Barrett6.jpg';
+import Barrett7 from '../../Images/Barrett7.jpg';
+import Barrett8 from '../../Images/Barrett8.jpg';
+import Barrett9 from '../../Images/Barrett9.jpg';
+import Barrett10 from '../../Images/Barrett10.jpg';
+import Barrett11 from '../../Images/Barrett11.jpg';
+import Barrett12 from '../../Images/Barrett12.jpg';
+import Barrett13 from '../../Images/Barrett13.jpg';
 
-const Shiloh = () => {
+const Barrett = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [showForm, setShowForm] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -162,31 +161,30 @@ const Shiloh = () => {
   const categories = ['all', 'fine line', 'realism', 'color'];
 
   const workExamples = [
-    { id: 1, image: Shiloh1, category: 'realism' },
-    { id: 2, image: Shiloh2, category: 'fine line' },
-    { id: 3, image: Shiloh3, category: 'realism' },
-    { id: 4, image: Shiloh4, category: 'realism' },
-    { id: 5, image: Shiloh5, category: 'fine line' },
-    { id: 6, image: Shiloh6, category: 'realism' },
-    { id: 7, image: Shiloh7, category: 'realism' },
-    { id: 8, image: Shiloh8, category: 'color' },
-    { id: 9, image: Shiloh9, category: 'realism' },
-    { id: 10, image: Shiloh10, category: 'fine line' },
-    { id: 11, image: Shiloh11, category: 'fine line' },
-    { id: 12, image: Shiloh12, category: 'realism' },
-    { id: 13, image: Shiloh13, category: 'realism' },
-    { id: 14, image: Shiloh14, category: 'realism' },
+    { id: 1, image: Barrett1, category: 'realism' },
+    { id: 2, image: Barrett2, category: 'fine line' },
+    { id: 3, image: Barrett3, category: 'realism' },
+    { id: 4, image: Barrett4, category: 'realism' },
+    { id: 5, image: Barrett5, category: 'fine line' },
+    { id: 6, image: Barrett6, category: 'realism' },
+    { id: 7, image: Barrett7, category: 'realism' },
+    { id: 8, image: Barrett8, category: 'color' },
+    { id: 9, image: Barrett9, category: 'realism' },
+    { id: 10, image: Barrett10, category: 'fine line' },
+    { id: 11, image: Barrett11, category: 'fine line' },
+    { id: 12, image: Barrett12, category: 'realism' },    
+    { id: 13, image: Barrett13, category: 'realism' },
   ];
 
   return (
     <div className="ArtistPage">
       <section className="ArtistIntro">
         <div className="ArtistProfile">
-          <img src={ShilohsPhoto} alt="Shiloh" className="ArtistImage" />
+          <img src={BarrettsPhoto} alt="Shiloh" className="ArtistImage" />
           <div className="ArtistInfo">
-            <h1>Shiloh Barrett</h1>
+            <h1>Barrett Leary</h1>
             <p className="ArtistBio">
-              I'm Shiloh, a passionate tattoo artist specializing in creating
+              I'm Barrett, a passionate tattoo artist specializing in creating
               unique, custom designs that reflect my clients' individuality.
             </p>
             <div className="ArtistSocials">
@@ -373,4 +371,4 @@ const Shiloh = () => {
   );
 };
 
-export default Shiloh;
+export default Barrett;

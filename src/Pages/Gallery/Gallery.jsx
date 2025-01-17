@@ -33,24 +33,66 @@ import Christina14 from '../../Images/Christina14.jpg';
 import Christina15 from '../../Images/Christina15.jpg';
 
 // Shiloh Images
-import Shiloh1 from '../../Images/Shiloh1.jpg';
-import Shiloh2 from '../../Images/Shiloh2.jpg';
-import Shiloh3 from '../../Images/Shiloh3.jpg';
-import Shiloh4 from '../../Images/Shiloh4.jpg';
-import Shiloh5 from '../../Images/Shiloh5.jpg';
-import Shiloh6 from '../../Images/Shiloh6.jpg';
-import Shiloh7 from '../../Images/Shiloh7.jpg';
-import Shiloh8 from '../../Images/Shiloh8.jpg';
-import Shiloh9 from '../../Images/Shiloh9.jpg';
-import Shiloh10 from '../../Images/Shiloh10.jpg';
-import Shiloh11 from '../../Images/Shiloh11.jpg';
-import Shiloh12 from '../../Images/Shiloh12.jpg';
-import Shiloh13 from '../../Images/Shiloh13.jpg';
-import Shiloh14 from '../../Images/Shiloh14.jpg';
+import Barrett1 from '../../Images/Barrett1.jpg';
+import Barrett2 from '../../Images/Barrett2.jpg';
+import Barrett3 from '../../Images/Barrett3.jpg';
+import Barrett4 from '../../Images/Barrett4.jpg';
+import Barrett5 from '../../Images/Barrett5.jpg';
+import Barrett6 from '../../Images/Barrett6.jpg';
+import Barrett7 from '../../Images/Barrett7.jpg';
+import Barrett8 from '../../Images/Barrett8.jpg';
+import Barrett9 from '../../Images/Barrett9.jpg';
+import Barrett10 from '../../Images/Barrett10.jpg';
+import Barrett11 from '../../Images/Barrett11.jpg';
+import Barrett12 from '../../Images/Barrett12.jpg';
+import Barrett13 from '../../Images/Barrett13.jpg';
 
 const Gallery = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [randomizedImages, setRandomizedImages] = useState([]);
+
+  const allImagesWithOwners = [
+    { src: Audrey1, owner: "Audrey Jenkins" },
+    { src: Audrey2, owner: "Audrey Jenkins" },
+    { src: Audrey3, owner: "Audrey Jenkins" },
+    { src: Audrey4, owner: "Audrey Jenkins" },
+    { src: Audrey5, owner: "Audrey Jenkins" },
+    { src: Audrey6, owner: "Audrey Jenkins" },
+    { src: Audrey7, owner: "Audrey Jenkins" },
+    { src: Audrey8, owner: "Audrey Jenkins" },
+    { src: Audrey9, owner: "Audrey Jenkins" },
+    { src: Audrey10, owner: "Audrey Jenkins" },
+    { src: Audrey11, owner: "Audrey Jenkins" },
+    { src: Audrey12, owner: "Audrey Jenkins" },
+    { src: Christina1, owner: "Christina Aguilar" },
+    { src: Christina2, owner: "Christina Aguilar" },
+    { src: Christina3, owner: "Christina Aguilar" },
+    { src: Christina4, owner: "Christina Aguilar" },
+    { src: Christina5, owner: "Christina Aguilar" },
+    { src: Christina6, owner: "Christina Aguilar" },
+    { src: Christina7, owner: "Christina Aguilar" },
+    { src: Christina8, owner: "Christina Aguilar" },
+    { src: Christina9, owner: "Christina Aguilar" },
+    { src: Christina10, owner: "Christina Aguilar" },
+    { src: Christina11, owner: "Christina Aguilar" },
+    { src: Christina12, owner: "Christina Aguilar" },
+    { src: Christina13, owner: "Christina Aguilar" },
+    { src: Christina14, owner: "Christina Aguilar" },
+    { src: Christina15, owner: "Christina Aguilar" },
+    { src: Barrett1, owner: "Barrett Leary" },
+    { src: Barrett2, owner: "Barrett Leary" },
+    { src: Barrett3, owner: "Barrett Leary" },
+    { src: Barrett4, owner: "Barrett Leary" },
+    { src: Barrett5, owner: "Barrett Leary" },
+    { src: Barrett6, owner: "Barrett Leary" },
+    { src: Barrett7, owner: "Barrett Leary" },
+    { src: Barrett8, owner: "Barrett Leary" },
+    { src: Barrett9, owner: "Barrett Leary" },
+    { src: Barrett10, owner: "Barrett Leary" },
+    { src: Barrett11, owner: "Barrett Leary" },
+    { src: Barrett12, owner: "Barrett Leary" },
+    { src: Barrett13, owner: "Barrett Leary" },
+  ]
 
   // Fisher-Yates shuffle algorithm
   const shuffleArray = (array) => {
@@ -62,19 +104,12 @@ const Gallery = () => {
     return newArray;
   };
 
-    useEffect(() => {
-      window.scrollTo(0, 0);
-    }, []);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
-    const allImages = [
-      Audrey1, Audrey2, Audrey3, Audrey4, Audrey5, Audrey6, Audrey7, Audrey8, Audrey9, Audrey10, Audrey11, Audrey12,
-      Christina1, Christina2, Christina3, Christina4, Christina5, Christina6, Christina7, Christina8, Christina9, 
-      Christina10, Christina11, Christina12, Christina13, Christina14, Christina15,
-      Shiloh1, Shiloh2, Shiloh3, Shiloh4, Shiloh5, Shiloh6, Shiloh7, Shiloh8, Shiloh9, Shiloh10, 
-      Shiloh11, Shiloh12, Shiloh13, Shiloh14
-    ];
-    setRandomizedImages(shuffleArray(allImages));
+    setRandomizedImages(shuffleArray(allImagesWithOwners));
   }, []);
 
   return (
@@ -82,8 +117,11 @@ const Gallery = () => {
       <div className="gallery-container">
         <div className="gallery-header">
           <h1>Our Work</h1>
-          <p>Explore our diverse collection of custom tattoos created by our talented artists. 
-             Each piece tells a unique story and showcases our commitment to quality and artistic excellence.</p>
+          <p>
+            Explore our diverse collection of custom tattoos created by our talented
+            artists. Each piece tells a unique story and showcases our commitment to
+            quality and artistic excellence.
+          </p>
           <div className="header-separator">
             <span className="separator-line"></span>
             <span className="separator-icon">✦</span>
@@ -93,12 +131,15 @@ const Gallery = () => {
 
         <div className="gallery-grid">
           {randomizedImages.map((image, index) => (
-            <div 
+            <div
               className="gallery-item"
               key={index}
-              onClick={() => setSelectedImage(image)}
+              onClick={() => setSelectedImage(image.src)}
             >
-              <img src={image} alt={`Tattoo artwork ${index + 1}`} loading="lazy" />
+              <div className="clip">
+                <img src={image.src} alt={`Tattoo artwork ${index + 1}`} loading="lazy" />
+              </div>
+              <span className="image-owner">By: {image.owner}</span>
             </div>
           ))}
         </div>
