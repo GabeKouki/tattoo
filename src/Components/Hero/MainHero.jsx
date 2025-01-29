@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './MainHero.css';
-import inkGif from '../../Images/HeroVideo.mp4'; 
+import inkGif from '../../Images/HeroVideo.mp4';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAnglesDown } from '@fortawesome/free-solid-svg-icons';
 const MainHero = () => {
@@ -16,7 +16,15 @@ const MainHero = () => {
   return (
     <div className="MainHeroContainer">
       <div className="GifBackground">
-        <video muted autoPlay loop src={inkGif} alt="ink background" className="BackgroundGif" />
+        <video
+          muted
+          autoPlay
+          playsInline
+          loop
+          src={inkGif}
+          className="BackgroundGif"
+          preload="auto"
+        />
         <div className="GifOverlay"></div>
       </div>
       <div className="MainHeroContent">
@@ -26,7 +34,7 @@ const MainHero = () => {
           <p>Mon-Fri: 12PM-8PM</p>
         </div>
       </div>
-      <div 
+      <div
         className="ScrollIndicator"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
@@ -40,9 +48,9 @@ const MainHero = () => {
         {isHovered ? (
           <span className="ScrollText">Scroll Down</span>
         ) : (
-          <FontAwesomeIcon 
-            icon={faAnglesDown} 
-            className="ScrollArrow" 
+          <FontAwesomeIcon
+            icon={faAnglesDown}
+            className="ScrollArrow"
             beat
           />
         )}

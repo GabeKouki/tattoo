@@ -2,41 +2,52 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../Utils/SupabaseClient';
 import { useSession } from '../../Context/SessionContext';
-import './Login.css'
+import './Login.css';
 
+// Import icons from react-icons
+import { FiLogIn, FiAlertCircle } from 'react-icons/fi';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const { setSession } = useSession(); // Get context setter
+  const { setSession } = useSession();
   const navigate = useNavigate();
-
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
 
     try {
-      const { data: sessionData, error } = await supabase.auth.signInWithPassword({
+      // Authenticate with auth.users
+      const { data: sessionData, error: sessionError } = await supabase.auth.signInWithPassword({
         email,
         password,
-        options: {
-          expiresIn: 10
-        }
       });
 
-      if (error) throw error;
-
-      if (sessionData.session) {
-        setSession(sessionData.session); // Update session context
-        navigate('/dashboard');
-      } else {
-        setError('Login failed. No session found.');
+      if (sessionError || !sessionData.session) {
+        throw new Error('Invalid email or password.');
       }
+
+      const userId = sessionData.user.id;
+
+      // Fetch role and metadata from users table
+      const { data: userMetadata, error: metadataError } = await supabase
+        .from('users')
+        .select('*')
+        .eq('id', userId)
+        .single();
+
+      if (metadataError || !userMetadata) {
+        throw new Error('Unable to fetch user metadata.');
+      }
+
+      // Set session and metadata
+      setSession({ ...sessionData.session, userMetadata });
+      navigate('/dashboard');
     } catch (err) {
       console.error('Login error:', err);
-      setError('Invalid email or password.');
+      setError(err.message || 'Login failed. Please try again.');
     }
   };
 
@@ -45,11 +56,10 @@ const Login = () => {
       <div className="login-card">
         <h1>Artist Login</h1>
         <form onSubmit={handleLogin}>
-          <div className="input-group">
-            <label htmlFor="email">Email</label>
+          <div className="login-input-group">
             <div className="input-wrapper">
-              <span className="material-icons">email</span>
               <input
+                className="login-input"
                 id="email"
                 type="email"
                 value={email}
@@ -60,11 +70,10 @@ const Login = () => {
             </div>
           </div>
 
-          <div className="input-group">
-            <label htmlFor="password">Password</label>
+          <div className="login-input-group">
             <div className="input-wrapper">
-              <span className="material-icons">lock</span>
               <input
+                className="login-input"
                 id="password"
                 type="password"
                 value={password}
@@ -75,14 +84,16 @@ const Login = () => {
             </div>
           </div>
 
-          {error && <div className="error-message">
-            <span className="material-icons">error</span>
-            {error}
-          </div>}
+          {error && (
+            <div className="error-message">
+              <FiAlertCircle style={{ marginRight: '8px' }} />
+              {error}
+            </div>
+          )}
 
           <div className="button-group">
             <button type="submit" className="login-button">
-              <span className="material-icons">login</span>
+              <FiLogIn style={{ marginRight: '8px' }} />
               Login
             </button>
           </div>

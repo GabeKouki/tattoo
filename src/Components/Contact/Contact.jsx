@@ -25,62 +25,68 @@ const Contact = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setError(null);
-    
+
     emailjs.sendForm(
       'service_elyvlak',
       'template_6pmgboa',
       form.current,
       '5g8P1nv5NKMpKDxHq'
     )
-    .then(() => {
-      setSubmitted(true);
-      setFormData({
-        from_name: '',
-        reply_to: '',
-        phone: '',
-        message: ''
+      .then(() => {
+        setSubmitted(true);
+        setFormData({
+          from_name: '',
+          reply_to: '',
+          phone: '',
+          message: ''
+        });
+        setTimeout(() => {
+          setSubmitted(false);
+        }, 5000);
+      })
+      .catch((error) => {
+        setError('Failed to send message. Please try again.');
+        console.error('Error:', error);
       });
-      setTimeout(() => {
-        setSubmitted(false);
-      }, 5000);
-    })
-    .catch((error) => {
-      setError('Failed to send message. Please try again.');
-      console.error('Error:', error);
-    });
   };
 
   return (
     <section className="ContactSection" id="contact">
       <div className="ContactContainer">
         <h2 className="ContactTitle">Contact Us</h2>
-        
+
         <div className="ContactContent">
           <div className="MapSection">
             <div className="MapContainer">
               <iframe
-                title="Location"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2974.4821549657546!2d-71.41463492439074!3d41.82018994444345!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89e445247a3d60c7%3A0x684bb28657c7c6c5!2s122%20Washington%20St%2C%20Providence%2C%20RI%2002903!5e0!3m2!1sen!2sus!4v1709168669317!5m2!1sen!2sus"
+                title="Above The Clouds Tattoo"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3126.313174602639!2d-105.0601455!3d38.9931864!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8713595a699e02b5%3A0x506474b51529e5de!2s730%20US-24%2C%20Woodland%20Park%2C%20CO%2080863!5e0!3m2!1sen!2sus!4v1709168669317!5m2!1sen!2sus"
                 className="Map"
                 allowFullScreen=""
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
+                crossOrigin="anonymous"
               ></iframe>
             </div>
-            
+
             <div className="BusinessInfo">
               <div className="InfoItem">
                 <h3>Location</h3>
-                <p>122 Washington Street</p>
-                <p>Providence, RI 02895</p>
+                <p>730 US-24</p>
+                <p>Woodland Park, CO 80863</p>
               </div>
-              
+              <div className="InfoItem">
+                <h3>Phone</h3>
+                <p>+1 (719) 686-7472</p>
+              </div>
               <div className="InfoItem">
                 <h3>Hours</h3>
-                <p>Monday - Friday</p>
-                <p>8:00 AM - 8:00 PM</p>
+                <p>Tuesday - Saturday</p>
+                <p>12:00 PM - 8:00 PM</p>
               </div>
+
             </div>
+
             {/*//! <div className="NewsLetterContainer">
                 <h1>Sign up for our newsletter</h1>
                 <input type="email"></input>
@@ -146,7 +152,7 @@ const Contact = () => {
                   Message sent successfully!
                 </div>
               )}
-              
+
               {error && (
                 <div className="ErrorMessage">
                   {error}

@@ -1,20 +1,38 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FaInstagram, FaTwitter, FaFacebook } from 'react-icons/fa';
+import { FaInstagram, FaFacebook } from 'react-icons/fa';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faXTwitter } from '@fortawesome/free-brands-svg-icons';
+import { useNavigate } from 'react-router-dom';
 import './ArtistCards.css';
 import AudreyJenkins from '../../Images/Audrey.jpeg';
-import ShilohHix from '../../Images/Shiloh.jpg';
+import BarrettLeary from '../../Images/Barrett.jpg';
 import Christina from '../../Images/Christina.jpg';
+
+
 
 const artists = [
   {
     id: 1,
+    name: "Barrett Leary",
+    specialty: "Realism",
+    image: BarrettLeary,
+    email: "tattoos.by.barrett@gmail.com",
+    experience: "Experience: xx years",
+    slug: "Barrett",
+    socials: {
+      instagram: "shiloh_tattoos",
+      twitter: "shiloh_ink",
+      facebook: "shilohsmith.tattoo"
+    }
+  },
+  {
+    id: 2,
     name: "Audrey Jenkins",
     specialty: "Black & Grey Realism",
     image: AudreyJenkins,
-    email: "jane@studio.com",
-    experience: "8 years",
-    availability: "Mon-Fri",
+    email: "tattoos.by.audrey@gmail.com",
+    experience: "Experience: xx years",
     slug: "Audrey",
     socials: {
       instagram: "jane_tattoos",
@@ -23,38 +41,23 @@ const artists = [
     }
   },
   {
-    id: 2,
+    id: 3,
     name: "Christina",
     specialty: "Color",
     image: Christina,
-    email: "christina@studio.com",
-    experience: "12 years",
-    availability: "Tue-Sat",
+    email: "tattoos.by.christina@gmail.com",
+    experience: "Experience: xx years",
     slug: "Christina",
     socials: {
       instagram: "christina_tattoos",
       facebook: "christinasmith.tattoo"
     }
   },
-  {
-    id: 3,
-    name: "Shiloh Hix",
-    specialty: "Realism",
-    image: ShilohHix,
-    email: "shiloh@studio.com",
-    experience: "10 years",
-    availability: "Mon-Fri",
-    slug: "Shiloh",
-    socials: {
-      instagram: "shiloh_tattoos",
-      twitter: "shiloh_ink",
-      facebook: "shilohsmith.tattoo"
-    }
-  }
 ];
 
 const ArtistCard = ({ artist }) => {
   const [isFlipped, setIsFlipped] = useState(false);
+
 
   return (
     <div className="artist-card-container">
@@ -69,19 +72,16 @@ const ArtistCard = ({ artist }) => {
             <div className="artist-info">
               <h3>{artist.name}</h3>
               <div className="artist-details">
-                <span className="detail-item">
+                <span className="detail-item-card">
                   <i className="far fa-clock"></i> {artist.experience}
-                </span>
-                <span className="detail-item">
-                  <i className="far fa-calendar"></i> {artist.availability}
                 </span>
               </div>
               <p className="artist-bio">
                 Specializing in {artist.specialty.toLowerCase()} designs with a focus on 
                 creating unique, personalized artwork for each client.
               </p>
-              <div className="card-footer">
-                <span className="flip-hint">Click to view contact details</span>
+              <div className="artist-card-footer">
+                <span className="flip-hint">Click to reverse</span>
               </div>
             </div>
           </div>
@@ -89,12 +89,14 @@ const ArtistCard = ({ artist }) => {
           {/* Back of card */}
           <div className="artist-card-face artist-card-back">
             <div className="contact-section">
-              <h4>Contact Information</h4>
+              <h4>Contact</h4>
               <div className="contact-info-group">
                 <p className="email">{artist.email}</p>
                 <p className="hours">Available: {artist.availability}</p>
               </div>
+              <h4>Socials</h4>
               <div className="social-links">
+ 
                 {artist.socials.instagram && (
                   <a href={`https://instagram.com/${artist.socials.instagram}`}
                     target="_blank"
@@ -106,7 +108,8 @@ const ArtistCard = ({ artist }) => {
                   <a href={`https://twitter.com/${artist.socials.twitter}`}
                     target="_blank"
                     rel="noopener noreferrer">
-                    <FaTwitter />
+                    {/* <FaXTwitter /> */}
+                    <FontAwesomeIcon icon={faXTwitter} />
                   </a>
                 )}
                 {artist.socials.facebook && (
@@ -128,11 +131,13 @@ const ArtistCard = ({ artist }) => {
   );
 };
 
+
 const ArtistCards = () => {
+
+  const navigate = useNavigate();
   return (
     <section className="artists-section" id="artists">
       <div className="section-header">
-        <span className="section-subtitle">Creative Professionals</span>
         <h2>Meet Our Artists</h2>
         <p className="section-description">
           Each artist at our studio brings their own unique style and expertise to every piece they create. 
@@ -157,6 +162,9 @@ const ArtistCards = () => {
         {artists.map(artist => (
           <ArtistCard key={artist.id} artist={artist} />
         ))}
+      </div>
+      <div className="ButtonContainer">
+        <button className="CTAButton" onClick={() => navigate('/gallery')}>View Full Gallery</button>
       </div>
     </section>
   );

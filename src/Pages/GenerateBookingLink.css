@@ -1,99 +1,385 @@
-.GenerateBookingLink {
-  max-width: 600px;
-  margin: 20px auto;
-  padding: 20px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+.generate-booking-container {
+  min-height: calc(100vh - 80px);
+  padding: 100px 2rem 2rem;
+  background: #0f172a;
+  color: #e2e8f0;
 }
 
-.GenerateBookingLink h1 {
-  font-size: 24px;
-  text-align: center;
-  margin-bottom: 20px;
+.booking-card {
+  max-width: 800px;
+  margin: 0 auto;
+  background: #1e293b;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  border: 1px solid #334155;
+  overflow: hidden;
 }
 
-.GenerateBookingLink form {
+/* Header Styles */
+.booking-header {
+  background: #334155;
+  padding: 1.5rem;
+  border-bottom: 1px solid #475569;
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.GenerateBookingLink label {
-  margin-bottom: 10px;
-  font-weight: bold;
+.booking-header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #f1f5f9;
 }
 
-.GenerateBookingLink input {
-  padding: 8px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.SplitSections {
-  margin-top: 10px;
-}
-
-.SectionInput {
+.back-button {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: #2a3649;
+  border: 1px solid #475569;
+  border-radius: 6px;
+  color: #f1f5f9;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-.SectionInput input {
-  margin-left: 10px;
-  margin-right: 10px;
-  width: 60px;
+.back-button:hover {
+  background: #334155;
+  transform: translateY(-1px);
 }
 
-.RemoveSectionButton {
-  background-color: #e74c3c;
-  color: white;
-  border: none;
+/* Client Info */
+.client-info {
+  padding: 1.5rem;
+  border-bottom: 1px solid #334155;
+}
+
+.info-group {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: #2a3649;
+  border-radius: 8px;
+  border: 1px solid #475569;
+}
+
+.info-group .material-icons {
+  color: #60a5fa;
+}
+
+.info-group label {
+  color: #94a3b8;
+  font-size: 0.875rem;
+  margin-bottom: 0.25rem;
+  display: block;
+}
+
+.info-group p {
+  margin: 0;
+  color: #f1f5f9;
+}
+
+/* Session Type Toggle */
+.session-type-toggle {
+  padding: 1.5rem;
+  border-bottom: 1px solid #334155;
+}
+
+.toggle-label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  color: #f1f5f9;
+}
+
+.toggle-label input[type="checkbox"] {
+  width: 1.25rem;
+  height: 1.25rem;
   border-radius: 4px;
-  padding: 5px 10px;
+  border: 1px solid #475569;
+  background: #2a3649;
   cursor: pointer;
 }
 
-.RemoveSectionButton:hover {
-  background-color: #c0392b;
+/* Sessions Container */
+.sessions-container {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
-.AddSectionButton {
-  margin-top: 10px;
-  background-color: #2ecc71;
-  color: white;
+.session-input {
+  background: #2a3649;
+  border-radius: 8px;
+  border: 1px solid #475569;
+  overflow: hidden;
+}
+
+.session-header {
+  background: #334155;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #475569;
+}
+
+.session-header h3 {
+  margin: 0;
+  color: #f1f5f9;
+  font-size: 1rem;
+}
+
+.session-details {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.input-group label {
+  color: #94a3b8;
+  font-size: 0.875rem;
+}
+
+.input-group input,
+.input-group textarea {
+  padding: 0.75rem;
+  background: #1e293b;
+  border: 1px solid #475569;
+  border-radius: 6px;
+  color: #f1f5f9;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.input-group input:focus,
+.input-group textarea:focus {
+  outline: none;
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.2);
+}
+
+.input-group textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+/* Buttons */
+.remove-session {
+  background: none;
   border: none;
-  border-radius: 4px;
-  padding: 5px 10px;
+  color: #ef4444;
   cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  transition: all 0.2s ease;
 }
 
-.AddSectionButton:hover {
-  background-color: #27ae60;
+.remove-session:hover {
+  background: rgba(239, 68, 68, 0.1);
 }
 
-.SubmitButton {
-  background-color: #3498db;
-  color: white;
+.add-session {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background: #2a3649;
+  border: 1px solid #475569;
+  border-radius: 6px;
+  color: #60a5fa;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.add-session:hover {
+  background: #334155;
+  transform: translateY(-1px);
+}
+
+.generate-button,
+.send-email-button {
+  width: calc(100% - 3rem);
+  margin: 1.5rem;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
   border: none;
-  border-radius: 4px;
-  padding: 10px 15px;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 500;
   cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-.SubmitButton:hover {
-  background-color: #2980b9;
+.generate-button {
+  background: #2563eb;
+  color: white;
 }
 
-.Error {
-  color: #e74c3c;
-  margin-bottom: 15px;
-  text-align: center;
+.generate-button:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
 }
 
-.Success {
-  color: #2ecc71;
-  margin-bottom: 15px;
-  text-align: center;
+.send-email-button {
+  background: #059669;
+  color: white;
+}
+
+.send-email-button:hover {
+  background: #047857;
+  transform: translateY(-1px);
+}
+
+/* Booking Link Section */
+.booking-link-section {
+  padding: 1.5rem;
+}
+
+.link-display {
+  margin-bottom: 1.5rem;
+}
+
+.link-display label {
+  display: block;
+  color: #94a3b8;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.link-container {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.link-container input {
+  flex: 1;
+  padding: 0.75rem;
+  background: #1e293b;
+  border: 1px solid #475569;
+  border-radius: 6px;
+  color: #f1f5f9;
+  font-size: 0.875rem;
+}
+
+.copy-button {
+  padding: 0.75rem;
+  background: #2a3649;
+  border: 1px solid #475569;
+  border-radius: 6px;
+  color: #94a3b8;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.copy-button:hover {
+  background: #334155;
+  color: #f1f5f9;
+}
+
+/* Messages */
+.error-message,
+.success-message {
+  margin: 1.5rem;
+  padding: 1rem;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.error-message {
+  background: #7f1d1d;
+  color: #fee2e2;
+  border: 1px solid #dc2626;
+}
+
+.success-message {
+  background: #064e3b;
+  color: #dcfce7;
+  border: 1px solid #059669;
+}
+
+/* Loading Animation */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.spinning {
+  animation: spin 1s linear infinite;
+}
+
+/* Media Queries */
+@media screen and (max-width: 768px) {
+  .generate-booking-container {
+    padding: 90px 1rem 1rem;
+  }
+
+  .booking-header {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .back-button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .session-details {
+    padding: 1rem;
+  }
+
+  .generate-button,
+  .send-email-button {
+    width: calc(100% - 2rem);
+    margin: 1rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .generate-booking-container {
+    padding: 85px 0.5rem 0.5rem;
+  }
+
+  .booking-header h1 {
+    font-size: 1.25rem;
+  }
+
+  .info-group {
+    flex-direction: column;
+  }
+
+  .info-group .material-icons {
+    margin-bottom: 0.5rem;
+  }
+
+  .session-header {
+    padding: 0.75rem;
+  }
+
+  .link-container {
+    flex-direction: column;
+  }
+
+  .copy-button {
+    width: 100%;
+  }
 }

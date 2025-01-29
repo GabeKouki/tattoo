@@ -1,26 +1,42 @@
 import emailjs from '@emailjs/browser';
 
-export const sendEmail = async (templateParams) => {
-  try {
-    const serviceId = process.env.REACT_APP_AUDREY_EMAILJS_SERVICE_ID;
-    const templateId = process.env.REACT_APP_AUDREY_APPOINTMENT_REQUEST_TEMPLATE_ID;
-    const publicKey = process.env.REACT_APP_AUDREY_EMAILJS_PUBLIC_KEY;
-
-    const response = await emailjs.send(
-      serviceId,
-      templateId,
-      templateParams,
-      {
-        publicKey: publicKey
-
-      })
-    console.log('Email sent successfully:', response);
-    return response;
-
-  } catch (error) {
-    console.error('Error sending email:', error);
-    alert('Failed to send email. Please try again.');
+export const sendEmail = async (templateParams, artistID) => {
+  let serviceId;
+  let templateId; 
+  let publicKey;
+  
+  switch(artistID) {
+    case 'Audrey':
+      serviceId = process.env.REACT_APP_AUDREY_EMAILJS_SERVICE_ID;
+      templateId = process.env.REACT_APP_AUDREY_APPOINTMENT_REQUEST_TEMPLATE_ID;
+      publicKey = process.env.REACT_APP_AUDREY_EMAILJS_PUBLIC_KEY;
+      break;
+    case 'Shiloh':
+      serviceId = process.env.REACT_APP_SHILOH_EMAILJS_SERVICE_ID;
+      templateId = process.env.REACT_APP_SHILOH_APPOINTMENT_REQUEST_TEMPLATE_ID;
+      publicKey = process.env.REACT_APP_SHILOH_EMAILJS_PUBLIC_KEY;
+      break;
+    case 'Christina':
+      serviceId = process.env.REACT_APP_CHRISTINA_EMAILJS_SERVICE_ID;
+      templateId = process.env.REACT_APP_CHRISTINA_APPOINTMENT_REQUEST_TEMPLATE_ID;
+      publicKey = process.env.REACT_APP_CHRISTINA_EMAILJS_PUBLIC_KEY;
+      break;
+    default:
+      throw new Error('Invalid artist ID');
   }
+
+  if (!publicKey) {
+    throw new Error('EmailJS public key is missing');
+  }
+
+  const response = await emailjs.send(
+    serviceId,
+    templateId,
+    templateParams,
+    publicKey
+  );
+  
+  return response;
 }
 
 export const sendRejectionEmail = async ({ clientEmail, rejectionReason, clientName, artistName }) => {
@@ -50,6 +66,36 @@ export const sendRejectionEmail = async ({ clientEmail, rejectionReason, clientN
   } catch (error) {
     console.error('Error sending rejection email:', error);
     alert('Failed to send rejection email. Please try again.');
+    throw error;
+  }
+};
+
+export const sendBookingLinkEmail = async ({ to_email, client_name, artist_name, bookingLink }) => {
+  try {
+    const serviceId = process.env.REACT_APP_MAIN_EMAILJS_SERVICE_ID;
+    const templateId = process.env.REACT_APP_MAIN_EMAILJS_BOOKING_LINK_TEMPLATE_ID;
+    const publicKey = process.env.REACT_APP_MAIN_EMAILJS_PUBLIC_KEY;
+
+    const templateParams = {
+      to_email: to_email,
+      client_name: client_name,
+      booking_link: bookingLink,
+      artist_name: artist_name
+    }
+
+    const response = await emailjs.send(
+      serviceId,
+      templateId,
+      templateParams,
+      publicKey
+    );
+
+    console.log('Booking link email sent successfully:', response);
+    return response;
+
+  } catch (error) {
+    console.error('Error sending booking link email:', error);
+    alert('Failed to send booking link email. Please try again.');
     throw error;
   }
 };

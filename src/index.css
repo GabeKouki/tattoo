@@ -2,13 +2,9 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Playfair Display', serif;
-  background-color: #121212;
-  color: white;
   box-sizing: border-box;
-  overflow-x: hidden;
 }
 
-/* Typography */
 h1, h2, h3 {
   color: #008080;
   margin: 0;
@@ -18,15 +14,14 @@ p {
   color: #cccccc;
   line-height: 1.6;
   margin: 0 0 20px;
-}
-
-/* Buttons */
+} 
 
 
 .Spacer {
   height: 80px;
 }
-/* ::-webkit-scrollbar {
+
+::-webkit-scrollbar {
   width: 8px;
 }
 
@@ -37,9 +32,8 @@ p {
 
 ::-webkit-scrollbar-track {
   background: #1a1a1a;
-} */
+}
 
-/* Utility Classes */
 .container {
   max-width: 1200px;
   margin: 0 auto;
