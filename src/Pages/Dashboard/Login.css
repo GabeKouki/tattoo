@@ -1,107 +1,155 @@
-/* Login.css */
+:root {
+  --primary: #00ffc8;
+  --primary-dark: #00d4a9;
+  --error: #ff4d4d;
+  --glass: rgba(255, 255, 255, 0.05);
+  --background: linear-gradient(45deg, #0f0f0f, #1a1a1a);
+}
+
 .login-container {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #1e1e1e, #2b2b2b);
+  background: var(--background);
   padding: 20px;
+  backdrop-filter: blur(20px);
 }
 
 .login-card {
-  background: #2a2a2a;
+  background: var(--glass);
   padding: 2.5rem;
-  border-radius: 12px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   width: 100%;
   max-width: 400px;
+  backdrop-filter: blur(12px);
+  transform-style: preserve-3d;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
 }
 
 .login-card h1 {
-  color: #ffffff;
+  color: #fff;
   text-align: center;
   margin-bottom: 2rem;
   font-size: 2rem;
-}
-
-.login-input-group {
-  margin-bottom: 1.5rem;
-}
-
-
-
-.input-group label {
-  display: block;
-  margin-bottom: 0.5rem;
-  color: #ffffff;
-  font-weight: 500;
+  font-weight: 600;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .input-wrapper {
   position: relative;
+  margin-bottom: 1.5rem;
 }
 
-.input-wrapper input {
-  width: calc(100% - 28px);
-  padding: 12px 12px 12px 12px; 
-  border: 2px solid #555555;
+.login-input {
+  width: 100%;
+  padding: 14px 48px 14px 16px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
   font-size: 1rem;
-  background: #1f1f1f;
-  color: #ffffff;
-  transition: all 0.3s ease;
+  background: rgba(0, 0, 0, 0.2);
+  color: #fff;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-sizing: border-box;
 }
 
-.input-wrapper input:focus {
-  border-color: #00b8b8;
-  outline: none;
+.login-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(0, 255, 200, 0.2);
 }
 
-.input-icon {
+.password-toggle {
   position: absolute;
+  right: 16px;
   top: 50%;
-  left: 12px; /* Properly position the icon */
   transform: translateY(-50%);
-  color: #888888;
-  font-size: 1.2rem;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.password-toggle:hover {
+  color: var(--primary);
 }
 
 .error-message {
-  background: #ff4d4d;
-  color: #ffffff;
+  background: var(--error);
+  color: white;
   padding: 12px;
   border-radius: 8px;
-  margin-bottom: 1rem;
-  text-align: center;
+  margin: 1rem 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  animation: slideDown 0.3s ease;
+  transform-origin: top;
 }
 
-.button-group {
-  margin-top: 2rem;
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .login-button {
   width: 100%;
-  padding: 12px;
-  background: #00b8b8;
-  color: white;
+  padding: 14px;
+  background: var(--primary);
+  color: #000;
   border: none;
   border-radius: 8px;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
 .login-button:hover {
-  background: #009999;
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 255, 200, 0.2);
 }
 
-@media (max-width: 480px) {
-  .login-card {
-    padding: 1.5rem;
-  }
+.password-reveal {
+  position: relative;
+}
 
-  .login-card h1 {
-    font-size: 1.5rem;
+.password-reveal::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent 50%, rgba(0,0,0,0.1) 50%);
+  background-size: 200% 100%;
+  animation: reveal 0.6s steps(8) forwards;
+  opacity: 0;
+}
+
+@keyframes reveal {
+  0% {
+    background-position: 100% 0;
+    opacity: 1;
   }
+  100% {
+    background-position: 0 0;
+    opacity: 0;
+  }
+}
+
+.is-revealing {
+  animation: reveal 0.6s steps(8) forwards;
 }

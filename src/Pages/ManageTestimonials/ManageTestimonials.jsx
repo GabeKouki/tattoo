@@ -7,7 +7,6 @@ import './ManageTestimonials.css';
 const ManageTestimonials = () => {
   const { session } = useSession();
   const [testimonials, setTestimonials] = useState([]);
-  const [error, setError] = useState('');
   const [showModal, setShowModal] = useState(false); // State for modal visibility
   const [newTestimonial, setNewTestimonial] = useState({
     name: '',
@@ -55,7 +54,8 @@ const ManageTestimonials = () => {
     }]);
 
     if (error) {
-      setError('Error adding testimonial');
+      console.error('Error adding testimonial:', error);
+ 
     } else {
       setShowModal(false);
       setNewTestimonial({
@@ -75,7 +75,6 @@ const ManageTestimonials = () => {
         .eq('id', testimonialId);
 
       if (error) {
-        setError('Error deleting testimonial');
         console.error('Error deleting testimonial:', error);
       } else {
         fetchTestimonials(); // Refresh the list after deletion

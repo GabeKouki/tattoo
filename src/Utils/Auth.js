@@ -31,7 +31,7 @@ export const getUserRole = async () => {
 
   // Fetch the user's role from your "users" table
   const { data, error } = await supabase
-    .from('users')
+    .from('artists')
     .select('role')
     .eq('id', user.id)
     .single();

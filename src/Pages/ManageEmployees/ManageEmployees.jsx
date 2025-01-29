@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { supabase } from '../../Utils/SupabaseClient';
 import { useSession } from '../../Context/SessionContext';
 import { useNavigate } from 'react-router-dom';
-import { createEmployee } from '../../Utils/EmployeeUtils';
+// import { createEmployee } from '../../Utils/EmployeeUtils';
 import './ManageEmployees.css';
 
 const ManageEmployees = () => {
@@ -52,19 +52,19 @@ const ManageEmployees = () => {
     fetchEmployees();
   };
 
-  const handleAddEmployee = async () => {
-    const { email, password, name, phone, role } = newEmployee;
+  // const handleAddEmployee = async () => {
+  //   const { email, password, name, phone, role } = newEmployee;
 
-    const { data, error } = await createEmployee(email, password, { name, role, phone });
+  //   const { data, error } = await createEmployee(email, password, { name, role, phone });
 
-    if (error) {
-      console.error('Failed to create employee:', error);
-    } else {
-      console.log('Employee created:', data);
-      fetchEmployees();
-      closeAddDialog();
-    }
-  };
+  //   if (error) {
+  //     console.error('Failed to create employee:', error);
+  //   } else {
+  //     console.log('Employee created:', data);
+  //     fetchEmployees();
+  //     closeAddDialog();
+  //   }
+  // };
 
   const openAddDialog = () => {
     if (addDialogRef.current) {
@@ -205,7 +205,8 @@ const ManageEmployees = () => {
           </div>
         </form>
         <div className="dialog-buttons">
-          <button onClick={handleAddEmployee}>Add</button>
+          {/* <button onClick={handleAddEmployee}>Add</button> */}
+          <button>Add</button>
           <button onClick={closeAddDialog}>Cancel</button>
         </div>
       </dialog>
