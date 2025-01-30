@@ -1,0 +1,98 @@
+.SidebarContainer {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0;
+  margin-left: 20px;
+  width: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgb(21, 26, 45);
+  height: auto;
+  border-radius: 8px;
+  transition: all 1s ease;
+}
+
+.SidebarContainer.open {
+  width: 300px;
+}
+
+.SidebarBody {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 5px;
+}
+
+.MainGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: all 1s ease;
+}
+
+.MainGroup.open {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.SidebarIcon {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  color: white;
+  border-radius: 8px;
+  padding: 5px;
+  transition: all 0.3s ease;
+}
+
+.SidebarIcon.active {
+  background-color: white;
+  color: rgb(21, 26, 45);
+}
+
+
+.SidebarHeading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
+}
+
+.GeneralGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.SidebarFooter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
+}
+
+.Separator {
+  width: 80%;
+  height: 2px;
+  background-color: white;
+  margin: 20px 0;
+}
+
+.ProfilePicture {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  border: 2px solid white;
+  margin-top: 10px;
+}
