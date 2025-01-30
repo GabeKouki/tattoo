@@ -3,7 +3,7 @@
   justify-content: space-between;
   align-items: center;
   background-color: rgba(26, 26, 26, 0.5);
-  height: 80px;
+  height: 70px;
   padding: 0 40px;
   position: fixed;
   top: 0;
@@ -19,7 +19,7 @@
 }
 
 .NavbarLogo {
-  height: 50px;
+  height: 40px;
   width: auto;
   transition: opacity 0.3s ease;
 }
@@ -41,11 +41,11 @@
   padding: 0;
   list-style: none;
   align-items: center;
-  height: 80px;
+  height: 70px;
 }
 
 .NavLinks > li {
-  height: 80px;
+  height: 70px;
   display: flex;
   align-items: center;
 }
@@ -82,9 +82,8 @@
   width: 100%;
 }
 
-/* Updated Dropdown Styles */
 .NavDropdown {
-  height: 80px;
+  height: 70px;
   display: flex;
   align-items: center;
   position: relative;
@@ -93,7 +92,7 @@
 .DropdownContent {
   display: none;
   position: absolute;
-  top: 80px;
+  top: 70px;
   left: 50%;
   transform: translateX(-50%);
   background-color: rgba(26, 26, 26, 0.95);
@@ -143,7 +142,6 @@
   border-color: transparent transparent rgba(26, 26, 26, 0.95) transparent;
 }
 
-/* Add padding to create hover space */
 .DropdownContent::after {
   content: '';
   position: absolute;
@@ -180,7 +178,6 @@
   transform: translateY(-2px);
 }
 
-/* Keep existing mobile menu styles */
 .HamburgerButton {
   display: none;
   flex-direction: column;
@@ -216,10 +213,10 @@
 
 .MobileMenu {
   position: fixed;
-  top: 80px;
+  top: 70px;
   left: 0;
   width: 100%;
-  height: calc(100vh - 80px);
+  height: calc(100vh - 70px);
   background-color: rgba(26, 26, 26, 0.98);
   transform: translateX(100%);
   transition: transform 0.3s ease-in-out;

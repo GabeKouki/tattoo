@@ -7,7 +7,11 @@ export const fetchArtistData = async (artistEmail) => {
     .select('*')
     .eq('email', artistEmail)
     .single();
-  return { data, error };
+
+    if (error) {
+      throw error;
+    }
+  return { data };
 };
 
 export const fetchAppointments = async (userId) => {

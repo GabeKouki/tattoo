@@ -1,5 +1,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
+import { useState } from 'react';
 import './App.css';
 import Home from './Pages/Home';
 import Booking from './Pages/Booking';
@@ -21,17 +22,21 @@ import Barrett from './Pages/Artists/Barrett';
 import ManageAccount from './Components/ManageAccount/ManageAccount';
 import ManageEmployees from './Pages/ManageEmployees/ManageEmployees';
 import ManageTestimonials from './Pages/ManageTestimonials/ManageTestimonials';
+import Sidebar from './Pages/Dashboard/Sidebar';
 
 function App() {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   return (
     <div className="App">
       <Navbar />
       <Routes>
         {/* Public Routes */}
         <Route path="/" element={<Home />} />
-        <Route path="/Barrett" element={<Barrett />} />
+        <Route path="/sidebar" element={<Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />} />
+        {/* <Route path="/Barrett" element={<Barrett />} />
         <Route path="/Audrey" element={<Audrey />} />
-        <Route path="/Christina" element={<Christina />} />
+        <Route path="/Christina" element={<Christina />} /> */}
         <Route path="/booking" element={<Booking />} />
         <Route path="/aftercare" element={<Aftercare />} />
         <Route path="/faq" element={<FAQ />} />
