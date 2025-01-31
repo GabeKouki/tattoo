@@ -1,43 +1,36 @@
 import React, { useEffect, useState } from 'react';
-import { FiEdit, FiCalendar, FiClock, FiUser, FiMail, FiPlus } from 'react-icons/fi';
-import { fetchArtistData, fetchAppointments, fetchAvailability, fetchTestimonials } from '../../Utils/dashboardUtils';
-import { supabase } from "../../Utils/SupabaseClient"
+import { fetchArtistData } from '../../Utils/dashboardUtils';
+import ManageArtists from './ManageArtists';
 import './Dashboard.css';
+import Sidebar from './Sidebar';
 
 const Dashboard = ({ user, session }) => {
   const [artistData, setArtistData] = useState(null);
-  // const [appointments, setAppointments] = useState([]);
-  // const [availability, setAvailability] = useState([]);
-  // const [testimonials, setTestimonials] = useState([]);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState("home");
 
-  //! fetching all the artist Data from the artists table
-  const fetchArtistData = async (artistEmail) => {
-    const { data, error } = await supabase
-      .from('artists')
-      .select('*')
-      .eq('email', artistEmail)
-      .single();
 
-    if (error) {
-      throw error;
-    }
-    setArtistData(data);
-  };
-
-//! on mount, fetch the artist data
   useEffect(() => {
-    fetchArtistData(session.user.email)
-  }, [session]);
+    setArtistData(fetchArtistData(session.user.email))
+    setActiveTab(activeTab)
+  }, [session, activeTab]);
 
 
   if (!artistData) return <div className="loading">Loading...</div>;
 
   return (
-    <div className="DashboardContainer">
-      <div className="DashboardContainer">
-        
-      </div>
-    </div>
+    <>
+    <Sidebar
+      activeTab={activeTab}
+      setActiveTab={setActiveTab}
+      artistName={(artistData.first_name + ' ' + artistData.last_name)}
+      artistRole={session.user.role}
+      artistimage={artistData.profile_picture}
+      />
+
+    {activeTab === "manageArtists" && <ManageArtists />}
+
+    </>
   );
 };
 

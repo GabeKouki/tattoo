@@ -1,39 +1,33 @@
 // dashboardUtils.js
-import { supabase } from './SupabaseClient';
+import { supabase } from "./SupabaseClient";
 
 export const fetchArtistData = async (artistEmail) => {
   const { data, error } = await supabase
-    .from('artists')
-    .select('*')
-    .eq('email', artistEmail)
+    .from("artists")
+    .select("*")
+    .eq("email", artistEmail)
     .single();
 
-    if (error) {
-      throw error;
-    }
+  if (error) {
+    throw error;
+  }
   return { data };
 };
 
-export const fetchAppointments = async (userId) => {
-  const { data, error } = await supabase
-    .from('appointments')
-    .select('*')
-    .eq('artist_id', userId);
-  return { data, error };
+export const fetchAllArtists = async () => {
+  const { data, error } = await supabase.from("artists").select("*");
+  if (error) {
+    console.log(error);
+    throw error;
+  }
+  return { data };
 };
 
-export const fetchAvailability = async (userId) => {
-  const { data, error } = await supabase
-    .from('availability')
-    .select('*')
-    .eq('artist_id', userId);
-  return { data, error };
-};
-
-export const fetchTestimonials = async (userId) => {
-  const { data, error } = await supabase
-    .from('testimonials')
-    .select('*')
-    .eq('artist_id', userId);
-  return { data, error };
-};
+export const fetchArtistByFullName = async (artistId) => {
+  const { data, error } = await supabase.from("artists").select("*").eq("id", artistId);
+  if (error) {
+    console.log(error);
+    throw error;
+  }
+  return { data };
+}

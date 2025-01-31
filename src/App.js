@@ -1,42 +1,34 @@
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
-import { useState } from 'react';
-import './App.css';
-import Home from './Pages/Home';
-import Booking from './Pages/Booking';
-import Aftercare from './Pages/Aftercare';
-import FAQ from './Pages/FAQ';
-import Policies from './Pages/Policies';
-import NotFound from './Pages/NotFound';
-import Christina from './Pages/Artists/Christina';
-import Audrey from './Pages/Artists/Audrey';
-import Login from './Pages/Dashboard/Login';
-import Dashboard from './Pages/Dashboard/Dashboard';
-import GenerateBookingLink from './Pages/GenerateBookingLink';
-import BookAppointment from './Pages/BookAppointment';
-import Navbar from './Components/Navbar/Navbar';
-import { SessionProvider } from './Context/SessionContext';
-import ProtectedRoute from './Context/ProtectedRoute';
-import Gallery from './Pages/Gallery/Gallery';
-import Barrett from './Pages/Artists/Barrett';
-import ManageAccount from './Components/ManageAccount/ManageAccount';
-import ManageEmployees from './Pages/ManageEmployees/ManageEmployees';
-import ManageTestimonials from './Pages/ManageTestimonials/ManageTestimonials';
-import Sidebar from './Pages/Dashboard/Sidebar';
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import { useState } from "react";
+import "./App.css";
+import Home from "./Pages/Home";
+import Booking from "./Pages/Booking";
+import Aftercare from "./Pages/Aftercare";
+import FAQ from "./Pages/FAQ";
+import Policies from "./Pages/Policies";
+import NotFound from "./Pages/NotFound";
+import Login from "./Pages/Dashboard/Login";
+import Dashboard from "./Pages/Dashboard/Dashboard";
+import GenerateBookingLink from "./Pages/GenerateBookingLink";
+import BookAppointment from "./Pages/BookAppointment";
+import Navbar from "./Components/Navbar/Navbar";
+import { SessionProvider } from "./Context/SessionContext";
+import ProtectedRoute from "./Context/ProtectedRoute";
+import Gallery from "./Pages/Gallery/Gallery";
+import ManageAccount from "./Components/ManageAccount/ManageAccount";
+import ManageEmployees from "./Pages/ManageEmployees/ManageEmployees";
+import ManageTestimonials from "./Pages/ManageTestimonials/ManageTestimonials";
+import ArtistSchema from "./Pages/Artists/ArtistPage";
 
 function App() {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-
   return (
     <div className="App">
       <Navbar />
       <Routes>
         {/* Public Routes */}
         <Route path="/" element={<Home />} />
-        <Route path="/sidebar" element={<Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />} />
-        {/* <Route path="/Barrett" element={<Barrett />} />
-        <Route path="/Audrey" element={<Audrey />} />
-        <Route path="/Christina" element={<Christina />} /> */}
+        <Route path="/artists/:artistId" element={<ArtistSchema />} />
         <Route path="/booking" element={<Booking />} />
         <Route path="/aftercare" element={<Aftercare />} />
         <Route path="/faq" element={<FAQ />} />
@@ -44,14 +36,17 @@ function App() {
         <Route path="/gallery" element={<Gallery />} />
         <Route path="/book-appointment/:token" element={<BookAppointment />} />
 
-        <Route path="/login" element={
-          <SessionProvider>
+        <Route
+          path="/login"
+          element={
+            //           <SessionProvider>
             <Login />
-          </SessionProvider>
-        } />
+            //        </SessionProvider>
+          }
+        />
 
         {/* Protected Routes */}
-        <Route path="/dashboard" element={
+        {/* <Route path="/dashboard" element={
           <SessionProvider>
             <ProtectedRoute>
               <Dashboard />
@@ -92,7 +87,7 @@ function App() {
               <ManageTestimonials />
             </ProtectedRoute>
           </SessionProvider>
-        } />
+        } /> */}
 
         {/* Catch-all route for undefined paths */}
         <Route path="*" element={<NotFound />} />

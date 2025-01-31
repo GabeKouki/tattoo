@@ -1,10 +1,11 @@
 .SidebarContainer {
   position: fixed;
-  top: 50%;
+  top: calc(50% + 60px);
   left: 0;
   transform: translateY(-50%);
   background-color: #1d1b31; 
   width: 60px;
+  gap: 10px;
   border-radius: 8px;
   padding: 0;
   transition: width 0.4s ease;
@@ -12,7 +13,8 @@
   flex-direction: column;
   justify-content: space-between;
   z-index: 999;
-
+  min-height: 530px;
+  max-height: 530px;
 }
 
 .SidebarContainer.open {
@@ -27,8 +29,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 60px; 
-  padding: 0 10px;
+  height: 40px; 
+  padding: 5px 10px;
   box-sizing: border-box;
 }
 
@@ -54,7 +56,7 @@
 .SidebarBody {
   display: flex;
   flex-direction: column;
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
 }
 
 .GroupTitle {
@@ -122,6 +124,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-bottom: 10px;
 }
 
 
@@ -179,4 +182,27 @@
   color: #bbb;
   margin: 0;
   padding: 0;
+}
+
+.MenuText, .LogoText, .GroupTitle, .ProfileInfo {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.1s ease;
+  transition-delay: 0s;
+}
+
+/* Show text when sidebar is open */
+.SidebarContainer.open .MenuText,
+.SidebarContainer.open .LogoText,
+.SidebarContainer.open .GroupTitle,
+.SidebarContainer.open .ProfileInfo {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0.3s;
+}
+
+/* Update the existing SidebarContainer transition */
+.SidebarContainer {
+  /* ... existing properties ... */
+  transition: width 0.3s ease-in-out;
 }

@@ -12,11 +12,11 @@ import {
 } from "react-icons/fa";
 import ProfilePicture from "../../Images/Audrey.jpeg";
 
-const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
-  const [activeTab, setActiveTab] = useState("home");
+const Sidebar = ({ activeTab, setActiveTab, artistName, artistRole }) => {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const handleSidebarClick = (tab) => {
-    setActiveTab(tab);
+  const handleSidebarClick = (activeTab) => {
+    setActiveTab(activeTab);
   };
 
   return (
@@ -35,7 +35,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
         {sidebarOpen && <h2 className="GroupTitle">Main Menu</h2>}
         <div className="MainGroup">
           <div
-            className={`MenuItem ${activeTab === "home" ? "active" : ""} ${sidebarOpen ? "expanded" : ""}`}
+            className={`MenuItem ${activeTab === "home" ? "active" : ""}`}
             onClick={() => handleSidebarClick("home")}
           >
             <FaHome className="SidebarIcon" />
@@ -113,8 +113,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
           />
           {sidebarOpen && (
             <div className="ProfileInfo">
-              <h3 className="ProfileName">Eva Murphy</h3>
-              <p className="ProfileRole">Web Developer</p>
+              <h3 className="ProfileName">{artistName}</h3>
+              <p className="ProfileRole">{artistRole}</p>
             </div>
           )}
         </div>

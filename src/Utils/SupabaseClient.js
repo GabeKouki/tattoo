@@ -9,9 +9,6 @@ if (!supabaseUrl || !supabaseAnonKey ) {
   console.error('Supabase URL, anon key is missing in environment variables.');
 }
 
-console.log('Supabase URL:', supabaseUrl);
-console.log('Anon Key:', supabaseAnonKey);
-// console.log('Service Role Key:', supabaseServiceRoleKey ? 'Loaded' : 'Not Loaded');
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
