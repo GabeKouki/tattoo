@@ -2,18 +2,17 @@ import React, { useState } from "react";
 import "./Sidebar.css";
 import {
   FaArrowRight,
-  FaCog,
   FaHome,
-  FaUsersCog,
-  FaPlus,
   FaCalendarCheck,
   FaCalendarPlus,
   FaCalendarAlt,
+  FaUsersCog,
   FaPaperPlane,
+  FaCog,
 } from "react-icons/fa";
 import ProfilePicture from "../../Images/Audrey.jpeg";
 
-const Sidebar = ({ sidebarOpen, setSidebarOpen, currentPage }) => {
+const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
   const [activeTab, setActiveTab] = useState("home");
 
   const handleSidebarClick = (tab) => {
@@ -23,77 +22,102 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, currentPage }) => {
   return (
     <div className={`SidebarContainer ${sidebarOpen ? "open" : ""}`}>
       <div className="SidebarHeading">
+        {sidebarOpen && <h1 className="LogoText">Above The Clouds</h1>}
         <FaArrowRight
-          className="SidebarIcon"
+          className={`ToggleIcon ${sidebarOpen ? "rotate" : ""}`}
           onClick={() => setSidebarOpen(!sidebarOpen)}
         />
-        {sidebarOpen && <h1>Above The Clouds</h1>}
       </div>
+
       <div className="SidebarBody">
-        <div className={`MainGroup ${sidebarOpen ? "open" : ""}`}>
-          <span className="Separator" />
-          <span>
-            <FaHome
-              className={`SidebarIcon ${activeTab === "home" ? "active" : ""}`}
-              onClick={() => handleSidebarClick("home")}
-            />
-          </span>
-          <span>
-            <FaCalendarCheck
-              className={`SidebarIcon ${
-                activeTab === "appointments" ? "active" : ""
-              }`}
-              onClick={() => handleSidebarClick("appointments")}
-            />
-          </span>
-          <span>
-            <FaCalendarPlus
-              className={`SidebarIcon ${
-                activeTab === "addAppointment" ? "active" : ""
-              }`}
-              onClick={() => handleSidebarClick("addAppointment")}
-            />
-          </span>
+        {!sidebarOpen && <div className="Separator"></div>}
+
+        {sidebarOpen && <h2 className="GroupTitle">Main Menu</h2>}
+        <div className="MainGroup">
+          <div
+            className={`MenuItem ${activeTab === "home" ? "active" : ""} ${sidebarOpen ? "expanded" : ""}`}
+            onClick={() => handleSidebarClick("home")}
+          >
+            <FaHome className="SidebarIcon" />
+            {sidebarOpen && <span className="MenuText">Dashboard</span>}
+          </div>
+          <div
+            className={`MenuItem ${
+              activeTab === "appointments" ? "active" : ""
+            }`}
+            onClick={() => handleSidebarClick("appointments")}
+          >
+            <FaCalendarCheck className="SidebarIcon" />
+            {sidebarOpen && <span className="MenuText">Appointments</span>}
+          </div>
+          <div
+            className={`MenuItem ${
+              activeTab === "addAppointment" ? "active" : ""
+            }`}
+            onClick={() => handleSidebarClick("addAppointment")}
+          >
+            <FaCalendarPlus className="SidebarIcon" />
+            {sidebarOpen && <span className="MenuText">New Appointment</span>}
+          </div>
         </div>
+
+        {!sidebarOpen && <div className="Separator"></div>}
+
+        {sidebarOpen && <h2 className="GroupTitle">General</h2>}
         <div className="GeneralGroup">
-          <span className="Separator" />
-          <span>
-            <FaCalendarAlt
-              className={`SidebarIcon ${
-                activeTab === "calendar" ? "active" : ""
-              }`}
-              onClick={() => handleSidebarClick("calendar")}
-            />
-          </span>
-          <span>
-            <FaUsersCog
-              className={`SidebarIcon ${
-                activeTab === "manageArtists" ? "active" : ""
-              }`}
-              onClick={() => handleSidebarClick("manageArtists")}
-            />
-          </span>
-          <span>
-            <FaPaperPlane
-              className={`SidebarIcon ${
-                activeTab === "sendEmail" ? "active" : ""
-              }`}
+          <div
+            className={`MenuItem ${activeTab === "calendar" ? "active" : ""}`}
+            onClick={() => handleSidebarClick("calendar")}
+          >
+            <FaCalendarAlt className="SidebarIcon" />
+            {sidebarOpen && <span className="MenuText">Calendar</span>}
+          </div>
+          <div
+            className={`MenuItem ${
+              activeTab === "manageArtists" ? "active" : ""
+            }`}
+            onClick={() => handleSidebarClick("manageArtists")}
+          >
+            <FaUsersCog className="SidebarIcon" />
+            {sidebarOpen && <span className="MenuText">Manage Artists</span>}
+          </div>
+          <div
+            className={`MenuItem ${activeTab === "sendEmail" ? "active" : ""}`}
             onClick={() => handleSidebarClick("sendEmail")}
-            />
-          </span>
+          >
+            <FaPaperPlane className="SidebarIcon" />
+            {sidebarOpen && <span className="MenuText">Send Email</span>}
+          </div>
+        </div>
+
+        {!sidebarOpen && <div className="Separator"></div>}
+
+        {sidebarOpen && <h2 className="GroupTitle">Account</h2>}
+        <div className="AccountGroup">
+          <div
+            className={`MenuItem ${activeTab === "settings" ? "active" : ""}`}
+            onClick={() => handleSidebarClick("settings")}
+          >
+            <FaCog className="SidebarIcon" />
+            {sidebarOpen && <span className="MenuText">Settings</span>}
+          </div>
         </div>
       </div>
+
       <div className="SidebarFooter">
-        <span className="Separator" />
-        <span>
-          <FaCog
-            className={`SidebarIcon ${
-              activeTab === "settings" ? "active" : ""
-            }`}
-            onClick={() => handleSidebarClick("settings")}
+        <div className={`ProfileSection ${sidebarOpen ? "expanded" : ""}`}>
+          <img
+            src={ProfilePicture}
+            alt="UserProfile"
+            className="ProfilePicture"
           />
-        </span>
-        <img src={ProfilePicture} alt="Audrey" className="ProfilePicture" />
+          {sidebarOpen && (
+            <div className="ProfileInfo">
+              <h3 className="ProfileName">Eva Murphy</h3>
+              <p className="ProfileRole">Web Developer</p>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
