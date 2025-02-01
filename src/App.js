@@ -12,7 +12,6 @@ import Login from "./Pages/Dashboard/Login";
 import Dashboard from "./Pages/Dashboard/Dashboard";
 import GenerateBookingLink from "./Pages/GenerateBookingLink";
 import BookAppointment from "./Pages/BookAppointment";
-import Navbar from "./Components/Navbar/Navbar";
 import { SessionProvider } from "./Context/SessionContext";
 import ProtectedRoute from "./Context/ProtectedRoute";
 import Gallery from "./Pages/Gallery/Gallery";
@@ -24,7 +23,6 @@ import ArtistSchema from "./Pages/Artists/ArtistPage";
 function App() {
   return (
     <div className="App">
-      <Navbar />
       <Routes>
         {/* Public Routes */}
         <Route path="/" element={<Home />} />

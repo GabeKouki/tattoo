@@ -3,6 +3,7 @@ import { supabase } from "../../Utils/SupabaseClient";
 import Dashboard from "./Dashboard";
 import "./Login.css";
 import { FiLogIn, FiAlertCircle, FiEye, FiEyeOff } from "react-icons/fi";
+import { fetchArtistByEmail } from "../../Utils/dashboardUtils";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -10,7 +11,7 @@ const Login = () => {
   const [formError, setFormError] = useState([false, false]);
   const [error, setError] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
-  const [user, setUser] = useState(null);
+  const [artistData, setArtistData] = useState(null);
   const [session, setSession] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
   const [isRevealing, setIsRevealing] = useState(false);
@@ -23,10 +24,17 @@ const Login = () => {
     setShowPassword(!showPassword);
   };
 
-  // Handle user inactivity
+  // Handle user inactivity and fetch artist data on login.
   useEffect(() => {
     let timeoutId;
     const INACTIVITY_TIMEOUT = 15 * 60 * 1000; // 15 minutes
+
+    const fetchData = async () => {
+      const { data } = await fetchArtistByEmail(email);
+      setArtistData(data[0]);
+      console.log(data[0]);
+    };
+    fetchData();
 
     const resetTimer = () => {
       clearTimeout(timeoutId);
@@ -36,7 +44,7 @@ const Login = () => {
     const logout = async () => {
       await supabase.auth.signOut();
       setLoggedIn(false);
-      setUser(null);
+      setArtistData(null);
       setSession(null);
     };
 
@@ -61,7 +69,7 @@ const Login = () => {
         clearTimeout(timeoutId);
       };
     }
-  }, [loggedIn]);
+  }, [loggedIn, email]);
 
   const validateForm = () => {
     const errors = [false, false];
@@ -86,7 +94,6 @@ const Login = () => {
       if (error) throw error;
 
       setLoggedIn(true);
-      setUser(data.user);
       setSession(data.session);
       setError("");
     } catch (error) {
@@ -125,9 +132,7 @@ const Login = () => {
               <div className="login-input-group">
                 <div className="input-wrapper">
                   <input
-                    className={`login-input ${
-                      isRevealing ? "is-revealing" : ""
-                    }`}
+                    className={`login-input ${isRevealing ? "is-revealing" : ""}`}
                     id="password"
                     type={showPassword ? "text" : "password"}
                     value={password}
@@ -168,7 +173,7 @@ const Login = () => {
           </div>
         </div>
       ) : (
-        <Dashboard user={user} session={session} />
+        <Dashboard artistData={artistData} session={session} />
       )}
     </>
   );

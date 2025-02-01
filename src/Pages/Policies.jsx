@@ -1,10 +1,11 @@
 import React from 'react';
+import Navbar from '../Components/Navbar/Navbar';
 import './Pages.css';
 
 const Policies = () => {
   return (
     <div className="Page">
-      {/* Decorative SVG Background */}
+      <Navbar />
       <div className="policy-background">
         <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="background-blob">
           <path fill="#00808015" d="M45.3,-59.1C57.6,-49.5,65.9,-33.7,70.1,-16.6C74.3,0.5,74.4,19,67.4,34.1C60.4,49.2,46.3,61,30.4,66.9C14.6,72.8,-3,72.8,-19.9,67.7C-36.8,62.5,-52.9,52.3,-62.4,37.6C-71.9,22.9,-74.7,3.7,-70.8,-13.3C-66.9,-30.3,-56.3,-45.2,-42.5,-54.5C-28.7,-63.9,-11.7,-67.7,3.1,-71.8C17.9,-75.9,33,-68.7,45.3,-59.1Z" transform="translate(100 100)" />

@@ -1,125 +1,92 @@
 import React, { useState } from "react";
+import profilePicture from "../../Images/Audrey.jpeg";
+import logout from "../../Images/logout.png";
+import dashboard from "../../Images/dashboard.png";
+import calendar from "../../Images/calendar.png";
+import calendar2 from "../../Images/calendar2.png";
+import downarrow from "../../Images/downarrow.png";
+import user from "../../Images/user.png";
+import padlock from "../../Images/padlock.png";
 import "./Sidebar.css";
-import {
-  FaArrowRight,
-  FaHome,
-  FaCalendarCheck,
-  FaCalendarPlus,
-  FaCalendarAlt,
-  FaUsersCog,
-  FaPaperPlane,
-  FaCog,
-} from "react-icons/fa";
-import ProfilePicture from "../../Images/Audrey.jpeg";
 
-const Sidebar = ({ activeTab, setActiveTab, artistName, artistRole }) => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+const Sidebar = ({ artistImage, artistName, artistRole }) => {
+  const [appointmentsOpen, setAppointmentsOpen] = useState(false);
+  const [scheduleOpen, setScheduleOpen] = useState(false);
 
-  const handleSidebarClick = (activeTab) => {
-    setActiveTab(activeTab);
+  const toggleAppointments = () => {
+    setAppointmentsOpen((prev) => !prev);
   };
 
+  const toggleSchedule = () => {
+    setScheduleOpen((prev) => !prev);
+  };
   return (
-    <div className={`SidebarContainer ${sidebarOpen ? "open" : ""}`}>
-      <div className="SidebarHeading">
-        {sidebarOpen && <h1 className="LogoText">Above The Clouds</h1>}
-        <FaArrowRight
-          className={`ToggleIcon ${sidebarOpen ? "rotate" : ""}`}
-          onClick={() => setSidebarOpen(!sidebarOpen)}
-        />
-      </div>
+    <>
+      <h2>Above The Clouds</h2>
+      <div className="SidebarButtonContainer">
+        <div className="SideNavItem">
+          <img src={dashboard} alt="Dashboard Icon" className="DashboardIcon" />
+          <h3>Dashboard</h3>
+        </div>
 
-      <div className="SidebarBody">
-        {!sidebarOpen && <div className="Separator"></div>}
-
-        {sidebarOpen && <h2 className="GroupTitle">Main Menu</h2>}
-        <div className="MainGroup">
-          <div
-            className={`MenuItem ${activeTab === "home" ? "active" : ""}`}
-            onClick={() => handleSidebarClick("home")}
-          >
-            <FaHome className="SidebarIcon" />
-            {sidebarOpen && <span className="MenuText">Dashboard</span>}
+        <div className="SideNavWrapper">
+          <div className={`SideNavItem ${appointmentsOpen ? "active" : ""}`} onClick={toggleAppointments}>
+            <img src={calendar} alt="Appointments" className="DashboardIcon" />
+            <h3>Appointments</h3>
+            <img src={downarrow} alt="down arrow" className="DownArrow" />
           </div>
           <div
-            className={`MenuItem ${
-              activeTab === "appointments" ? "active" : ""
-            }`}
-            onClick={() => handleSidebarClick("appointments")}
+            className={`DropDownContent ${appointmentsOpen ? "active" : ""}`}
           >
-            <FaCalendarCheck className="SidebarIcon" />
-            {sidebarOpen && <span className="MenuText">Appointments</span>}
-          </div>
-          <div
-            className={`MenuItem ${
-              activeTab === "addAppointment" ? "active" : ""
-            }`}
-            onClick={() => handleSidebarClick("addAppointment")}
-          >
-            <FaCalendarPlus className="SidebarIcon" />
-            {sidebarOpen && <span className="MenuText">New Appointment</span>}
+            <div className="SideNavItem">
+              <h3>Need Action</h3>
+            </div>
+            <div className="SideNavItem">
+              <h3>Add Appointment</h3>
+            </div>
           </div>
         </div>
 
-        {!sidebarOpen && <div className="Separator"></div>}
-
-        {sidebarOpen && <h2 className="GroupTitle">General</h2>}
-        <div className="GeneralGroup">
-          <div
-            className={`MenuItem ${activeTab === "calendar" ? "active" : ""}`}
-            onClick={() => handleSidebarClick("calendar")}
-          >
-            <FaCalendarAlt className="SidebarIcon" />
-            {sidebarOpen && <span className="MenuText">Calendar</span>}
+        <div className="SideNavWrapper">
+          <div className={`SideNavItem ${scheduleOpen ? "active" : ""}`} onClick={toggleSchedule}>
+            <img src={calendar2} alt="Schedule" className="DashboardIcon" />
+            <h3>Schedule</h3>
+            <img src={downarrow} alt="down arrow" className="DownArrow" />
           </div>
-          <div
-            className={`MenuItem ${
-              activeTab === "manageArtists" ? "active" : ""
-            }`}
-            onClick={() => handleSidebarClick("manageArtists")}
-          >
-            <FaUsersCog className="SidebarIcon" />
-            {sidebarOpen && <span className="MenuText">Manage Artists</span>}
-          </div>
-          <div
-            className={`MenuItem ${activeTab === "sendEmail" ? "active" : ""}`}
-            onClick={() => handleSidebarClick("sendEmail")}
-          >
-            <FaPaperPlane className="SidebarIcon" />
-            {sidebarOpen && <span className="MenuText">Send Email</span>}
+          <div className={`DropDownContent ${scheduleOpen ? "active" : ""}`}>
+            <div className="SideNavItem">
+              <h3>View Schedule</h3>
+            </div>
+            <div className="SideNavItem">
+              <h3>Change Hours</h3>
+            </div>
+            <div className="SideNavItem">
+              <h3>Time Off</h3>
+            </div>
           </div>
         </div>
 
-        {!sidebarOpen && <div className="Separator"></div>}
-
-        {sidebarOpen && <h2 className="GroupTitle">Account</h2>}
-        <div className="AccountGroup">
-          <div
-            className={`MenuItem ${activeTab === "settings" ? "active" : ""}`}
-            onClick={() => handleSidebarClick("settings")}
-          >
-            <FaCog className="SidebarIcon" />
-            {sidebarOpen && <span className="MenuText">Settings</span>}
-          </div>
+        <div className="SideNavItem">
+          <img src={user} alt="Profile Icon" className="DashboardIcon" />
+          <h3>Profile</h3>
+        </div>
+        <div className="SideNavItem">
+          <img src={padlock} alt="Admin Icon" className="DashboardIcon" />
+          <h3>Admin+</h3>
         </div>
       </div>
 
       <div className="SidebarFooter">
-        <div className={`ProfileSection ${sidebarOpen ? "expanded" : ""}`}>
-          <img
-            src={ProfilePicture}
-            alt="UserProfile"
-            className="ProfilePicture"
-          />
-          {sidebarOpen && (
-            <div className="ProfileInfo">
-              <h3 className="ProfileName">{artistName}</h3>
-              <p className="ProfileRole">{artistRole}</p>
-            </div>
-          )}
-        </div>
+        <img src={artistImage} alt="Audrey" className="ProfilePicture" />
+        <span className="FooterText">
+          <h4>{artistName}</h4>
+          <h4>
+            <strong>{artistRole}</strong>
+          </h4>
+        </span>
+        <img src={logout} alt="logout" className="LogoutIcon" />
       </div>
-    </div>
+    </>
   );
 };
 

@@ -92,7 +92,7 @@ const Navbar = () => {
               </button>
               <ul className="DropdownContent">
                 {artistNames.map((artist) => (
-                  <li>
+                  <li key={artist.id}>
                     <Link to={`/artists/${artist.id}`} className="DropdownLink">
                       {artist.first_name} {artist.last_name}
                     </Link>

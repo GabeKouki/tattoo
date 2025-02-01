@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Navbar from '../../Components/Navbar/Navbar';
 import './Gallery.css';
 
 // Audrey Images
@@ -114,6 +115,7 @@ const Gallery = () => {
 
   return (
     <div className="gallery-wrapper">
+      <Navbar />
       <div className="gallery-container">
         <div className="gallery-header">
           <h1>Our Work</h1>

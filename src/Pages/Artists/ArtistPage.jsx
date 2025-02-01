@@ -4,7 +4,8 @@ import { ReactComponent as TwitterIcon } from "../../Images/TwitterIcon.svg";
 import { ReactComponent as InstagramIcon } from "../../Images/InstagramIcon.svg";
 import { ReactComponent as FacebookIcon } from "../../Images/FacebookIcon.svg";
 import { useParams } from "react-router-dom";
-import { fetchArtistByFullName } from "../../Utils/dashboardUtils";
+import { fetchArtistById } from "../../Utils/dashboardUtils";
+import Navbar from '../../Components/Navbar/Navbar';
 
 const ArtistPage = () => {
   const params = useParams();
@@ -14,7 +15,7 @@ const ArtistPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data } = await fetchArtistByFullName(artistId);
+      const { data } = await fetchArtistById(artistId);
       setArtistData(data[0]);
     };
     fetchData();
@@ -31,6 +32,7 @@ const ArtistPage = () => {
 
   return (
     <div className="ArtistPage">
+      <Navbar />
       <section className="ArtistIntro">
         <div className="ArtistProfile">
           <img src={artistData.profile_picture} alt="Audrey" className="ArtistImage" />

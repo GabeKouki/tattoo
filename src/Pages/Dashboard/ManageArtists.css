@@ -1,0 +1,10 @@
+.ManageArtistsContainer {
+  margin-top: 70px;
+  border: 1px solid black;
+  width: calc(100vw);
+  height: calc(100vh - 70px);
+  box-sizing: border-box;
+  padding: 10px;
+  padding-left: 60px;
+  background-color: #090909;
+}

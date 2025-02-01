@@ -1,9 +1,10 @@
 import React from 'react'
+import './ManageArtists.css'
 
 const ManageArtists = () => {
   return (
-    <div>
-      Hey
+    <div className="ManageArtistsContainer">
+      
     </div>
   )
 }

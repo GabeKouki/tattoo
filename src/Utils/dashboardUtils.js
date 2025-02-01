@@ -1,4 +1,3 @@
-// dashboardUtils.js
 import { supabase } from "./SupabaseClient";
 
 export const fetchArtistData = async (artistEmail) => {
@@ -23,11 +22,20 @@ export const fetchAllArtists = async () => {
   return { data };
 };
 
-export const fetchArtistByFullName = async (artistId) => {
+export const fetchArtistById = async (artistId) => {
   const { data, error } = await supabase.from("artists").select("*").eq("id", artistId);
   if (error) {
     console.log(error);
     throw error;
   }
   return { data };
-}
+};
+
+export const fetchArtistByEmail = async (email) => {
+  const { data, error } = await supabase.from("artists").select("*").eq("email", email);
+  if (error) {
+    console.log(error);
+    throw error;
+  }
+  return { data };
+};
