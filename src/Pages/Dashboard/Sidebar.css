@@ -6,9 +6,9 @@
   align-items: center;
   justify-content: center;
   font-size: 1.4rem;
-  color: white;
+  color: #EAEAEA;
   font-family: sans-serif;
-  font-weight: 300;
+  font-weight: 200;
 }
 
 .SidebarContainer h3 {
@@ -16,9 +16,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: #EAEAEA;
   font-size: 1.2rem;
-  font-weight: 400;
+  font-weight: 200;
 }
 
 .SidebarContainer h4 {
@@ -26,7 +26,7 @@
   white-space: nowrap;
   align-items: center;
   justify-content: left;
-  color: white;
+  color: #EAEAEA;
   font-size: 1rem;
   font-weight: 200;
   margin: 0;
@@ -42,7 +42,12 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  background-color: rgba(221, 217, 217, 0.3);
+  background-color: rgba(255, 255, 255, 0.01);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px); 
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
+  color: #fff; 
 }
 
 .FooterText {
@@ -59,12 +64,14 @@
   min-height: 50px;
   min-width: 50px;
   border-radius: 8px;
+  object-fit: cover;
 }
 
 .LogoutIcon {
+  cursor: pointer;
   height: 32px;
   width: 32px;
-  color: white;
+  color: #EAEAEA;
 }
 
 
@@ -81,11 +88,10 @@
   align-items: center;
   justify-content: flex-start;
   padding-left: 20px;
-  /* margin-right: 10px; */
   padding-right: 10px;
   gap: 10px;
   white-space: nowrap;
-  color: white;
+  color: #EAEAEA;
   cursor: pointer;
   transition: all 1s;
 }
@@ -113,7 +119,6 @@
   width: 100%;
   overflow: hidden;
   transition: all 1.0s;
-  /* margin-left: 10px; */
 }
 
 .active {

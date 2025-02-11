@@ -74,7 +74,7 @@ const Login = () => {
   const validateForm = () => {
     const errors = [false, false];
     if (!/\S+@\S+\.\S+/.test(email)) errors[0] = true;
-    if (password.length < 8) errors[1] = true;
+    if (password.length < 6) errors[1] = true;
     setFormError(errors);
     return !errors.includes(true);
   };
@@ -102,9 +102,18 @@ const Login = () => {
     }
   };
 
+  const artistValid = () => {
+    if (artistData.completed_setup) {
+      return true;
+    }
+    return false;
+  };
+
+  console.log(artistData);
+  console.log(session);
   return (
     <>
-      {!loggedIn ? (
+      {!loggedIn && (
         <div className="login-container">
           <div className="login-card">
             <h1>Artist Login</h1>
@@ -132,7 +141,9 @@ const Login = () => {
               <div className="login-input-group">
                 <div className="input-wrapper">
                   <input
-                    className={`login-input ${isRevealing ? "is-revealing" : ""}`}
+                    className={`login-input ${
+                      isRevealing ? "is-revealing" : ""
+                    }`}
                     id="password"
                     type={showPassword ? "text" : "password"}
                     value={password}
@@ -172,8 +183,14 @@ const Login = () => {
             </form>
           </div>
         </div>
-      ) : (
+      )}
+
+      {loggedIn && artistData && artistValid() && (
         <Dashboard artistData={artistData} session={session} />
+      )}
+
+      {loggedIn && artistData && !artistValid() && (
+        <h1>You have not completed the setup process</h1>
       )}
     </>
   );

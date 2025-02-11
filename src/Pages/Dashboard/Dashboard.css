@@ -1,10 +1,29 @@
 .DashboardContainer {
   height: 100vh;
-  background-color: red;
   width: 100vw;
   display: flex;
   flex-direction: row;
   gap: 20px;
+  background: 
+    radial-gradient(
+      circle at 10% 20%,
+      #ff646433 0%,
+      #ffffff00 60%
+    ),
+    radial-gradient(
+      circle at 80% 80%,
+      rgba(100, 100, 255, 0.2) 0%,
+      rgba(255, 255, 255, 0) 60%
+    ),
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(100, 255, 100, 0.2) 0%,
+      rgba(255, 255, 255, 0) 60%
+    ),
+    #1F2D3D;
+  background-repeat: no-repeat;
+  background-size: cover;
+  box-sizing: border-box;
 }
 
 .SidebarContainer {
@@ -13,7 +32,11 @@
   flex-direction: column;
   justify-content: space-between;
   gap: 20px;
-  background-color: #090909;
+  background-color: rgba(255, 255, 255, 0.05); 
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
 }
 
 .ContentContainer {
@@ -26,12 +49,22 @@
 
 .DashboardHeader {
   height: 60px;
-  background-color: white;
+  min-height: 60px;
+  max-height: 60px;
+  background-color: rgba(255, 255, 255, 0.05); 
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 0 0 10px 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
 }
 
 .Content {
   height: calc(100vh - 80px);
   border-radius: 10px 10px 0 0;
-  background-color: #777777;
+  background-color: rgba(255, 255, 255, 0.05); 
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
 }

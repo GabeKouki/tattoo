@@ -1,0 +1,93 @@
+.AdminContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.AdminHeader {
+  height: 40px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  box-sizing: border-box;
+  align-items: center;
+  align-items: center;
+  padding: 0 10px;
+}
+
+.CardsContainer {
+  height: 740px;
+  padding: 10px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  box-sizing: border-box;
+}
+
+.AdminCard {
+  max-height: 350px;
+  width: 30%;
+  border: 3px solid black;
+  border-radius: 8px;
+}
+
+.CardHeader {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  height: 75px;
+  padding: 5px;
+  width: 100%;
+  box-sizing: border-box;
+  border-bottom: 1px solid #ddd;
+}
+
+.CardHeader img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.CardHeader h2 {
+  font-size: 1.5rem;
+  color: white;
+}
+
+.CardBody {
+  display: flex;
+  flex-direction: column;
+
+}
+
+
+.PaginationContainer {
+  height: 40px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+} 
+
+.PaginationButton {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(0, 0, 0, 0.6);
+  transition: all 0.3s ease;
+}
+
+.PaginationButton.active {
+  background-color: rgba(255, 255, 255, 0.6);
+  color: #008080;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}

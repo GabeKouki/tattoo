@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { fetchArtistData } from '../../Utils/dashboardUtils';
 import './Dashboard.css';
+
+import React, { useState } from 'react';
+import DashboardHome from './DashboardHome';
 import Sidebar from './Sidebar';
+import Admin from './Admin';
 
 const Dashboard = ({ artistData, session }) => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("home");
 
   if (!artistData) {
@@ -15,19 +16,22 @@ const Dashboard = ({ artistData, session }) => {
     <div className="DashboardContainer">
       <div className="SidebarContainer">
         <Sidebar 
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
           artistImage={artistData.profile_picture}
           artistName={`${artistData.first_name} ${artistData.last_name}`}
-          artistRole={session.user.role}
+          artistRole={session.user.role}z
         />
       </div>
       <div className="ContentContainer">
         <header className="DashboardHeader">
           <nav className="DashboardNav">
-            {/* Navigation content goes here */}
+
           </nav>
         </header>
         <div className="Content">
-          {/* Main content goes here */}
+          {activeTab === "home" && <DashboardHome artistData={artistData} />}
+          {activeTab === "admin" && <Admin />}
         </div>
       </div>
     </div>

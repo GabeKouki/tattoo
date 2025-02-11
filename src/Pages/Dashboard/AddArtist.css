@@ -1,0 +1,74 @@
+/* src/components/AddArtist.css */
+.add-artist-container {
+  width: 400px;
+  margin: 50px auto;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #fff;
+  font-family: Arial, sans-serif;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.form-group {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.form-group input,
+.form-group select {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  font-size: 1em;
+}
+
+button {
+  padding: 12px;
+  font-size: 1em;
+  font-weight: bold;
+  background: #6c63ff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+button:hover {
+  background: #5753c9;
+}
+
+.error {
+  color: #ff6b6b;
+  font-size: 0.85em;
+  margin-top: 5px;
+}
+
+.success {
+  color: #28a745;
+  font-size: 0.9em;
+  margin-top: 5px;
+}
