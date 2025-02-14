@@ -10,7 +10,7 @@ const AddArtist = () => {
     first_name: "",
     last_name: "",
     password: "",
-    role: "artist", // default role; can also be set to "admin" if needed
+    role: "artist",
     completed_setup: false
   });
 

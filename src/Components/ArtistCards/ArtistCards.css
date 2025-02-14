@@ -116,6 +116,11 @@
   perspective: 1000px;
 }
 
+.social-icon {
+  width: 25px;
+  height: 25px;
+}
+
 .artist-card-inner {
   position: relative;
   width: 100%;
