@@ -24,6 +24,9 @@ const Sidebar = ({ artistImage, artistName, artistRole, activeTab, setActiveTab 
     return data;
   }
   const handleTabClick = (tab) => {
+    if (tab === "admin" && artistRole !== "admin") {
+      return;
+    }
     setActiveTab(tab);
   };
 

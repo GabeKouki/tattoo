@@ -45,7 +45,7 @@ h2 {
   font-size: 1em;
 }
 
-button {
+.add-artist-container button {
   padding: 12px;
   font-size: 1em;
   font-weight: bold;
@@ -57,7 +57,7 @@ button {
   margin-top: 10px;
 }
 
-button:hover {
+.add-artist-container button:hover {
   background: #5753c9;
 }
 

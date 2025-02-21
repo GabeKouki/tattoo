@@ -1,5 +1,4 @@
 import { supabase } from "./SupabaseClient";
-import { useNavigate } from "react-router-dom";
 
 export const fetchArtistData = async (artistEmail) => {
   const { data, error } = await supabase
@@ -79,8 +78,7 @@ export const createAuthUser = async ({
   email,
   password,
   first_name,
-  last_name,
-  role,
+  last_name
 }) => {
   const displayName = `${first_name} ${last_name}`;
   const { data, error } = await supabase.auth.signUp({
@@ -89,7 +87,6 @@ export const createAuthUser = async ({
     options: {
       data: {
         displayName,
-        role,
       },
     },
   });
@@ -97,10 +94,10 @@ export const createAuthUser = async ({
   return data;
 };
 
-export const createArtist = async ({ email, first_name, last_name, completed_setup }) => {
+export const createArtist = async ({ email, first_name, last_name, completed_setup, role }) => {
   const { data, error } = await supabase
     .from("artists")
-    .insert([{ email, first_name, last_name, completed_setup }]);
+    .insert([{ email, first_name, last_name, completed_setup, role }]);
   if (error) throw error;
   return data;
 };
