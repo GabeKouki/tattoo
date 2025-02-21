@@ -1,9 +1,10 @@
 import React from 'react'
+import './ArtistSetup.css'
 
 const ArtistSetup = () => {
   return (
-    <div>
-      
+    <div className="ArtistSetupContainer">
+
     </div>
   )
 }

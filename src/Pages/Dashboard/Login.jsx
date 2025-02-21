@@ -4,6 +4,7 @@ import Dashboard from "./Dashboard";
 import "./Login.css";
 import { FiLogIn, FiAlertCircle, FiEye, FiEyeOff } from "react-icons/fi";
 import { fetchArtistByEmail } from "../../Utils/dashboardUtils";
+import ArtistSetup from "../../Components/ArtistSetup/ArtistSetup";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -190,7 +191,7 @@ const Login = () => {
       )}
 
       {loggedIn && artistData && !artistValid() && (
-        <h1>You have not completed the setup process</h1>
+        <ArtistSetup artistData={artistData} />
       )}
     </>
   );
