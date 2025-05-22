@@ -1,0 +1,95 @@
+.DashboardHomeContainer {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.DashboardHomeHeader {
+  display: flex;
+  flex-direction: column;
+}
+
+.DashboardHomeHeader h1 {
+  margin: 30px 0 0 20px;
+  color: white;
+  min-width: 100%;
+  font-size: 2.5rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.QuickStatsContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.QuickStat {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-self: center;
+  margin: 10px 20px;
+  border-radius: 12px;
+  border: 1px solid #008080;
+  color: white;
+  padding: 20px;
+}
+
+.QuickStat h3 {
+  margin: 0;
+}
+
+.DashboardHomeBody {
+  border: 1px solid red;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.DashboardHomeBodyButtonContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.DashboardHomeBodyButtonContainer button {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  background-color: #008080;
+  color: white;
+  cursor: pointer;
+  padding: 12px;
+  font-size: 1.2rem;
+}
+
+
+.DashboardHomeAppointmentsContainer {
+  border: 1px solid green;
+  border-radius: 8px;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.AppointmentsContainerHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+}
+
+
+
+@media screen and (max-width: 1024px) {
+  .QuickStatsContainer {
+    flex-direction: column;
+    justify-content: space-around;
+    margin-top: 50px;
+  }
+}

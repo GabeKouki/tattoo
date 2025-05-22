@@ -33,7 +33,7 @@ const Login = () => {
     const fetchData = async () => {
       const { data } = await fetchArtistByEmail(email);
       setArtistData(data[0]);
-      console.log(data[0]);
+      // console.log(data[0]);
     };
     fetchData();
 
@@ -110,8 +110,8 @@ const Login = () => {
     return false;
   };
 
-  console.log(artistData);
-  console.log(session);
+  // console.log(artistData);
+  // console.log(session);
   return (
     <>
       {!loggedIn && (

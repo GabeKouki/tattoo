@@ -24,9 +24,9 @@ const Dashboard = ({ artistData, session }) => {
         />
       </div>
       <div className="ContentContainer">
-        <div className="HeaderContainer">
+        {/* <div className="HeaderContainer">
           <DashboardHeader artistData={artistData} />
-        </div>
+        </div> */}
         <div className="Content">
           {activeTab === "home" && <DashboardHome artistData={artistData} />}
           {activeTab === "admin" && <Admin />}

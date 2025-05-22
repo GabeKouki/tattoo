@@ -5,11 +5,6 @@ body {
   box-sizing: border-box;
 }
 
-h1, h2, h3 {
-  color: #008080;
-  margin: 0;
-}
-
 p {
   color: #cccccc;
   line-height: 1.6;

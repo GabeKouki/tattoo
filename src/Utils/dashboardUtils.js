@@ -78,7 +78,7 @@ export const createAuthUser = async ({
   email,
   password,
   first_name,
-  last_name
+  last_name,
 }) => {
   const displayName = `${first_name} ${last_name}`;
   const { data, error } = await supabase.auth.signUp({
@@ -94,10 +94,32 @@ export const createAuthUser = async ({
   return data;
 };
 
-export const createArtist = async ({ email, first_name, last_name, completed_setup, role }) => {
+export const createArtist = async ({
+  email,
+  first_name,
+  last_name,
+  completed_setup,
+  role,
+}) => {
   const { data, error } = await supabase
     .from("artists")
     .insert([{ email, first_name, last_name, completed_setup, role }]);
+  if (error) throw error;
+  return data;
+};
+
+export const fetchAppointmentsByArtistId = async (artistId) => {
+  const today = new Date();
+  const mm = String(today.getMonth() + 1).padStart(2, "0");
+  const dd = String(today.getDate()).padStart(2, "0");
+  const yyyy = today.getFullYear();
+
+  const formattedDate = `${yyyy}-${mm}-${dd}`;
+
+  const { data, error } = await supabase
+    .from("appointments")
+    .select("*")
+    .eq("artist_id", artistId)
   if (error) throw error;
   return data;
 };

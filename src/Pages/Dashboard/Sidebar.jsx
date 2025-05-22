@@ -10,7 +10,13 @@ import { logoutUser } from "../../Utils/dashboardUtils";
 import { useNavigate } from "react-router-dom";
 import "./Sidebar.css";
 
-const Sidebar = ({ artistImage, artistName, artistRole, activeTab, setActiveTab }) => {
+const Sidebar = ({
+  artistImage,
+  artistName,
+  artistRole,
+  activeTab,
+  setActiveTab,
+}) => {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -22,9 +28,14 @@ const Sidebar = ({ artistImage, artistName, artistRole, activeTab, setActiveTab 
     navigate("/");
     setActiveTab("home");
     return data;
-  }
+  };
   const handleTabClick = (tab) => {
     if (tab === "admin" && artistRole !== "admin") {
+      return;
+    }
+
+    if (tab === activeTab) {
+      setActiveTab("home");
       return;
     }
     setActiveTab(tab);
@@ -44,6 +55,7 @@ const Sidebar = ({ artistImage, artistName, artistRole, activeTab, setActiveTab 
             className={`SideNavItem ${
               activeTab === "appointments" ? "active" : ""
             }`}
+            onClick={() => handleTabClick("appointments")}
           >
             <img src={calendar} alt="Appointments" className="DashboardIcon" />
             <h3>Appointments</h3>
@@ -54,10 +66,16 @@ const Sidebar = ({ artistImage, artistName, artistRole, activeTab, setActiveTab 
               activeTab === "appointments" ? "active" : ""
             }`}
           >
-            <div className="SideNavItem" onClick={() =>handleTabClick("needAction")}>
+            <div
+              className="SideNavItem"
+              onClick={() => handleTabClick("needAction")}
+            >
               <h3>Need Action</h3>
             </div>
-            <div className="SideNavItem" onClick={() =>handleTabClick("addAppointment")}>
+            <div
+              className="SideNavItem"
+              onClick={() => handleTabClick("addAppointment")}
+            >
               <h3>Add Appointment</h3>
             </div>
           </div>
@@ -65,7 +83,9 @@ const Sidebar = ({ artistImage, artistName, artistRole, activeTab, setActiveTab 
 
         <div className="SideNavWrapper">
           <div
-            className={`SideNavItem ${activeTab === "schedule" ? "active" : ""}`}
+            className={`SideNavItem ${
+              activeTab === "schedule" ? "active" : ""
+            }`}
             onClick={() => handleTabClick("schedule")}
           >
             <img src={calendar2} alt="Schedule" className="DashboardIcon" />
@@ -94,7 +114,7 @@ const Sidebar = ({ artistImage, artistName, artistRole, activeTab, setActiveTab 
           <h3>Profile</h3>
         </div>
         <div className="SideNavItem" onClick={() => handleTabClick("admin")}>
-          <img src={padlock} alt="Admin Icon" className="DashboardIcon"  />
+          <img src={padlock} alt="Admin Icon" className="DashboardIcon" />
           <h3>Admin+</h3>
         </div>
       </div>
@@ -107,7 +127,12 @@ const Sidebar = ({ artistImage, artistName, artistRole, activeTab, setActiveTab 
             <strong>{artistRole}</strong>
           </h4>
         </span>
-        <img onClick={() => handleLogout()} src={logout} alt="logout" className="LogoutIcon" />
+        <img
+          onClick={() => handleLogout()}
+          src={logout}
+          alt="logout"
+          className="LogoutIcon"
+        />
       </div>
     </>
   );

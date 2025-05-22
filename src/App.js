@@ -27,7 +27,7 @@ function App() {
         {/* Public Routes */}
         <Route path="/" element={<Home />} />
         <Route path="/artists/:artistId" element={<ArtistSchema />} />
-        <Route path="/booking" element={<Booking />} />
+        {/* <Route path="/booking" element={<Booking />} /> */}
         <Route path="/aftercare" element={<Aftercare />} />
         <Route path="/faq" element={<FAQ />} />
         <Route path="/policies" element={<Policies />} />

@@ -33,7 +33,7 @@ const Navbar = () => {
 
   const fetchArtistNames = async () => {
     const { data } = await fetchAllArtists();
-    setArtistNames(data);
+    setArtistNames(data.filter((artist) => artist.profile_picture !== null && artist.client_tattoos !== null));
   }
   //! Handle scroll after navigation
   useEffect(() => {
@@ -107,11 +107,11 @@ const Navbar = () => {
             </li>
 
             {/* Separate pages */}
-            <li>
+            {/* <li>
               <Link to="/booking" className="NavLink">
                 Book Now
               </Link>
-            </li>
+            </li> */}
 
             {/* Info Dropdown */}
             <li className="NavDropdown">
